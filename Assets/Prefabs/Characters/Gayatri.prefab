@@ -122,6 +122,7 @@ MonoBehaviour:
   animator: {fileID: 95697003090998116}
   direction: 0
   speed: 10
+  attackDistance: 0.5
   isPulling: 0
   isHorizontalPulling: 0
   isLifting: 0

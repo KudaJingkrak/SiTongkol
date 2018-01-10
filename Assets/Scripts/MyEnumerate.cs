@@ -7,5 +7,5 @@ public enum DamageType{
 	Normal, Magic
 }
 public enum DamageEffect{
-	Fuzzy, Poison, Confused, Sleep //blablabla....
+	None, Fuzzy, Poison, Confused, Sleep //blablabla....
 }

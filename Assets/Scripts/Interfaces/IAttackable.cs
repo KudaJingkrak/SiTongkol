@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 public interface IAttackable{
-	void ApplyDamage(float damage);
-	void ApplyDamage(float damage, GameObject causer);
-	void ApplyDamage(float damage, GameObject causer, DamageType type);
-	void ApplyDamage(float damage, GameObject causer, DamageType type, DamageEffect effect);
+	void ApplyDamage(float damage = 0f, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None);
+
+	void Destruct();
+
+	void Die();
 }
