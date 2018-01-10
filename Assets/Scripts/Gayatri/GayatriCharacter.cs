@@ -14,6 +14,7 @@ public class GayatriCharacter : MonoBehaviour {
 	public bool isAttacking;
 	public bool isInteracting;
 	public bool onDialogue;
+	private IInteractable interactable;
 	//private float _slower = 0.0f;
 	// Use this for initialization
 	void Start () {
@@ -66,6 +67,10 @@ public class GayatriCharacter : MonoBehaviour {
 	}
 
 	public void Move(float x, float y){
+		if(onDialogue)
+		{
+			return;
+		}
 		if(rigid2D.velocity.sqrMagnitude < speed){
 			if(!isPulling){
 				rigid2D.AddForce(new Vector2(x,y)*rigid2D.mass / Time.fixedDeltaTime);
@@ -103,7 +108,7 @@ public class GayatriCharacter : MonoBehaviour {
 
 			for(int i =0; i < hits.Length; i++){
 				if(hits[i].collider != null && !hits[i].collider.gameObject.Equals(this.gameObject)){
-					IInteractable interactable = hits[i].collider.gameObject.GetComponent<IInteractable>();
+					interactable = hits[i].collider.gameObject.GetComponent<IInteractable>();
 					if(interactable != null){
 						Debug.Log("Berinteraksi dengan "+ hits[i].collider.gameObject.name);
 						interactable.ApplyInteract(gameObject);
@@ -116,9 +121,8 @@ public class GayatriCharacter : MonoBehaviour {
 			}
 
 		}else{
-
 			//TODO disini harusnya pas interact ngapain kayak dialog, bisa pilih gitu juga, atau notifikasi
-
+			interactable.ApplyInteract(gameObject);
 		}
 	}
 	

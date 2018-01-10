@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GayatriController : MonoBehaviour {
 	public GayatriCharacter myCharacter;
+	public DialogueManager m_Dialogue;
 	float _axisX = 0f, _axisY = 0f;
 	// Use this for initialization
 	void Start () {
