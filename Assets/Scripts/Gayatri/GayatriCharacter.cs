@@ -7,12 +7,11 @@ public class GayatriCharacter : MonoBehaviour {
 	public Animator animator;
 	public Direction direction = Direction.Front;
 	public float speed;
-	[Range(0,1)]
-	public float linearDampling = 0.05f;
+	//public float linearDampling = 0.05f;
 	public bool isPulling;
 	public bool isHorizontalPulling;
 	public bool isLifting;
-	private float _slower = 0.0f;
+	//private float _slower = 0.0f;
 	// Use this for initialization
 	void Start () {
 		
@@ -20,11 +19,11 @@ public class GayatriCharacter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		_slower = 1 - linearDampling;
+		//_slower = 1 - linearDampling;
 	}
 
 	void FixedUpdate(){
-		rigid2D.velocity = rigid2D.velocity * _slower;
+		//rigid2D.velocity = rigid2D.velocity * _slower;
 
 		animator.SetFloat("Speed", rigid2D.velocity.sqrMagnitude);
 		animator.SetBool("IsPulling", isPulling);
