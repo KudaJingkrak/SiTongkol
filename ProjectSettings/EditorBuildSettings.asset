@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/Persistent.unity
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/Scenes/SecurityRoom.unity
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/Scenes/Market.unity
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scene/Gameprime/Main_Menu.unity
+    guid: a45820347d6e48e4d8baf8236f794227
+  - enabled: 1
+    path: Assets/Scene/Gameprime/Rumah_Gayatri.unity
+    guid: 5b308ab73a77fe843859ff7a2ae36b7a
+  - enabled: 1
+    path: Assets/Scene/Gameprime/Hutan.unity
+    guid: 130b158cf25a6a340aecbff623874836
+  - enabled: 1
+    path: Assets/Scene/Gameprime/Halaman.unity
+    guid: 3c0ace8bb87b8ae499cfbcd36c15876e
+  - enabled: 1
+    path: Assets/Scene/Gameprime/Dungeon.unity
+    guid: c4582251d1c57a34fa0813b44e6a7282
+  - enabled: 1
+    path: Assets/Scene/Gameprime/Rumah_Gayatri_2.unity
+    guid: da6043c852bb4cc49a5800edb6969a20
+  - enabled: 1
+    path: Assets/Scene/Gameprime/Halaman_2.unity
+    guid: cccfae0eaf9c7ea45b7d057f6173b1ab
+  - enabled: 1
+    path: Assets/Scene/Gameprime/Rumah_Gayatri_3.unity
+    guid: 7ee57ef8dedc89d4eae981b95ec35c85
+  - enabled: 1
+    path: Assets/Scene/Gameprime/Halaman_3.unity
+    guid: 02183a763e7fcbd44a1bbf0b177d4a8b
+  - enabled: 1
+    path: Assets/Scene/Test/Budi-Boss.unity
+    guid: 3add55ae7669b7f4cb7f3eb70c4e95c3
+  - enabled: 1
+    path: Assets/Scene/Gameprime/Epilog_Scene.unity
+    guid: bb440a27b178dff4197303f841940c7b
