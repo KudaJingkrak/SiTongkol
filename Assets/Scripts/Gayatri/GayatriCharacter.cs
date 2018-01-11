@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class GayatriCharacter : MonoBehaviour {
 	public Rigidbody2D rigid2D;
+	public BoxCollider2D boxCollider2D;
 	public Animator animator;
 	public Direction direction = Direction.Front;
 	public float speed;
 	public float attackDistance = 0.1f;
+	public float inteactDistance = 0.1f;
 	public bool isPulling;
 	public bool isHorizontalPulling;
 	public bool isLifting;
@@ -71,6 +73,20 @@ public class GayatriCharacter : MonoBehaviour {
 		{
 			return;
 		}
+
+		if(x > 0.6f){
+			SetDirection(Direction.Right);
+		}else if(x < -0.6f){
+			SetDirection(Direction.Left);
+		}
+
+		if(y > 0.6f){
+			SetDirection(Direction.Back);
+		}else if(y < -0.6f){
+			SetDirection(Direction.Front);
+		}
+
+
 		if(rigid2D.velocity.sqrMagnitude < speed){
 			if(!isPulling){
 				rigid2D.AddForce(new Vector2(x,y)*rigid2D.mass / Time.fixedDeltaTime);
@@ -103,7 +119,7 @@ public class GayatriCharacter : MonoBehaviour {
 					break;
 			}
 
-			RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position + new Vector3(0f,-0.1f), new Vector2(0.5f, 0.5f), 0.0f, _castDir, 0.1f);
+			RaycastHit2D[] hits = Physics2D.BoxCastAll(boxCollider2D.transform.position, boxCollider2D.size, 0.0f, _castDir, inteactDistance);
 			Debug.Log("Jumlah hits ada "+hits.Length);
 
 			for(int i =0; i < hits.Length; i++){
@@ -122,7 +138,11 @@ public class GayatriCharacter : MonoBehaviour {
 
 		}else{
 			//TODO disini harusnya pas interact ngapain kayak dialog, bisa pilih gitu juga, atau notifikasi
-			interactable.ApplyInteract(gameObject);
+			if(interactable != null){
+				interactable.ApplyInteract(gameObject);
+			}else{
+				isInteracting = false;
+			}
 		}
 	}
 	
@@ -151,7 +171,7 @@ public class GayatriCharacter : MonoBehaviour {
 				break;
 		}
 
-		RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position + new Vector3(0f,-0.1f), new Vector2(0.5f, 0.5f), 0.0f, _castDir, attackDistance);
+		RaycastHit2D[] hits = Physics2D.BoxCastAll(boxCollider2D.transform.position, boxCollider2D.size, 0.0f, _castDir, attackDistance);
 		//Debug.Log("Jumlah hits ada "+hits.Length);
 
 		for(int i =0; i < hits.Length; i++){
