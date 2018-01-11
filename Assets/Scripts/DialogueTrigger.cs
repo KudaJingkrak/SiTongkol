@@ -24,8 +24,8 @@ public class DialogueTrigger : MonoBehaviour,IInteractable {
 	   {
 		   if(c_Gayatri.onDialogue)
 		   {
-			   m_Dialogue.DisplayNextSentence();
-			   if(m_Dialogue.dialogueText.text.Equals("End of Conversation"))
+			   
+			   if(!m_Dialogue.DisplayNextSentence())
 			   {
 				   c_Gayatri.onDialogue = false;
 				   c_Gayatri.isInteracting = false;
