@@ -25,3 +25,6 @@ public enum ItemName{
 	//Consumable
 	Trash, Banana, HP_Potion // bbalablablaba.....
 }
+public enum ItemType{
+	Amulet, Equipment, Consumable
+}
