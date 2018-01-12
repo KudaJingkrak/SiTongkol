@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TestTreasure : MonoBehaviour, IInteractable{
 	public SpriteRenderer render;
+	public Pickup[] items;
 	public bool isOpened = false;
 	public Sprite openedSprite;
     // Use this for initialization
