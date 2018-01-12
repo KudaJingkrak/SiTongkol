@@ -28,3 +28,7 @@ public enum ItemName{
 public enum ItemType{
 	Amulet, Equipment, Consumable
 }
+
+public enum MoveAble_State{
+    Idle, MoveX, MoveY
+}
