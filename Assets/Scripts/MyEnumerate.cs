@@ -32,3 +32,8 @@ public enum ItemType{
 public enum MoveAble_State{
     Idle, MoveX, MoveY
 }
+
+public enum ButtonDoor_Type
+{
+    Door, Bridge, Switch
+}
