@@ -39,6 +39,11 @@ public class Amulet: Item{
 	public float manaUsage;
 }
 
+[System.Serializable]
+public class QuestItem: Item{
+	public int index_Quest;
+}
+
 
 
 
