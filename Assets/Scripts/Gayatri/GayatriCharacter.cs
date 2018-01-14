@@ -17,6 +17,8 @@ public class GayatriCharacter : MonoBehaviour {
 	public bool isInteracting;
 	public bool onDialogue;
 	private IInteractable interactable;
+	private Moveable _moveable;
+	private float _moveX = 0.0f, _moveY = 0.0f;
 	//private float _slower = 0.0f;
 	// Use this for initialization
 	void Start () {
@@ -39,18 +41,26 @@ public class GayatriCharacter : MonoBehaviour {
 			case Direction.Front:
 				animator.SetFloat("MoveX", 0);
 				animator.SetFloat("MoveY", -1);
+				_moveX = 0;
+				_moveY = -1;
 				break;
 			case Direction.Right:
 				animator.SetFloat("MoveX", 1);
 				animator.SetFloat("MoveY", 0);
+				_moveX = 1;
+				_moveY = 0;
 				break;
 			case Direction.Left:
 				animator.SetFloat("MoveX", -1);
 				animator.SetFloat("MoveY", 0);
+				_moveX = -1;
+				_moveY = 0;
 				break;
 			case Direction.Back:
 				animator.SetFloat("MoveX", 0);
 				animator.SetFloat("MoveY", 1);
+				_moveX = 0;
+				_moveY = 1;
 				break;
 		}
 		
@@ -186,5 +196,100 @@ public class GayatriCharacter : MonoBehaviour {
 
 		yield return new WaitForSeconds(delay);
 		isAttacking = false;
+	}
+
+	public bool Pull(){
+		if(isPulling) return false;
+
+		animator.SetFloat("TempX", _moveX);
+		animator.SetFloat("TempY", _moveY);
+
+		Vector2 _castDir = Vector2.zero; 
+		switch(direction){
+			case Direction.Back:
+				_castDir = Vector2.up;
+				isHorizontalPulling = false;
+				break;
+			case Direction.Front:
+				_castDir = Vector2.down;
+				isHorizontalPulling = false;
+				break;
+			case Direction.Left:
+				_castDir = Vector2.left;
+				isHorizontalPulling = true;
+				break;
+			case Direction.Right:
+				_castDir = Vector2.right;
+				isHorizontalPulling = true;
+				break;
+		}
+
+		RaycastHit2D[] hits = Physics2D.BoxCastAll(boxCollider2D.transform.position, boxCollider2D.size, 0.0f, _castDir, 0.25f);
+		//Debug.Log("Jumlah hits ada "+hits.Length);
+
+		for(int i =0; i < hits.Length; i++){
+			if(hits[i].collider != null && !hits[i].collider.gameObject.Equals(this.gameObject)){
+				_moveable = hits[i].collider.gameObject.GetComponent<Moveable>();
+				if(_moveable != null){
+					
+					Debug.Log("Moveable object "+ hits[i].collider.gameObject.name);
+					isPulling = true;
+
+					_moveable.transform.SetParent(this.transform);
+					
+					_moveable.rb_Object.isKinematic = true;
+					BoxCollider2D _collMoveable = _moveable.boxCollider;
+					
+					switch(direction){
+						case Direction.Back:
+							_moveable.transform.position = new Vector2(_moveable.transform.position.x, transform.position.y+_collMoveable.size.y+boxCollider2D.offset.y/2f);
+							break;
+						case Direction.Front:
+							_moveable.transform.position = new Vector2(_moveable.transform.position.x, transform.position.y-_collMoveable.size.y+boxCollider2D.offset.y/2f);
+							break;
+						case Direction.Left:
+							_moveable.transform.position = new Vector2(transform.position.x-_collMoveable.size.x+boxCollider2D.offset.x/2f, _moveable.transform.position.y);
+							break;
+						case Direction.Right:
+							_moveable.transform.position = new Vector2(transform.position.x+_collMoveable.size.x+boxCollider2D.offset.x/2f, _moveable.transform.position.y);
+							break;
+					}
+					
+					
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	IEnumerator MovingObject(float delay){
+		yield return new WaitForSeconds(delay);
+		if(_moveable != null){
+			switch(direction){
+				case Direction.Back:
+					_moveable.transform.position = new Vector2(_moveable.transform.position.x, transform.position.y -1.29f);
+					break;
+				case Direction.Front:
+					_moveable.transform.position = new Vector2(_moveable.transform.position.x, transform.position.y+1.29f);
+					break;
+				case Direction.Left:
+					_moveable.transform.position = new Vector2(transform.position.x-1.29f, _moveable.transform.position.y);
+					break;
+				case Direction.Right:
+					_moveable.transform.position = new Vector2(transform.position.x+1.29f, _moveable.transform.position.y);
+					break;
+			}
+		}
+		
+	}
+
+	public void UnPull(){
+		if(isPulling){
+			_moveable.transform.SetParent(null);
+			_moveable.rb_Object.isKinematic = false;
+			_moveable = null;
+			isPulling = false;
+		}
 	}
 }

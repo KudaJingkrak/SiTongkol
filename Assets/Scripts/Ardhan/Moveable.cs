@@ -7,6 +7,7 @@ public class Moveable : MonoBehaviour {
     public TriggerMove Trigger_X;
     public TriggerMove Trigger_Y;
     public Rigidbody2D rb_Object;
+    public BoxCollider2D boxCollider;
 	// Use this for initialization
 	void Start () {
 		

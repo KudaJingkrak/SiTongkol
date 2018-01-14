@@ -17,7 +17,11 @@ public class GayatriController : MonoBehaviour {
 			myCharacter.Attack(0.3f);
 		}
 
+		if(Input.GetButtonDown("A")){
+			myCharacter.Pull();
+		}
 		if(Input.GetButtonUp("A")){
+			myCharacter.UnPull();
 			myCharacter.Interact();
 		}
 	}
