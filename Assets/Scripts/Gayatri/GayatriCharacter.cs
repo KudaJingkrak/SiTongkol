@@ -17,8 +17,14 @@ public class GayatriCharacter : MonoBehaviour {
 	public bool isInteracting;
 	public bool onDialogue;
 	private IInteractable interactable;
+
+	//Movable
 	private Moveable _moveable;
 	private float _moveX = 0.0f, _moveY = 0.0f;
+	private Direction _moveDir  = Direction.Front;
+	private BoxCollider2D _moveableColl = null;
+
+
 	//private float _slower = 0.0f;
 	// Use this for initialization
 	void Start () {
@@ -63,6 +69,31 @@ public class GayatriCharacter : MonoBehaviour {
 				_moveY = 1;
 				break;
 		}
+
+		if(isPulling){
+			if(_moveable != null){
+				Vector2 _moveableNewPos = Vector2.zero;
+				switch(_moveDir){
+					case Direction.Back:
+						_moveableNewPos = new Vector2(_moveable.transform.position.x, transform.position.y+_moveableColl.size.y+boxCollider2D.offset.y*0.5f);
+						break;
+					case Direction.Front:
+						_moveableNewPos = new Vector2(_moveable.transform.position.x, transform.position.y-_moveableColl.size.y+boxCollider2D.offset.y*0.5f);
+						break;
+					case Direction.Left:
+						_moveableNewPos = new Vector2(transform.position.x-_moveableColl.size.x+boxCollider2D.offset.x*0.5f, _moveable.transform.position.y);
+						break;
+					case Direction.Right:
+						_moveableNewPos = new Vector2(transform.position.x+_moveableColl.size.x+boxCollider2D.offset.x*0.5f, _moveable.transform.position.y);
+						break;
+				}
+				_moveable.rb_Object.MovePosition(_moveableNewPos);
+			}
+			//Debug.Log("Panjang move " + Vector2.Distance(_moveable.transform.position, transform.position));
+			if(Vector2.Distance(_moveable.transform.position, (transform.position + (Vector3) boxCollider2D.offset*0.5f ) )> 1.5f){
+				UnPull();
+			}
+		}
 		
 	}
 
@@ -96,8 +127,11 @@ public class GayatriCharacter : MonoBehaviour {
 			SetDirection(Direction.Front);
 		}
 
-
-		if(rigid2D.velocity.sqrMagnitude < speed){
+		float _speed = speed;
+		if(isPulling){
+			_speed = speed * 0.5f;
+		}
+		if(rigid2D.velocity.sqrMagnitude < _speed){
 			if(!isPulling){
 				rigid2D.AddForce(new Vector2(x,y)*rigid2D.mass / Time.fixedDeltaTime);
 			}else{
@@ -235,25 +269,26 @@ public class GayatriCharacter : MonoBehaviour {
 					Debug.Log("Moveable object "+ hits[i].collider.gameObject.name);
 					isPulling = true;
 
-					_moveable.transform.SetParent(this.transform);
+					//_moveable.transform.SetParent(this.transform);
 					
-					_moveable.rb_Object.isKinematic = true;
-					BoxCollider2D _collMoveable = _moveable.boxCollider;
+					//_moveable.rb_Object.isKinematic = true;
+					_moveableColl = _moveable.boxCollider;
+					_moveDir = direction;
 					
-					switch(direction){
-						case Direction.Back:
-							_moveable.transform.position = new Vector2(_moveable.transform.position.x, transform.position.y+_collMoveable.size.y+boxCollider2D.offset.y/2f);
-							break;
-						case Direction.Front:
-							_moveable.transform.position = new Vector2(_moveable.transform.position.x, transform.position.y-_collMoveable.size.y+boxCollider2D.offset.y/2f);
-							break;
-						case Direction.Left:
-							_moveable.transform.position = new Vector2(transform.position.x-_collMoveable.size.x+boxCollider2D.offset.x/2f, _moveable.transform.position.y);
-							break;
-						case Direction.Right:
-							_moveable.transform.position = new Vector2(transform.position.x+_collMoveable.size.x+boxCollider2D.offset.x/2f, _moveable.transform.position.y);
-							break;
-					}
+					// switch(direction){
+					// 	case Direction.Back:
+					// 		_moveable.transform.position = new Vector2(_moveable.transform.position.x, transform.position.y+_collMoveable.size.y+boxCollider2D.offset.y/2f);
+					// 		break;
+					// 	case Direction.Front:
+					// 		_moveable.transform.position = new Vector2(_moveable.transform.position.x, transform.position.y-_collMoveable.size.y+boxCollider2D.offset.y/2f);
+					// 		break;
+					// 	case Direction.Left:
+					// 		_moveable.transform.position = new Vector2(transform.position.x-_collMoveable.size.x+boxCollider2D.offset.x/2f, _moveable.transform.position.y);
+					// 		break;
+					// 	case Direction.Right:
+					// 		_moveable.transform.position = new Vector2(transform.position.x+_collMoveable.size.x+boxCollider2D.offset.x/2f, _moveable.transform.position.y);
+					// 		break;
+					// }
 					
 					
 					return true;
