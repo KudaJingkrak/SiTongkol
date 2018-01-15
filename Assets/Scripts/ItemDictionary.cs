@@ -6,10 +6,12 @@ public class ItemDictionary : MonoBehaviour {
 	public List<AmuletDictionary> amulets;
 	public List<EqupmentDictionary> equipments;
 	public List<ConsumableDictionary> consumables;
+	public List<QuestItemDictionary> questItems;
 
 	public Dictionary<ItemName, Amulet> dictAmulet;
 	public Dictionary<ItemName, Equipment> dictEquipment;
 	public Dictionary<ItemName, Consumable> dictConsumable;
+	public Dictionary<ItemName, QuestItem> dictQuestItem;
 
 
 	private static ItemDictionary instance = null;
@@ -55,6 +57,14 @@ public class ItemDictionary : MonoBehaviour {
 				dictConsumable.Add(dict.key, dict.consumable);
 			}
 			consumables.Clear();
+		}
+
+		if(dictQuestItem == null){
+			dictQuestItem = new Dictionary<ItemName, QuestItem>();
+			foreach(QuestItemDictionary dict in questItems){
+				dictQuestItem.Add(dict.key, dict.questItem);
+			}
+			questItems.Clear();
 		}	
 	}
 
@@ -82,29 +92,43 @@ public class ItemDictionary : MonoBehaviour {
 		}
 	}
 
+	public QuestItem GetQuestItem(ItemName key){
+		if(dictQuestItem.ContainsKey(key)){
+			return dictQuestItem[key];
+		}else{
+			return null;
+		}
+	}
+
 
 
 
 }
-	[System.Serializable]
-	public class AmuletDictionary 
-	{
-		public ItemName key;
-		public Amulet amulet;
-		private byte a;
-	}
-	[System.Serializable]
-	public class EqupmentDictionary 
-	{
-		public ItemName key;
-		public Equipment equipment;
-		private byte a;
-	}
-	[System.Serializable]
-	public class ConsumableDictionary 
-	{
-		public ItemName key;
-		public Consumable consumable;
-		private byte a;
-	}
+[System.Serializable]
+public class AmuletDictionary 
+{
+	public ItemName key;
+	public Amulet amulet;
+	private byte a;
+}
+[System.Serializable]
+public class EqupmentDictionary 
+{
+	public ItemName key;
+	public Equipment equipment;
+	private byte a;
+}
+[System.Serializable]
+public class ConsumableDictionary 
+{
+	public ItemName key;
+	public Consumable consumable;
+	private byte a;
+}
+[System.Serializable]
+public class QuestItemDictionary{
+	public ItemName key;
+	public QuestItem questItem;
+	private byte a;
+}
 
