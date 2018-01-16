@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestTreasure : MonoBehaviour, IInteractable{
+public class Treasure : MonoBehaviour, IInteractable{
 	public SpriteRenderer render;
 	public Pickup[] items;
 	public bool isOpened = false;
@@ -27,6 +27,13 @@ public class TestTreasure : MonoBehaviour, IInteractable{
 				Debug.Log("Player mendapatkan item");
 				isOpened = true;
 				render.sprite = openedSprite;
+
+				for(int i =0;i < items.Length; i++){
+					if(items[i].amount > 0){
+						Pickup item = Pickup.PickupItem(items[i], instigator);
+						items[i].amount = item.amount;
+					}
+				}
 			}
 
 			// TODO harusnya muncul notifikasi setelah ity di false-in ketika selesai notifikasi
@@ -34,4 +41,5 @@ public class TestTreasure : MonoBehaviour, IInteractable{
 		}
 		
     }
+
 }

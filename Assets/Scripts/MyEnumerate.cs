@@ -16,6 +16,7 @@ public enum ItemEffect{
 	None, Heal_HP, Heal_MP //blablablabla
 }
 public enum ItemName{
+	None,
 	// Amulet
 	Amulet_Normal, Amulet_Fire, Amulet_Water, Amulet_Earth, Amulet_Air, 
 	
@@ -26,7 +27,7 @@ public enum ItemName{
 	Trash, Banana, HP_Potion // bbalablablaba.....
 }
 public enum ItemType{
-	Amulet, Equipment, Consumable
+	Amulet, Equipment, Consumable, QuestItem
 }
 
 public enum MoveAble_State{

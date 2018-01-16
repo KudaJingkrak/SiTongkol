@@ -23,6 +23,7 @@ public class GayatriController : MonoBehaviour {
 		if(Input.GetButtonUp("A")){
 			myCharacter.UnPull();
 			myCharacter.Interact();
+			myCharacter.Pickup();
 		}
 	}
 

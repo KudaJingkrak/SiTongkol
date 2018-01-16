@@ -268,28 +268,8 @@ public class GayatriCharacter : MonoBehaviour {
 					
 					Debug.Log("Moveable object "+ hits[i].collider.gameObject.name);
 					isPulling = true;
-
-					//_moveable.transform.SetParent(this.transform);
-					
-					//_moveable.rb_Object.isKinematic = true;
 					_moveableColl = _moveable.boxCollider;
-					_moveDir = direction;
-					
-					// switch(direction){
-					// 	case Direction.Back:
-					// 		_moveable.transform.position = new Vector2(_moveable.transform.position.x, transform.position.y+_collMoveable.size.y+boxCollider2D.offset.y/2f);
-					// 		break;
-					// 	case Direction.Front:
-					// 		_moveable.transform.position = new Vector2(_moveable.transform.position.x, transform.position.y-_collMoveable.size.y+boxCollider2D.offset.y/2f);
-					// 		break;
-					// 	case Direction.Left:
-					// 		_moveable.transform.position = new Vector2(transform.position.x-_collMoveable.size.x+boxCollider2D.offset.x/2f, _moveable.transform.position.y);
-					// 		break;
-					// 	case Direction.Right:
-					// 		_moveable.transform.position = new Vector2(transform.position.x+_collMoveable.size.x+boxCollider2D.offset.x/2f, _moveable.transform.position.y);
-					// 		break;
-					// }
-					
+					_moveDir = direction;		
 					
 					return true;
 				}
@@ -325,6 +305,21 @@ public class GayatriCharacter : MonoBehaviour {
 			_moveable.rb_Object.isKinematic = false;
 			_moveable = null;
 			isPulling = false;
+		}
+	}
+
+	public void Pickup(){
+		Debug.Log("Pickup");
+		RaycastHit2D[] hits = Physics2D.BoxCastAll(boxCollider2D.transform.position, boxCollider2D.size, 0.0f, Vector3.zero);
+		for(int i =0; i < hits.Length; i++){
+			if(hits[i].collider != null && !hits[i].collider.gameObject.Equals(this.gameObject)){
+				Pickupable pickupable = hits[i].collider.gameObject.GetComponent<Pickupable>();
+				Debug.Log("Pickup Item");
+				if(pickupable != null){
+					pickupable.PickupItem(gameObject);
+					return;
+				}
+			}
 		}
 	}
 }
