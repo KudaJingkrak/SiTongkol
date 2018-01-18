@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestEnemy : MonoBehaviour, IAttackable {
+public class TestEnemy : MonoBehaviour, IAttackable{
+	public Droppable droppable;
 	public float health = 10f;
 	private float _health;
 
@@ -31,6 +32,7 @@ public class TestEnemy : MonoBehaviour, IAttackable {
 
     public void Die()
     {
+		droppable.DropItem(transform);
 		gameObject.SetActive(false);
     }
 }
