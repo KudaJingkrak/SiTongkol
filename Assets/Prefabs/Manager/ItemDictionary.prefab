@@ -88,4 +88,12 @@ MonoBehaviour:
       type: 4
       manaUsage: 0
   equipments: []
-  consumables: []
+  consumables:
+  - key: 8
+    consumable:
+      sprite: {fileID: 21300000, guid: 62dbe713ac134af449a09782ac735d27, type: 3}
+      label: Banana
+      description: banaba
+      effect: 1
+      amount: 0
+  questItems: []

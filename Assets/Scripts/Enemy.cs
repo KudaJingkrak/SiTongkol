@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestEnemy : MonoBehaviour, IAttackable{
-	public Droppable droppable;
+[RequireComponent(typeof(Droppable))]
+public class Enemy : MonoBehaviour, IAttackable{
+	
 	public float health = 10f;
+	Droppable droppable;
 	private float _health;
 
     // Use this for initialization
     void Start () {
 		_health = health;
+		droppable = gameObject.GetComponent<Droppable>();
 	}
 
 	// Update is called once per frame

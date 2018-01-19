@@ -17,6 +17,7 @@ public class GayatriCharacter : MonoBehaviour {
 	public bool isInteracting;
 	public bool onDialogue;
 	private IInteractable interactable;
+	private float linearDrag;
 
 	//Movable
 	private Moveable _moveable;
@@ -28,7 +29,7 @@ public class GayatriCharacter : MonoBehaviour {
 	//private float _slower = 0.0f;
 	// Use this for initialization
 	void Start () {
-		
+		linearDrag = rigid2D.drag;
 	}
 	
 	// Update is called once per frame
@@ -129,8 +130,12 @@ public class GayatriCharacter : MonoBehaviour {
 
 		float _speed = speed;
 		if(isPulling){
-			_speed = speed * 0.5f;
+			_speed = speed * 0.25f;
+			rigid2D.drag = linearDrag * 2f;
+		}else{
+			rigid2D.drag = linearDrag;
 		}
+		
 		if(rigid2D.velocity.sqrMagnitude < _speed){
 			if(!isPulling){
 				rigid2D.AddForce(new Vector2(x,y)*rigid2D.mass / Time.fixedDeltaTime);
