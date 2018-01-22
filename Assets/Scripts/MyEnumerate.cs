@@ -12,9 +12,6 @@ public enum DamageType{
 public enum DamageEffect{
 	None, Fuzzy, Poison, Confused, Sleep //blablabla....
 }
-public enum ItemEffect{
-	None, Heal_HP, Heal_MP //blablablabla
-}
 public enum ItemName{
 	None,
 	// Amulet
@@ -25,6 +22,9 @@ public enum ItemName{
 	
 	//Consumable
 	Trash, Banana, HP_Potion // bbalablablaba.....
+}
+public enum ItemEffect{
+	None, Heal_HP, Heal_MP //blablablabla
 }
 public enum ItemType{
 	Amulet, Equipment, Consumable, QuestItem

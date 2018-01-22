@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Droppable))]
 public class Enemy : MonoBehaviour, IAttackable{
-	
+	public MonsterName label; 	
 	public float health = 10f;
 	Droppable droppable;
 	private float _health;
@@ -35,6 +35,9 @@ public class Enemy : MonoBehaviour, IAttackable{
 
     public void Die()
     {
+		Quest.Instance.AddCurrentMonsterCounter(label);
+		Quest.Instance.currentObjective.currentTask.CheckReq();
+		Debug.Log("Task completed is "+Quest.Instance.currentObjective.currentTask.isCompleted);
 		droppable.DropItem(transform);
 		gameObject.SetActive(false);
     }

@@ -72,28 +72,6 @@ public class Inventory : MonoBehaviour {
 			questItem = data.questItem;
 		}
 	}
-
-	public int Contains(ItemName label, ItemType type){
-		switch(type){
-			case ItemType.Amulet:
-				for (int i = 0; i < amulet.Length; i++)
-				{
-					
-				}
-				break;
-			case ItemType.Consumable:
-
-				break;
-			case ItemType.Equipment:
-
-				break;
-			case ItemType.QuestItem:
-
-				break;
-		}
-		return -1;
-	}
-
 	
 	public int AddAmulet(AmuletPointer _amulet, int index = -1, bool check = false){
 		if(check || index == -1){
@@ -387,6 +365,47 @@ public class Inventory : MonoBehaviour {
 
 		return false;
 	}
+
+	public int GetItemAmount(ItemType type, ItemName label){
+
+		switch(type){
+			case ItemType.Amulet:
+				for(int i=0; i < amulet.Length; i++){
+					if(amulet[i].label == label){
+						return 1;
+					}
+				}
+				break;
+			case ItemType.Consumable:
+				for (int i = 0; i < consumable.Length; i++)
+				{
+					if(consumable[i].label == label){
+						return consumable[i].amount;
+					}
+				}
+				break;
+			case ItemType.Equipment:
+				for (int i = 0; i < equipment.Length; i++)
+				{
+					if(equipment[i].label == label){
+						return 1;
+					}
+				}
+				break;
+			case ItemType.QuestItem:
+				for (int i = 0; i < questItem.Length; i++)
+				{
+					if(questItem[i].label == label){
+						return questItem[i].amount;
+					}
+				}
+				break;
+		}
+
+		return -1;
+	}
+
+
 }
 [System.Serializable]
 public class InventoryData{

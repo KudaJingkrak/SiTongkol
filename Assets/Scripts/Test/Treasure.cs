@@ -23,11 +23,22 @@ public class Treasure : MonoBehaviour, IInteractable{
     {
         
 		if(instigator != null && instigator.CompareTag("Player")){
-			if(!isOpened){
-				Debug.Log("Player mendapatkan item");
-				isOpened = true;
-				render.sprite = openedSprite;
+			bool haveItem=false;
+			for(int i =0;i < items.Length; i++){
+				if(items[i].amount > 0){
+					haveItem = true;
+					break;
+				}
+			}
 
+
+			if(haveItem){
+				Debug.Log("Player mendapatkan item");
+				if(!isOpened){
+					isOpened = true;
+					render.sprite = openedSprite;
+				}
+				
 				for(int i =0;i < items.Length; i++){
 					if(items[i].amount > 0){
 						Pickup item = Pickup.PickupItem(items[i], instigator);
