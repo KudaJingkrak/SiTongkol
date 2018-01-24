@@ -67,7 +67,6 @@ public class QuestItem: Item{
 
 
 
-
 // [CustomPropertyDrawer(typeof(Sprite))]
 // public class SpriteDrawer : PropertyDrawer {
  

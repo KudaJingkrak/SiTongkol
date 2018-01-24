@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c4c83ea3b61683488f2167705f11603, type: 3}
   m_Name: SimpleObjective
   m_EditorClassIdentifier: 
+  status: 0
   description: 
   tasks:
   - description: 
@@ -20,6 +21,7 @@ MonoBehaviour:
       amount: 1
       counter: 0
     targetNPC: {fileID: 0}
+    rewards: []
     isCompleted: 0
     requireComplete: 0
   index: 0

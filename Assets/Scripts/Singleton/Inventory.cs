@@ -72,7 +72,11 @@ public class Inventory : MonoBehaviour {
 			questItem = data.questItem;
 		}
 	}
-	
+	/**
+	 * Keluaran 1 atau 0
+	 * Jika 1, maka barang tidak berhasih diambil
+	 * 0, maka barang berhasil diambil 
+	 */
 	public int AddAmulet(AmuletPointer _amulet, int index = -1, bool check = false){
 		if(check || index == -1){
 			for(int i = 0; i < amulet.Length; i++){
@@ -117,7 +121,11 @@ public class Inventory : MonoBehaviour {
 		}
 		return false;
 	}
-
+	/**
+	 * Keluaran 1 atau 0
+	 * Jika 1, maka barang tidak berhasih diambil
+	 * 0, maka barang berhasil diambil 
+	 */
 	public int AddEquipment(EquipmentPointer _equipment, int index = -1, bool check = false){
 		if(check || index == -1){
 			for(int i = 0; i < equipment.Length; i++){
@@ -164,6 +172,7 @@ public class Inventory : MonoBehaviour {
 	}
 	/**
 	 * Amount pada pointer adalah jumlah item yang akan ditambahkan
+	 * Keluaran adalah jumlah barang yang tidak berhasil ditambahkan
 	 */
 	public int AddConsumable(ConsumablePointer _consumable, int index=-1, bool check=false){
 		int _amount = _consumable.amount;
@@ -267,6 +276,7 @@ public class Inventory : MonoBehaviour {
 	}
 	/**
 	 * Amount pada pointer adalah jumlah item yang akan ditambahkan
+	 * Keluaran adalah jumlah barang yang tidak berhasil ditambahkan
 	 */
 	public int AddQuestItem(QuestItemPointer _questItem,int index=-1, bool check=false){
 		int _amount = _questItem.amount;

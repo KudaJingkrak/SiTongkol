@@ -29,20 +29,33 @@ public class Quest : MonoBehaviour {
 	/**
 	 * If index = -9999, it will process current objective
 	 */
-	public bool AddCurrentMonsterCounter(MonsterName label, int index=-9999, int amount=1){
+	public bool AddCurrentMonsterCounter(MonsterName label, int amount=1, int index=-9999){
 		if(index == -9999){
 			index = this.index;
 		}
 		
 		if(index < 0 || index >=objectives.Length) return false;
 
-		return objectives[index].AddMonsterCounter(label, amount);
+		bool result = objectives[index].AddMonsterCounter(label, amount);
+
+		return result;
+	}
+
+	public void AddProgressMonsterCounter(MonsterName label, int amount=1){
+		for (int i = 0; i < objectives.Length; i++)
+		{
+			if(objectives[i].status == QuestStatus.OnProgress){
+				if(objectives[i].AddMonsterCounter(label, amount)){
+
+				}
+			}
+		}
 	}
 
 	/**
 	 * If index = -9999, it will process current objective
 	 */
-	public bool SubstractCurrentMonsterCounter(MonsterName label, int index=-9999, int amount=1){
+	public bool SubstractCurrentMonsterCounter(MonsterName label, int amount=1, int index=-9999){
 		if(index == -9999){
 			index = this.index;
 		}
@@ -52,5 +65,13 @@ public class Quest : MonoBehaviour {
 		return objectives[index].SubstactMonsterCounter(label, amount);
 	}
 	
+	public void SubstactProgressMonsterCounter(MonsterName label, int amount=1){
+		for (int i = 0; i < objectives.Length; i++)
+		{
+			if(objectives[i].status == QuestStatus.OnProgress){
+				objectives[i].SubstactMonsterCounter(label, amount);
+			}
+		}
+	}
 
 }
