@@ -49,7 +49,7 @@ public class Objective : ScriptableObject {
 		if(currentTask == null) {
 			
 			if(isCompleted){
-				// Current Objective is completed
+				// This Objective is completed
 
 			}
 
