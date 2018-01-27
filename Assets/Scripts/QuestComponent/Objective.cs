@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName="Objective", menuName = "Quest/Objective", order = 1)]
 [System.Serializable]
 public class Objective : ScriptableObject {
+	public QuestName label;
 	public QuestStatus status;
 	public string description;
 	public Task[] tasks;
@@ -14,6 +15,9 @@ public class Objective : ScriptableObject {
 			return index >= tasks.Length;
 		}
 	}
+
+	[Header("Next Objective")]
+	public QuestName[] nextObjective;
 
 	[HideInInspector] public Task currentTask{
 		get{
@@ -50,7 +54,7 @@ public class Objective : ScriptableObject {
 			
 			if(isCompleted){
 				// This Objective is completed
-
+				StartNextObjective();
 			}
 
 			return false;
@@ -65,6 +69,13 @@ public class Objective : ScriptableObject {
 		currentTask.CompletedTask();
 		index++;
 		return true;
+	}
+
+	public void StartNextObjective(){
+		for (int i = 0; i < nextObjective.Length; i++)
+		{
+			// Set next objective to on progress
+		}
 	}
 	public void DecrementIndex(){
 		index--;
