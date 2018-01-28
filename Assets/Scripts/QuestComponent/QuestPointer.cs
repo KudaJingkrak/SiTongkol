@@ -32,10 +32,13 @@ public class ObjectivePointer{
 	public QuestName[] nextObjectives;
 
 	public void StartNextObjectives(){
+		Debug.Log("Next Objective");
 		for(int i = 0; i < nextObjectives.Length; i++){
 			ObjectivePointer op = Quest.Instance.GetObjectivePointer(nextObjectives[i]);
 			if(op != null && op.status == QuestStatus.Unstarted){
+				Debug.Log("Objective ketemu");
 				op.status = QuestStatus.OnProgress;
+				Quest.Instance.processingObjective.Add(op);
 			}
 		}
 	}
@@ -58,8 +61,11 @@ public class ObjectivePointer{
 		// Index bertambah karena requirement terpenuhi
 		_index++;
 
+		Debug.Log("Index sekarang adalah "+_index);
+
 		if(isCompleted){
 			status = QuestStatus.Finished;
+			Debug.Log("Finish satu");
 			StartNextObjectives();
 		}
 

@@ -19,7 +19,7 @@ public class Task  {
 			return false;
 		}
 
-		bool itemComplete = true, mosnterComplete = true;
+		bool itemComplete = true, monsterComplete = true;
 		
 		// Check inventory udah selesai belom
 		for (int i = 0; i < items.Length; i++)
@@ -34,12 +34,14 @@ public class Task  {
 		for (int i = 0; i < monsters.Length; i++)
 		{
 			if(_monsters[i].amount < monsters[i].amount){
-				mosnterComplete = false;
+				monsterComplete = false;
 				break;
 			}
 		}
+
+		Debug.Log("Item complete is"+itemComplete+" & Monster complete is " +monsterComplete);
 	
-		return itemComplete && mosnterComplete;
+		return itemComplete && monsterComplete;
 	}
 
 	#region Completed Task

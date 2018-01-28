@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour, IAttackable{
     public void Die()
     {
 		Quest.Instance.AddMonsterCounter(label);
-		Quest.Instance.CheckProgressingObjective(gameObject);
+		Quest.Instance.CheckProgressingObjective(null);
 		droppable.DropItem(transform);
 		gameObject.SetActive(false);
     }

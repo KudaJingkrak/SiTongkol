@@ -58,7 +58,9 @@ public class Quest : MonoBehaviour {
 		FileStream file = File.Create(savePath);
 
 		QuestData data = new QuestData();
-		data.objectives = objectives;
+		foreach(ObjectivePointer item in dictObjective.Values){
+			data.objectives.Add(item);
+		}
 
 		bf.Serialize(file, data);
 		file.Close();
@@ -74,22 +76,22 @@ public class Quest : MonoBehaviour {
 	}
 
 	public void CheckProgressingObjective(GameObject target){
-		foreach (ObjectivePointer item in processingObjective)
-		{
-			item.CheckTask(target);
+		for(int i =0; i < processingObjective.Count; i++){
+			processingObjective[i].CheckTask(target);
 		}
+		
 	}
 
 	#region Task_Mosnter_Counter
 	public void AddMonsterCounter(MonsterName label, int amount=1){
-		foreach (ObjectivePointer item in objectives)
+		for (int i = 0; i < processingObjective.Count; i++)
 		{
-			item.AddMonsterCounter(label, amount);
+			processingObjective[i].AddMonsterCounter(label, amount);
 		}
 	}
 
 	public void SubstractMonsterCounter(MonsterName label, int amount=1){
-		foreach (ObjectivePointer item in objectives)
+		foreach (ObjectivePointer item in processingObjective)
 		{
 			item.AddMonsterCounter(label, -amount);
 		}

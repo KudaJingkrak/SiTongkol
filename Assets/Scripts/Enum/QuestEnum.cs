@@ -6,5 +6,5 @@ public enum QuestStatus{
 }
 
 public enum QuestName{
-	StartJourney
+	StartJourney, BulliedGirl
 }
