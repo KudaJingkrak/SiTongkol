@@ -18,6 +18,15 @@ public class Quest : MonoBehaviour {
 		}
 
 		DontDestroyOnLoad(gameObject);
+
+		foreach (ObjectivePointer item in objectives)
+		{
+			if(!dictObjective.ContainsKey(item.label)){
+				dictObjective.Add(item.label, item);
+			}
+		}
+
+		objectives.Clear();
 	}
 
 	public void InitProcessingObjective(){
