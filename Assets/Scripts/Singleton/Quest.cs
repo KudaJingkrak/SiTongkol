@@ -51,6 +51,18 @@ public class Quest : MonoBehaviour {
 
 		return false;
 	}
+
+	public bool HasProgressionQuest(QuestName label)
+	{
+		for(int i = 0; i < processingObjective.Count; i++)
+		{
+			if(processingObjective[i].label == label)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 	public void SaveObjective(string slotName="default"){
 		string savePath = Application.persistentDataPath+"/Quest"+slotName+".dat";
 

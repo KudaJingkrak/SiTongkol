@@ -6,7 +6,33 @@ public class DialogueTrigger : MonoBehaviour,IInteractable {
 
 	public Dialogue dialogue;
 	public DialogueManager m_Dialogue;
-	public void TriggerDialogue()
+	public int index_Dialogue;
+	public int indexQuest;
+	public QuestDialogue[] dialogueQuest;
+
+	public void dialoguePicker()
+	{
+		bool hadQuest = false;
+		for(int i = 0; i < dialogueQuest.Length; i++)
+		{
+			if(Quest.Instance.HasProgressionQuest(dialogueQuest[i].q_Name))
+			{
+				hadQuest = true;
+				indexQuest = i;
+				break;
+			}
+		}
+		if(hadQuest)
+		{
+			TriggerDialogue(dialogueQuest[indexQuest].dialogue);
+		}
+		else
+		{
+			TriggerDialogue(dialogue);
+		}
+		//intinya sih disini buat milih dialogue mana terus di StartDialogue(dialogue[number])
+	}
+	public void TriggerDialogue(Dialogue dialogue)
 	{
 		m_Dialogue = FindObjectOfType<DialogueManager>();
 		m_Dialogue.StartDialogue(dialogue);
@@ -33,7 +59,7 @@ public class DialogueTrigger : MonoBehaviour,IInteractable {
 		   }
 		   else
 		   {
-			   TriggerDialogue();
+			   dialoguePicker();
 			   c_Gayatri.onDialogue = true;
 		   }
 		   
