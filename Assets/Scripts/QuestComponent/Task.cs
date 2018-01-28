@@ -9,22 +9,16 @@ public class Task  {
 	public ItemPointer[] items;
 	public MosnterRequire[] monsters;
 	[Header("Target trigger")]
-	public GameObject targetNPC;
+	public GameObject target;
 	[Header("Reward")]
 	public ItemPointer[] rewards;
-	[Header("Status")]
-	public bool isCompleted;
-	[HideInInspector] public bool requireComplete = false;
 
-	public void SetCompleted(bool _isCompleted){
-		isCompleted = _isCompleted;
-	}
+	public bool CheckRequirement(GameObject _target, MosnterRequire[] _monsters){
 
-	public bool GetCompleted(){
-		return isCompleted;
-	}
+		if(target != null && !target.Equals(_target)){
+			return false;
+		}
 
-	public bool CheckReq(){
 		bool itemComplete = true, mosnterComplete = true;
 		
 		// Check inventory udah selesai belom
@@ -39,86 +33,21 @@ public class Task  {
 		// Check jumlah mosnter yang dibunuh udah sama sama current
 		for (int i = 0; i < monsters.Length; i++)
 		{
-			if(monsters[i].counter < monsters[i].amount){
+			if(_monsters[i].amount < monsters[i].amount){
 				mosnterComplete = false;
 				break;
 			}
 		}
-
-		
-		requireComplete = itemComplete && mosnterComplete;
-		if(targetNPC == null){
-			isCompleted = requireComplete;
-		}
+	
 		return itemComplete && mosnterComplete;
 	}
 
-	public void ResetMosnterCounter(){
-		for (int i = 0; i < monsters.Length; i++)
-		{
-			monsters[i].counter = 0;
-		}
-	}
+	#region Completed Task
 
-	public bool ResetMosnterCounter(int index){
-		if(index < 0 || index > monsters.Length - 1){
-			return false;
-		}
-
-		monsters[index].counter = 0;
-		return true;
-	}
-
-	public bool ResetMosnterCounter(MonsterName label){
-		int index = -1;
-
-		for (int i = 0; i < monsters.Length; i++)
-		{
-			if(monsters[i].label == label){
-				index = i;
-			}	
-		}
-
-		if(index == -1){
-			return false;
-		}
-
-		monsters[index].counter = 0;
-		return true;
-	}
-	/**
-	 * Default add by 1
-	 */
-	public bool AddMonsterCounter(MonsterName label, int amount=1){
-		for (int i = 0; i < monsters.Length; i++)
-		{
-			if(monsters[i].label == label){
-				monsters[i].counter += amount;
-				return true;
-			}	
-		}
-
-		return false;
-	}
-	/**
-	 * Default substact by 1
-	 */
-	public bool SubtractMonsterCounter(MonsterName label, int amount=1){
-		for (int i = 0; i < monsters.Length; i++)
-		{
-			if(monsters[i].label == label){
-				monsters[i].counter -= amount;
-				return true;
-			}	
-		}
-
-		return false;
-	}
 	/**
 	 * Remove Items requirement from inventory when is completed
 	 */
-	public void FetchRequirement(){
-		if(!isCompleted) return;
+	private void FetchRequirement(){
 
 		for (int i = 0; i < items.Length; i++)
 		{
@@ -151,8 +80,7 @@ public class Task  {
 	/**
 	 * Add reward to Invetory whes is completed
 	 */
-	public void GetRewards(){
-		if(!isCompleted) return;
+	private void GetRewards(){
 
 		for (int i = 0; i < rewards.Length; i++)
 		{
@@ -187,11 +115,13 @@ public class Task  {
 	 * If is completed, call FecthRequirement  and GetReward function
 	 */
 	public bool CompletedTask(){
-		if(!isCompleted) return false;
 		FetchRequirement();
 		GetRewards();
 		return true;
 	}
+
+	#endregion
+	
 	
 }
 [System.Serializable]
@@ -204,5 +134,4 @@ public class ItemPointer{
 public class MosnterRequire{
 	public MonsterName label;
 	[Range(0,99)] public int amount;
-	[HideInInspector] public int counter;
 }

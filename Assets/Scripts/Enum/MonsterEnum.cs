@@ -2,5 +2,5 @@
 using System.Collections.Generic;
 
 public enum MonsterName{
-	None, FireSpirite //blablablab
+	None, All, FireSpirite //blablablab
 }

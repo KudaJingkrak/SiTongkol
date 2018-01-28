@@ -100,9 +100,6 @@ public class ItemDictionary : MonoBehaviour {
 		}
 	}
 
-
-
-
 }
 [System.Serializable]
 public class AmuletDictionary 
