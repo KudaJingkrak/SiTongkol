@@ -21,6 +21,7 @@ public class Quest : MonoBehaviour {
 
 		DontDestroyOnLoad(gameObject);
 		LoadObjective();
+		if(dictObjective == null) dictObjective = new Dictionary<QuestName, ObjectivePointer>();
 
 		foreach (ObjectivePointer item in objectives)
 		{

@@ -43,7 +43,7 @@ public class QuestDictionary : MonoBehaviour {
 }
 [System.Serializable]
 public class ObjectiveDictionary{
-	public Objective objective;
 	public QuestName key;
+	public Objective objective;
 	private byte a;
 }
