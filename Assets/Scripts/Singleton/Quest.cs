@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class Quest : MonoBehaviour {
 	public static Quest Instance;
@@ -18,9 +20,14 @@ public class Quest : MonoBehaviour {
 		}
 
 		DontDestroyOnLoad(gameObject);
+		LoadObjective();
 
 		foreach (ObjectivePointer item in objectives)
 		{
+			if(item.status == QuestStatus.OnProgress){
+				processingObjective.Add(item);
+			}
+
 			if(!dictObjective.ContainsKey(item.label)){
 				dictObjective.Add(item.label, item);
 			}
@@ -28,15 +35,33 @@ public class Quest : MonoBehaviour {
 
 		objectives.Clear();
 	}
+	public bool LoadObjective(string slotName="default"){
+		string savePath = Application.persistentDataPath+"/Quest"+slotName+".dat";
+		if(File.Exists(savePath)){
+			BinaryFormatter bf = new BinaryFormatter();
+			FileStream file = File.Open(savePath, FileMode.Open);
 
-	public void InitProcessingObjective(){
-		foreach(ObjectivePointer op in dictObjective.Values){
-			if(op.status == QuestStatus.OnProgress){
-				if(!processingObjective.Contains(op)){
-					processingObjective.Add(op);
-				}
-			}
+			QuestData data = (QuestData) bf.Deserialize(file);
+			file.Close();
+
+			objectives = data.objectives;
+			return true;
 		}
+
+		return false;
+	}
+	public void SaveObjective(string slotName="default"){
+		string savePath = Application.persistentDataPath+"/Quest"+slotName+".dat";
+
+		BinaryFormatter bf = new BinaryFormatter();
+		FileStream file = File.Create(savePath);
+
+		QuestData data = new QuestData();
+		data.objectives = objectives;
+
+		bf.Serialize(file, data);
+		file.Close();
+
 	}
 
 	public ObjectivePointer GetObjectivePointer(QuestName key){
@@ -47,56 +72,32 @@ public class Quest : MonoBehaviour {
 		return null;
 	}
 
-
-
-	/**
-	 * If index = -9999, it will process current objective
-	 */
-	public bool AddCurrentMonsterCounter(MonsterName label, int amount=1, int index=-9999){
-		if(index == -9999){
-			//index = this.index;
+	public void CheckProgressingObjective(GameObject target){
+		foreach (ObjectivePointer item in processingObjective)
+		{
+			item.CheckTask(target);
 		}
-		
-		//if(index < 0 || index >=objectivesa.Length) return false;
-
-		//bool result = objectivesa[index].AddMonsterCounter(label, amount);
-
-		//return result;
-		return false;
 	}
 
-	public void AddProgressMonsterCounter(MonsterName label, int amount=1){
-		// for (int i = 0; i < objectivesa.Length; i++)
-		// {
-		// 	// if(objectives[i].status == QuestStatus.OnProgress){
-		// 	// 	if(objectives[i].AddMonsterCounter(label, amount)){
-
-		// 	// 	}
-		// 	// }
-		// }
-	}
-
-	/**
-	 * If index = -9999, it will process current objective
-	 */
-	public bool SubstractCurrentMonsterCounter(MonsterName label, int amount=1, int index=-9999){
-		if(index == -9999){
-			//index = this.index;
+	#region Task_Mosnter_Counter
+	public void AddMonsterCounter(MonsterName label, int amount=1){
+		foreach (ObjectivePointer item in objectives)
+		{
+			item.AddMonsterCounter(label, amount);
 		}
-
-		//if(index < 0 || index >=objectivesa.Length) return false;
-
-		//return objectivesa[index].SubstactMonsterCounter(label, amount);
-		return false;
 	}
+
+	public void SubstractMonsterCounter(MonsterName label, int amount=1){
+		foreach (ObjectivePointer item in objectives)
+		{
+			item.AddMonsterCounter(label, -amount);
+		}
+	}
+
+	#endregion
 	
-	public void SubstactProgressMonsterCounter(MonsterName label, int amount=1){
-		// for (int i = 0; i < objectivesa.Length; i++)
-		// {
-		// 	// if(objectives[i].status == QuestStatus.OnProgress){
-		// 	// 	objectives[i].SubstactMonsterCounter(label, amount);
-		// 	// }
-		// }
-	}
-
+}
+[System.Serializable]
+public class QuestData{
+	public List<ObjectivePointer> objectives;
 }

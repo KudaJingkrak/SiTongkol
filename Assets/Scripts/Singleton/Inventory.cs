@@ -41,12 +41,12 @@ public class Inventory : MonoBehaviour {
 
 	}
 	
-	public void SaveInventory(string slotName){
+	public void SaveInventory(string slotName="default"){
 		string savePath = Application.persistentDataPath+"/Item"+slotName+".dat";
 		
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create(savePath);
-
+		
 		InventoryData data =  new InventoryData();
 		data.amulet = amulet;
 		data.equipment = equipment;
@@ -57,7 +57,7 @@ public class Inventory : MonoBehaviour {
 		file.Close();
 	}
 
-	public void LoadInventory(string slotName){
+	public void LoadInventory(string slotName="default"){
 		string savePath = Application.persistentDataPath+"/Item"+slotName+".dat";
 		if(File.Exists(savePath)){
 			BinaryFormatter bf = new BinaryFormatter();
