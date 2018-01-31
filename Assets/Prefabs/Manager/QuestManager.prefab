@@ -55,15 +55,11 @@ MonoBehaviour:
   - label: 0
     status: 1
     tasks:
-    - monsters:
-      - label: 2
-        amount: 0
+    - monsters: []
     nextObjectives: 01000000
   - label: 1
     status: 0
     tasks:
-    - monsters:
-      - label: 2
-        amount: 0
-    nextObjectives: 
+    - monsters: []
+    nextObjectives: 01000000
   processingObjective: []

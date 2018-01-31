@@ -87,9 +87,9 @@ public class Quest : MonoBehaviour {
 		return null;
 	}
 
-	public void CheckProgressingObjective(GameObject target){
+	public void CheckProgressingObjective(GameObject target, MonsterName monsterName = MonsterName.All){
 		for(int i =0; i < processingObjective.Count; i++){
-			processingObjective[i].CheckTask(target);
+			processingObjective[i].CheckTask(target, monsterName);
 		}
 		
 	}

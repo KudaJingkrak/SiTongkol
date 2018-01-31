@@ -61,7 +61,7 @@ MonoBehaviour:
         items: []
         monsters:
         - label: 2
-          amount: 1
+          amount: 2
         target: {fileID: 0}
         rewards:
         - type: 2
@@ -76,9 +76,6 @@ MonoBehaviour:
         items: []
         monsters:
         - label: 2
-          amount: 1
+          amount: 2
         target: {fileID: 0}
-        rewards:
-        - type: 2
-          label: 8
-          amount: 20
+        rewards: []

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 
@@ -21,7 +22,7 @@ public class ObjectivePointer{
 	[Header("Task")]
 	private int _index;
 	public int index{get{return _index;}}
-	public TaskPointer[] tasks;
+	public TaskPointer[] tasks = new TaskPointer[1];
 	public TaskPointer currentTask{
 		get{
 			if(_index >= tasks.Length || _index < 0) return null;
@@ -47,12 +48,30 @@ public class ObjectivePointer{
 	 * Fungsi ini digunakan untuk mengecek task yang diambil, jika task telah selesai 
 	 * di objective maka akan memanggil StartNextObjectives() untuk memanggil objective baru
 	 */
-	public bool CheckTask(GameObject target){
+	public bool CheckTask(GameObject target, MonsterName monsterName = MonsterName.All){
 		Objective o = QuestDictionary.Instance.GetObjective(label);
 		if(o==null) return false;
 
 		Task _currentTask = o.GetTask(_index);
 		if(_currentTask == null) return false;
+
+		if(currentTask.monsters.Length == 0){
+			currentTask.monsters = new MosnterRequire[_currentTask.monsters.Length];
+			for (int i = 0; i < _currentTask.monsters.Length; i++)
+			{
+				currentTask.monsters[i] = new MosnterRequire();
+				currentTask.monsters[i].label = _currentTask.monsters[i].label;
+				
+				// cek mosnter
+				if(monsterName != MonsterName.All && currentTask.monsters[i].label == monsterName){
+					currentTask.monsters[i].amount = 1;
+				}else{
+					currentTask.monsters[i].amount = 0;
+				}
+
+			}
+		}
+
 		if(!_currentTask.CheckRequirement(target, currentTask.monsters))return false;
 		
 		// memnyelesaikan current task
