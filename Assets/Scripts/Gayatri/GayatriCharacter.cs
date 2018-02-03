@@ -25,6 +25,9 @@ public class GayatriCharacter : MonoBehaviour {
 	private Direction _moveDir  = Direction.Front;
 	private BoxCollider2D _moveableColl = null;
 
+	private int comboCounter = 0;
+	public Equipment senjata;
+
 
 	//private float _slower = 0.0f;
 	// Use this for initialization
@@ -201,8 +204,18 @@ public class GayatriCharacter : MonoBehaviour {
 		}
 	}
 
+	/*
+	Ketika dia men
+	 */
+	
 	IEnumerator Attacking(float delay){
 		isAttacking = true;
+
+		/*
+		Manggil Combonya gimana?
+
+		Method Combonya -> ComboSystem.FilterCombo(Equipment,ComboBerapa)
+		 */
 
 		Vector2 _castDir = Vector2.zero; 
 		switch(direction){

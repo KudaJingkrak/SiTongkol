@@ -11,6 +11,8 @@ public class ComboSystem : MonoBehaviour {
 	public Text Combo_UI;
 	public float Interval;
 	public float speed;
+	public float valueMarginAwal;
+	public float valueMarginAkhir;
 	public int comboCurrent = 0;
 
 	// Use this for initialization
@@ -28,15 +30,43 @@ public class ComboSystem : MonoBehaviour {
 		{
 			PlayerHit = false;
 		}
+		//intinya disini gue 
 	}
 
+	public ComboEnum FilterCombo(Equipment senjata,int comboBerapa)
+	{
+		//perfect Filter;	
+		if(comboBerapa < senjata.maxCombo)
+		{
+			if(SliderPointer.value >= senjata.perfect[comboBerapa].bottom && SliderPointer.value <= senjata.perfect[comboBerapa].top)
+			{
+				comboBerapa++; //kayanya salah deh
+				return ComboEnum.Perfect;
+			}
+			else if(SliderPointer.value >= senjata.good[comboBerapa].bottom && SliderPointer.value <= senjata.good[comboBerapa].top)
+			{
+				comboBerapa++; //kayanya salah deh
+				return ComboEnum.Good;
+			}
+			else if(SliderPointer.value >= 1)
+			{
+				// what happens here?
+			}
+			else
+			{
+				comboBerapa = 0;
+				return ComboEnum.Miss;
+			}
+			//emang comboBerapanya bisa di set ya?
+		}
+	}
 	IEnumerator AddValue(float second)
 	{
 		while(comboCurrent<=MaxCombo)
 		{
 			if(PlayerHit)
 			{
-				if(SliderPointer.value >= 0.71f && SliderPointer.value <= 0.835f)
+				if(SliderPointer.value >= valueMarginAwal && SliderPointer.value <= valueMarginAkhir)
 				{
 					comboCurrent++;
 					Status_UI.text = "Combo Hit!";
@@ -53,6 +83,7 @@ public class ComboSystem : MonoBehaviour {
 					{
 						comboCurrent = 1;
 						Status_UI.text = "Combo Hit!";
+						//disini pokoknya ada informasi bahwa dia kombo -> Interaction
 						Combo_UI.text = "" + comboCurrent;
 						SliderPointer.value = 0;					}          
 				}
