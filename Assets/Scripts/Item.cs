@@ -30,9 +30,28 @@ public class Consumable: Item{
 
 [System.Serializable]
 public class Equipment: Item{
-	public float durability;
+	public Margin[] perfect;
+	public Margin[] good;
+	public AttackSpeed[] attackSpeed;
+	[HideInInspector]
+	public int maxCombo{
+		get{
+			if(perfect == null) return 0;
+			return perfect.Length;
+		}
+	}
+	// public float durability;
 }
-
+[System.Serializable]
+public class Margin{
+	public float top;
+	public float bottom;
+}
+[System.Serializable]
+public class AttackSpeed{
+	public float wait;
+	public float value;
+}
 [System.Serializable]
 public class Amulet: Item{
 	public AmuletType type;
