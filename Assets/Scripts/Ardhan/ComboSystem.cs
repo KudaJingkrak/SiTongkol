@@ -48,17 +48,18 @@ public class ComboSystem : MonoBehaviour {
 				comboBerapa++; //kayanya salah deh
 				return ComboEnum.Good;
 			}
-			else if(SliderPointer.value >= 1)
-			{
-				// what happens here?
-			}
 			else
 			{
 				comboBerapa = 0;
 				return ComboEnum.Miss;
+				/*
+				Harus make sure disini dia nge hide visibility dari slidePointernya
+				bedanya sama miss apa ya?
+				 */
 			}
-			//emang comboBerapanya bisa di set ya?
+			//emang comboBerapanya bisa di set
 		}
+		return ComboEnum.Miss;
 	}
 	IEnumerator AddValue(float second)
 	{
