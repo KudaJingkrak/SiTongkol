@@ -40,18 +40,18 @@ public class ComboSystem : MonoBehaviour {
 		{
 			if(SliderPointer.value >= senjata.perfect[comboBerapa].bottom && SliderPointer.value <= senjata.perfect[comboBerapa].top)
 			{
-				comboBerapa++; //kayanya salah deh
+				SliderPointer.value = 0;
 				return ComboEnum.Perfect;
 			}
 			else if(SliderPointer.value >= senjata.good[comboBerapa].bottom && SliderPointer.value <= senjata.good[comboBerapa].top)
 			{
-				comboBerapa++; //kayanya salah deh
+				SliderPointer.value = 0;
 				return ComboEnum.Good;
 			}
-			else
+			else if(SliderPointer.value >= 1)
 			{
-				comboBerapa = 0;
-				return ComboEnum.Miss;
+				SliderPointer.value = 0;
+				return ComboEnum.Good;
 				/*
 				Harus make sure disini dia nge hide visibility dari slidePointernya
 				bedanya sama miss apa ya?
@@ -63,51 +63,18 @@ public class ComboSystem : MonoBehaviour {
 	}
 	IEnumerator AddValue(float second)
 	{
-		while(comboCurrent<=MaxCombo)
+		while(true)
 		{
-			if(PlayerHit)
+			if(SliderPointer.value < 1)
 			{
-				if(SliderPointer.value >= valueMarginAwal && SliderPointer.value <= valueMarginAkhir)
-				{
-					comboCurrent++;
-					Status_UI.text = "Combo Hit!";
-					Combo_UI.text = "" + comboCurrent;
-					SliderPointer.value = 0;  
-					if(comboCurrent == MaxCombo)
-					{
-						comboCurrent = MaxCombo;
-						Status_UI.text = "Full Combo";
-						Combo_UI.text = "" + comboCurrent;
-						SliderPointer.value = 0;
-					}
-					if(comboCurrent > MaxCombo)
-					{
-						comboCurrent = 1;
-						Status_UI.text = "Combo Hit!";
-						//disini pokoknya ada informasi bahwa dia kombo -> Interaction
-						Combo_UI.text = "" + comboCurrent;
-						SliderPointer.value = 0;					}          
-				}
-				else
-			   {
-				comboCurrent = 0;
-				Status_UI.text = "Combo miss";
-				Combo_UI.text = "" + comboCurrent;
-				SliderPointer.value = 0;
-			   }
+				SliderPointer.value += speed;
 			}
-
-			else if(SliderPointer.value >= 1f)
+			else
 			{
-				comboCurrent = 0;
-				SliderPointer.value = 0;
-				Status_UI.text = "Full Slider";
-				Combo_UI.text = "" + comboCurrent;
+				SliderPointer.value = 1;
+				SliderPointer.enabled = false;
 			}
-			
-			
-			SliderPointer.value += speed;
-			yield return new WaitForSeconds(second);			
+			yield return new WaitForSeconds(second);
 		}
 	}
 }

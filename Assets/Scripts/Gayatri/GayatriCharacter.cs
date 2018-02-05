@@ -28,6 +28,13 @@ public class GayatriCharacter : MonoBehaviour {
 	private int comboCounter = 0;
 	public Equipment senjata;
 
+	public GameObject Slider_Gayatri;
+	private ComboSystem combo_Sys;
+
+	public float Persentase_Perfect;
+	public float Persentase_Good;
+	public float Persentase_Miss;
+
 
 	//private float _slower = 0.0f;
 	// Use this for initialization
@@ -209,8 +216,21 @@ public class GayatriCharacter : MonoBehaviour {
 	 */
 	
 	IEnumerator Attacking(float delay){
-		isAttacking = true;
 
+		isAttacking = true;
+		float TempDamage = 0;
+		if(combo_Sys.FilterCombo(senjata,comboCounter) == ComboEnum.Perfect)
+		{
+			TempDamage = (senjata.Damage/100) * Persentase_Perfect;
+		}
+		else if(combo_Sys.FilterCombo(senjata,comboCounter) == ComboEnum.Good)
+		{
+			TempDamage = (senjata.Damage/100) * Persentase_Good;
+		}
+		else if(combo_Sys.FilterCombo(senjata,comboCounter) == ComboEnum.Miss)
+		{
+			TempDamage = (senjata.Damage/100) * Persentase_Miss;
+		}
 		/*
 		Manggil Combonya gimana?
 
@@ -241,12 +261,16 @@ public class GayatriCharacter : MonoBehaviour {
 				IAttackable attackable = hits[i].collider.gameObject.GetComponent<IAttackable>();
 				if(attackable != null){
 					Debug.Log("Menyerang "+ hits[i].collider.gameObject.name);
-					attackable.ApplyDamage(1.0f);
+					attackable.ApplyDamage(TempDamage);
 				}
 			}
 		}
+		CancelInvoke("");
+		yield return new WaitForSeconds(0.02f);
+		Invoke("UnAttack",senjata.attackSpeed[comboCounter].wait);
+	}
 
-		yield return new WaitForSeconds(delay);
+	bool UnAttack(){
 		isAttacking = false;
 	}
 

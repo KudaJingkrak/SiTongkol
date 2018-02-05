@@ -30,6 +30,7 @@ public class Consumable: Item{
 
 [System.Serializable]
 public class Equipment: Item{
+	public float Damage;
 	public Margin[] perfect;
 	public Margin[] good;
 	public AttackSpeed[] attackSpeed;
