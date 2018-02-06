@@ -13,6 +13,8 @@ public class ComboSystem : MonoBehaviour {
 	public float speed;
 	public float valueMarginAwal;
 	public float valueMarginAkhir;
+	public RectTransform Perfect_Region;
+	public RectTransform Good_Region;
 	public int comboCurrent = 0;
 
 	// Use this for initialization
@@ -38,6 +40,12 @@ public class ComboSystem : MonoBehaviour {
 		//perfect Filter;	
 		if(comboBerapa < senjata.maxCombo)
 		{
+			Perfect_Region.sizeDelta = new Vector2(4.5f*(senjata.perfect[comboBerapa].top-senjata.perfect[comboBerapa].bottom),Perfect_Region.sizeDelta.y);
+			Perfect_Region.anchoredPosition = new Vector2(4.5f*senjata.perfect[comboBerapa].bottom,Perfect_Region.anchoredPosition.y);
+			
+			Good_Region.sizeDelta = new Vector2(4.5f*(senjata.good[comboBerapa].top-senjata.good[comboBerapa].bottom),Good_Region.sizeDelta.y);
+			Good_Region.anchoredPosition = new Vector2(4.5f*senjata.good[comboBerapa].bottom,Good_Region.anchoredPosition.y);
+
 			if(SliderPointer.value >= senjata.perfect[comboBerapa].bottom && SliderPointer.value <= senjata.perfect[comboBerapa].top)
 			{
 				SliderPointer.value = 0;

@@ -270,7 +270,7 @@ public class GayatriCharacter : MonoBehaviour {
 		Invoke("UnAttack",senjata.attackSpeed[comboCounter].wait);
 	}
 
-	bool UnAttack(){
+	void UnAttack(){
 		isAttacking = false;
 	}
 

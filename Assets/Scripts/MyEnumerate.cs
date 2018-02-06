@@ -18,7 +18,7 @@ public enum ItemName{
 	Amulet_Normal, Amulet_Fire, Amulet_Water, Amulet_Earth, Amulet_Air, 
 	
 	//Equipment
-	Branch,
+	Branch, Sword,
 	
 	//Consumable
 	Trash, Banana, HP_Potion // bbalablablaba.....
