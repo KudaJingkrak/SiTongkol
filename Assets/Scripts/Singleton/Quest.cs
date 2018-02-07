@@ -63,6 +63,7 @@ public class Quest : MonoBehaviour {
 		}
 		return false;
 	}
+
 	public void SaveObjective(string slotName="default"){
 		string savePath = Application.persistentDataPath+"/Quest"+slotName+".dat";
 
@@ -88,10 +89,17 @@ public class Quest : MonoBehaviour {
 	}
 
 	public void CheckProgressingObjective(GameObject target, MonsterName monsterName = MonsterName.All){
+		// check all progresive quest
 		for(int i =0; i < processingObjective.Count; i++){
 			processingObjective[i].CheckTask(target, monsterName);
 		}
-		
+
+		// remove all finished objective
+		for(int i=0; i < processingObjective.Count; i++){
+			if(processingObjective[i].isCompleted){
+				processingObjective.RemoveAt(i);
+			}
+		}
 	}
 
 	#region Task_Mosnter_Counter
