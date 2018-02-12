@@ -37,11 +37,46 @@ public class ComboSystem : MonoBehaviour {
 
 	public ComboEnum FilterCombo(Equipment senjata,int comboBerapa)
 	{
-		//perfect Filter;	
-		if(comboBerapa < senjata.maxCombo)
+        //perfect Filter;
+        comboCurrent = comboBerapa;
+		if(comboCurrent < senjata.maxCombo)
 		{
-			Perfect_Region.sizeDelta = new Vector2(4.5f*(senjata.perfect[comboBerapa].top-senjata.perfect[comboBerapa].bottom),Perfect_Region.sizeDelta.y);
-			Perfect_Region.anchoredPosition = new Vector2(4.5f*senjata.perfect[comboBerapa].bottom,Perfect_Region.anchoredPosition.y);
+            if (comboCurrent == 0)
+            {
+                //change the speed to senjata.speed [0]
+
+                Interval = senjata.attackSpeed[0].wait;
+                speed = senjata.attackSpeed[0].value;
+            }
+            if (comboCurrent == 1)
+            {
+                Interval = senjata.attackSpeed[1].wait;
+                speed = senjata.attackSpeed[1].value;
+                //change the speed to senjata.speed [1]
+            }
+
+            if (comboCurrent == 2)
+            {
+                Interval = senjata.attackSpeed[2].wait;
+                speed = senjata.attackSpeed[2].value;
+                //change the speed to senjata.speed [2]
+            }
+            if (comboCurrent == 3)
+            {
+                Interval = senjata.attackSpeed[3].wait;
+                speed = senjata.attackSpeed[3].value;
+
+                //change the speed to senjata.speed [3]
+            }
+            if (comboCurrent == 4)
+            {
+                Interval = senjata.attackSpeed[4].wait;
+                speed = senjata.attackSpeed[4].value;
+                 
+                //change the speed to senjata.speed [4]
+            }
+			Perfect_Region.sizeDelta = new Vector2(4.5f*(senjata.perfect[comboCurrent].top-senjata.perfect[comboCurrent].bottom),Perfect_Region.sizeDelta.y);
+			Perfect_Region.anchoredPosition = new Vector2(4.5f*senjata.perfect[comboCurrent].bottom,Perfect_Region.anchoredPosition.y);
 			
 			Good_Region.sizeDelta = new Vector2(4.5f*(senjata.good[comboBerapa].top-senjata.good[comboBerapa].bottom),Good_Region.sizeDelta.y);
 			Good_Region.anchoredPosition = new Vector2(4.5f*senjata.good[comboBerapa].bottom,Good_Region.anchoredPosition.y);
@@ -65,8 +100,10 @@ public class ComboSystem : MonoBehaviour {
 				bedanya sama miss apa ya?
 				 */
 			}
-			//emang comboBerapanya bisa di set
+            //emang comboBerapanya bisa di set
 		}
+        SliderPointer.value = 0;
+        comboCurrent = 0;
 		return ComboEnum.Miss;
 	}
 	IEnumerator AddValue(float second)

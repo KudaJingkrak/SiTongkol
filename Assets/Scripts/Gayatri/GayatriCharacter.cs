@@ -40,6 +40,7 @@ public class GayatriCharacter : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		linearDrag = rigid2D.drag;
+        combo_Sys = Slider_Gayatri.GetComponentInParent<ComboSystem>();
 	}
 	
 	// Update is called once per frame
