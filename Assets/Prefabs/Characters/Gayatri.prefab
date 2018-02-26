@@ -577,11 +577,11 @@ MonoBehaviour:
   Status_UI: {fileID: 114512579510975412}
   Combo_UI: {fileID: 114093408315358020}
   Interval: 0.075
-  speed: 0.025
+  speed: 0.05
   valueMarginAwal: 0.64
   valueMarginAkhir: 0.82
-  Perfect_Region: {fileID: 0}
-  Good_Region: {fileID: 0}
+  Perfect_Region: {fileID: 224639385496780488}
+  Good_Region: {fileID: 224553306938749068}
   comboCurrent: 0
 --- !u!114 &114801618931001742
 MonoBehaviour:
