@@ -18,6 +18,7 @@ public class GayatriCharacter : MonoBehaviour {
 	public bool onDialogue;
 	private IInteractable interactable;
 	private float linearDrag;
+    public BombSystem systemBomb;
 
 	//Movable
 	private Moveable _moveable;
@@ -365,4 +366,20 @@ public class GayatriCharacter : MonoBehaviour {
 			}
 		}
 	}
+
+    public void Roll()
+    {
+        //disini buat Roll
+    }
+
+    public void DodgeRoll()
+    {
+        //disini buat DodgeRoll
+    }
+
+    public void Bomb()
+    {
+        systemBomb.DeployBomb();
+        //disini buat Bomb
+    }
 }
