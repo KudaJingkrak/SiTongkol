@@ -366,20 +366,4 @@ public class GayatriCharacter : MonoBehaviour {
 			}
 		}
 	}
-
-    public void Roll()
-    {
-        //disini buat Roll
-    }
-
-    public void DodgeRoll()
-    {
-        //disini buat DodgeRoll
-    }
-
-    public void Bomb()
-    {
-        systemBomb.DeployBomb(transform.position);
-        //disini buat Bomb
-    }
 }
