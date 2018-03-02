@@ -3,21 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using Panda;
 
-[RequireComponent(typeof(Droppable))]
+[RequireComponent(typeof(Droppable), typeof(Rigidbody2D))]
 public class Enemy : MonoBehaviour, IAttackable{
 	public MonsterName label; 	
 	public float health = 10f;
-	public Direction direction{get{return _direction;}}
+	
+	
+	[Header("Movement")]
+	public float speed = 1f;
 	public GameObject targetObject;
+	public List<Transform> targetPoints;
+	public int currentIndexPoint = 0;
 	public float disntanceTolerance = 0f;
+	private Direction _direction = Direction.Front;
+	public Direction currentDirection {get{return _direction;}}
+	public bool isReachedTarget{
+		get{
+			if(targetObject){
+				return Vector3.Distance(targetObject.transform.position, transform.position) <= disntanceTolerance;
+			}
+			return false;
+		}
+	}
+	public bool isStuck{
+		get{return false;}
+	}
+
+
+	Rigidbody2D rigid2D;
 	Droppable droppable;
 	private float _health;
-	private Direction _direction = Direction.Front;
 	float x,y;
     // Use this for initialization
     void Start () {
 		_health = health;
 		droppable = gameObject.GetComponent<Droppable>();
+		rigid2D = gameObject.GetComponent<Rigidbody2D>();
 	}
 
 	// Update is called once per frame
@@ -88,27 +109,42 @@ public class Enemy : MonoBehaviour, IAttackable{
 	public void Move(float x, float y){
 		this.x = x;
 		this.y = y;
+		rigid2D.velocity = new Vector3(x,y,0) * Mathf.Lerp(0f, speed, 1f);
 		SetDirection();
 	}
 
 	public void Move(Vector2 direction){
-		Move(direction.x, direction.y);
+		this.x = direction.x;
+		this.y = direction.y;
+		rigid2D.velocity = new Vector3(x,y,0) * Mathf.Lerp(0f, speed, 1f);
+		SetDirection();
 	}
 
-	public void Move(Vector3 direction){
-		Move(direction.x, direction.y);
-	}
-
-	public void MoveToObject(){
+	public void MoveToTarget(){
 		if(targetObject){
 			Vector3 dir = Vector3.Normalize(targetObject.transform.position - transform.position);
+			Move(dir);			
+		}
+	}
 
-			Move(dir);
+	public void MoveToPoint(int index = -1){
+		if(index >= targetPoints.Count) return;
+		
+		Vector3 dir;
+		if(index < 0){
+			dir = Vector3.Normalize(targetPoints[currentIndexPoint].position - transform.position);
+		}else{
+			dir = Vector3.Normalize(targetPoints[index].position - transform.position);
+		}
+		Move(dir);
+	}
 
-			if(GetTargetDistance() < disntanceTolerance){
-				
-			}
-			
+	public void Launch(Vector2 direction, float power = 1f, bool overrideSpeed = false){
+		Vector2 force = direction * power;
+		if(overrideSpeed){
+			rigid2D.velocity = Vector2.Lerp(Vector2.zero, force, 1f);
+		}else{
+			rigid2D.velocity = Vector2.Lerp(rigid2D.velocity, force, 1f);
 		}
 	}
 
