@@ -12,8 +12,6 @@ public class BombSystem : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        isActivated = false;
-        StartCoroutine(Waiting());
 	}
 
     void Activated()

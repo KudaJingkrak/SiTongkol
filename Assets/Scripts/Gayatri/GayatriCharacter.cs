@@ -379,7 +379,7 @@ public class GayatriCharacter : MonoBehaviour {
 
     public void Bomb()
     {
-        systemBomb.DeployBomb();
+        systemBomb.DeployBomb(transform.position);
         //disini buat Bomb
     }
 }
