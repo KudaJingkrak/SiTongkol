@@ -12,6 +12,9 @@ public class BombSystem : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        positionUser_Outside = new Vector3(28.58f,-12.42f,0);
+        bomb_Sprite.transform.position = positionUser_Outside;
+        area_KenaBomb.transform.position = positionUser_Outside;
 	}
 
     void Activated()
@@ -38,7 +41,8 @@ public class BombSystem : MonoBehaviour {
         area_KenaBomb.transform.position = positionUser_Inside;
         //animation of the area_kenaBomb
         //function of BombAoE
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
+        Debug.Log("harusnya keluar");
         area_KenaBomb.transform.position = positionUser_Outside;
 
     }
@@ -55,9 +59,11 @@ public class BombSystem : MonoBehaviour {
     }
     IEnumerator Waiting()
     {
-        while (waitingTime != 0)
+        float tempWait = waitingTime;
+        while (tempWait != 0)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
+            tempWait--;
             /*
              * 1. Play the animation by switching the color in here of the BombSprite attributes.
              * 

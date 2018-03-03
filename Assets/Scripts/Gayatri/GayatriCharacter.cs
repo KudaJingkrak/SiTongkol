@@ -46,6 +46,11 @@ public class GayatriCharacter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //ngetest
+            DeployBomb();
+        }
 		//_slower = 1 - linearDampling;
 	}
 
@@ -366,4 +371,9 @@ public class GayatriCharacter : MonoBehaviour {
 			}
 		}
 	}
+
+    public void DeployBomb()
+    {
+        systemBomb.DeployBomb(transform.position);
+    }
 }
