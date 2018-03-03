@@ -16,6 +16,7 @@ public class GayatriCharacter : MonoBehaviour {
 	public bool isAttacking;
 	public bool isInteracting;
 	public bool onDialogue;
+    public bool isDefend;
 	private IInteractable interactable;
 	private float linearDrag;
     public BombSystem systemBomb;
@@ -42,6 +43,7 @@ public class GayatriCharacter : MonoBehaviour {
 	void Start () {
 		linearDrag = rigid2D.drag;
         combo_Sys = Slider_Gayatri.GetComponentInParent<ComboSystem>();
+        isDefend = false;
 	}
 	
 	// Update is called once per frame
@@ -376,4 +378,12 @@ public class GayatriCharacter : MonoBehaviour {
     {
         systemBomb.DeployBomb(transform.position);
     }
+
+    public void OnDefense()
+    {
+        isDefend = true;
+        //terus nanti kaya masuk ke method OnTriggerEnter/OnCollision aja terus tinggal ganti ArahBulletnya aja. done.
+    }
+
+    
 }
