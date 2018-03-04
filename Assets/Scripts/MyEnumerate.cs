@@ -38,12 +38,3 @@ public enum ButtonDoor_Type
 {
     Door, Bridge, Switch
 }
-
-public enum Arah_Bullet
-{
-    atas,
-    bawah,
-    kiri,
-    kanan,
-    diam
-}
