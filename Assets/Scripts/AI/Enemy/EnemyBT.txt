@@ -1,2 +1,9 @@
 tree("Root")
-	Succeed
+	fallback
+		tree("ChasePlayer")
+
+tree("ChasePlayer")
+		sequence
+			SetPlayerTarget
+			MoveToPlayer
+			Wait(1.0)

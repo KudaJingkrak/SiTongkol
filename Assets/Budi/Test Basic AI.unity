@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scripts:
-  - {fileID: 0}
+  - {fileID: 4900000, guid: 01ac2109293a6d34a93627146bbf28c2, type: 3}
   autoReset: 1
   tickOn: 0
   sourceInfos:
@@ -193,11 +193,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4249367605509504, guid: 921292025d5a2fa4b96ea6138442a1e6, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -2.78
+      value: -4.11
       objectReference: {fileID: 0}
     - target: {fileID: 4249367605509504, guid: 921292025d5a2fa4b96ea6138442a1e6, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.64
+      value: 1.08
       objectReference: {fileID: 0}
     - target: {fileID: 4249367605509504, guid: 921292025d5a2fa4b96ea6138442a1e6, type: 2}
       propertyPath: m_LocalPosition.z
@@ -222,6 +222,22 @@ Prefab:
     - target: {fileID: 4249367605509504, guid: 921292025d5a2fa4b96ea6138442a1e6, type: 2}
       propertyPath: m_RootOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 212859040019043668, guid: 921292025d5a2fa4b96ea6138442a1e6,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 734c68054b653cb429cdb8aed3411622,
+        type: 3}
+    - target: {fileID: 114958872303380032, guid: 921292025d5a2fa4b96ea6138442a1e6,
+        type: 2}
+      propertyPath: disntanceTolerance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 212859040019043668, guid: 921292025d5a2fa4b96ea6138442a1e6,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 921292025d5a2fa4b96ea6138442a1e6, type: 2}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Panda;
 
-[RequireComponent(typeof(Droppable), typeof(Rigidbody2D))]
+[RequireComponent(typeof(Droppable), typeof(Rigidbody2D), typeof(Animator))]
 public class Enemy : MonoBehaviour, IAttackable{
 	public MonsterName label; 	
 	public float health = 10f;
@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour, IAttackable{
 	public bool isReachedTarget{
 		get{
 			if(targetObject){
+				Debug.Log(Vector3.Distance(targetObject.transform.position, transform.position)+" unit disntace");
 				return Vector3.Distance(targetObject.transform.position, transform.position) <= disntanceTolerance;
 			}
 			return false;
@@ -29,13 +30,14 @@ public class Enemy : MonoBehaviour, IAttackable{
 		get{return false;}
 	}
 
-
+	Animator anim;
 	Rigidbody2D rigid2D;
 	Droppable droppable;
 	private float _health;
 	float x,y;
     // Use this for initialization
     void Start () {
+		anim = gameObject.GetComponent<Animator>();
 		_health = health;
 		droppable = gameObject.GetComponent<Droppable>();
 		rigid2D = gameObject.GetComponent<Rigidbody2D>();
@@ -43,7 +45,8 @@ public class Enemy : MonoBehaviour, IAttackable{
 
 	// Update is called once per frame
 	void Update () {
-		
+		anim.SetFloat("MoveX", x);
+		anim.SetFloat("MoveY", y);
 	}
 
 	public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None){
@@ -66,6 +69,32 @@ public class Enemy : MonoBehaviour, IAttackable{
 		droppable.DropItem(transform);
 		gameObject.SetActive(false);
     }
+
+	[Panda.Task]
+	bool SetPlayerTarget(){
+		if(targetObject && targetObject.CompareTag("Player")) return true;
+
+		GayatriCharacter gayatri = FindObjectOfType<GayatriCharacter>();
+		if(gayatri){
+			targetObject = gayatri.gameObject;
+			return true;
+		}
+		return false;
+	}
+
+	[Panda.Task]
+	void MoveToPlayer(){
+		if(isReachedTarget){
+			Panda.Task.current.Succeed();
+		}
+
+		if(targetObject.CompareTag("Player")){
+			MoveToTarget();
+		}else{
+			Panda.Task.current.Fail();
+		}
+		
+	}
 
 	#region Movement	
 	public void SetDirection(){
