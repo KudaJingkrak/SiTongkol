@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BombAoE : MonoBehaviour {
+    public int Damage;
 	// Use this for initialization
 	void Start () {
 		
@@ -16,6 +17,10 @@ public class BombAoE : MonoBehaviour {
     public void OnTriggerEnter2D(Collider2D collision)
     {
         //does it right?
-        if (collision.gameObject.tag != "background") Destroy(collision.gameObject);
+        IAttackable attackable = collision.gameObject.GetComponent<IAttackable>();
+        if (attackable != null)
+        {
+            attackable.ApplyDamage(Damage);
+        }
     }
 }

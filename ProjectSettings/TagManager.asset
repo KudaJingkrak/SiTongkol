@@ -21,6 +21,7 @@ TagManager:
   - SideCamera
   - Map
   - Tebing
+  - Background
   layers:
   - Default
   - TransparentFX
