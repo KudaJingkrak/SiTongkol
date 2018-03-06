@@ -834,7 +834,7 @@ GameObject:
   - component: {fileID: 322610324}
   m_Layer: 0
   m_Name: Tilemap (1)
-  m_TagString: Background
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6341,7 +6341,7 @@ GameObject:
   - component: {fileID: 1049760466}
   m_Layer: 0
   m_Name: Grid
-  m_TagString: Background
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6988,7 +6988,7 @@ GameObject:
   - component: {fileID: 1303401137}
   m_Layer: 0
   m_Name: Tilemap
-  m_TagString: Background
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25991,6 +25991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 325d94a181776794f9e34956ff85e46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Damage: 0
 --- !u!61 &1456122436
 BoxCollider2D:
   m_ObjectHideFlags: 0
