@@ -38,3 +38,7 @@ public enum ButtonDoor_Type
 {
     Door, Bridge, Switch
 }
+
+public enum MovementType{
+	walk, swim, fly
+}

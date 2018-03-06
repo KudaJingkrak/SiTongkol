@@ -113,49 +113,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &11931404 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1206988292210594, guid: 921292025d5a2fa4b96ea6138442a1e6,
-    type: 2}
-  m_PrefabInternal: {fileID: 114254175}
---- !u!114 &11931411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 11931404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17e43e7170fb45b4b81dcd16d0ff55d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scripts:
-  - {fileID: 4900000, guid: 01ac2109293a6d34a93627146bbf28c2, type: 3}
-  autoReset: 1
-  tickOn: 0
-  sourceInfos:
-  - isFoldout: 1
-    breakPoints: 
-    breakPointStatuses: 
-    collapsedLines: 
-    btScript: 
---- !u!95 &11931412
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 11931404}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8108e2c72b2f9bf4a8095177bdf37fac, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &56696018
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,22 +179,6 @@ Prefab:
     - target: {fileID: 4249367605509504, guid: 921292025d5a2fa4b96ea6138442a1e6, type: 2}
       propertyPath: m_RootOrder
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 212859040019043668, guid: 921292025d5a2fa4b96ea6138442a1e6,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 734c68054b653cb429cdb8aed3411622,
-        type: 3}
-    - target: {fileID: 114958872303380032, guid: 921292025d5a2fa4b96ea6138442a1e6,
-        type: 2}
-      propertyPath: disntanceTolerance
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 212859040019043668, guid: 921292025d5a2fa4b96ea6138442a1e6,
-        type: 2}
-      propertyPath: m_SortingOrder
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 921292025d5a2fa4b96ea6138442a1e6, type: 2}

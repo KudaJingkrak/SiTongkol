@@ -7,27 +7,56 @@ using Panda;
 public class Enemy : MonoBehaviour, IAttackable{
 	public MonsterName label; 	
 	public float health = 10f;
+	public BoxCollider2D boxColl2D;
 	
+	[Header("Attack")]
+	public float attackSpeed = 1f;
+	public float attackDistance = 1f;
 	
 	[Header("Movement")]
+	public bool isFlying = false;
 	public float speed = 1f;
 	public GameObject targetObject;
 	public List<Transform> targetPoints;
 	public int currentIndexPoint = 0;
-	public float disntanceTolerance = 0f;
+	public float disntanceTolerance = 1f;
+	public float stuckDistance = 0.25f;
 	private Direction _direction = Direction.Front;
 	public Direction currentDirection {get{return _direction;}}
 	public bool isReachedTarget{
 		get{
 			if(targetObject){
-				Debug.Log(Vector3.Distance(targetObject.transform.position, transform.position)+" unit disntace");
+				//Debug.Log(Vector3.Distance(targetObject.transform.position, transform.position)+" unit disntace");
 				return Vector3.Distance(targetObject.transform.position, transform.position) <= disntanceTolerance;
 			}
 			return false;
 		}
 	}
 	public bool isStuck{
-		get{return false;}
+		get{
+			Vector2 _castDir = Vector2.zero; 
+			
+			switch(_direction){
+				case Direction.Back:
+					_castDir = Vector2.up;
+					break;
+				case Direction.Front:
+					_castDir = Vector2.down;
+					break;
+				case Direction.Left:
+					_castDir = Vector2.left;
+					break;
+				case Direction.Right:
+					_castDir = Vector2.right;
+					break;
+			}
+
+			RaycastHit2D hit = Physics2D.BoxCast(boxColl2D.transform.position, boxColl2D.size, 0, _castDir, stuckDistance);
+			if(hit && hit.collider.CompareTag("Wall")){
+				return !isFlying;
+			}
+			return false;
+		}
 	}
 
 	Animator anim;
@@ -41,6 +70,7 @@ public class Enemy : MonoBehaviour, IAttackable{
 		_health = health;
 		droppable = gameObject.GetComponent<Droppable>();
 		rigid2D = gameObject.GetComponent<Rigidbody2D>();
+		boxColl2D = gameObject.GetComponent<BoxCollider2D>();
 	}
 
 	// Update is called once per frame
@@ -133,6 +163,11 @@ public class Enemy : MonoBehaviour, IAttackable{
 				y = 0f;
 				break;
 		}
+	}
+
+	public void MoveByDirection(){
+		SetDirection(_direction);
+		Move(x,y);
 	}
 
 	public void Move(float x, float y){
