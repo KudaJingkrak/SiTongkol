@@ -124,35 +124,109 @@ public class Bullet : MonoBehaviour {
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("masuk ke sini?");
+        bool PosisiDepan;
         IAttackable attackable = collision.gameObject.GetComponent<IAttackable>();
-        if (attackable != null)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            if (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<GayatriCharacter>().isReflect)
+            Vector2 temp = new Vector2(transform.position.x - collision.gameObject.transform.position.x, transform.position.y - collision.gameObject.transform.position.y);
+            temp.Normalize();
+            if (Mathf.Abs(temp.x) > Mathf.Abs(temp.y))
             {
-                Flip();
-                return;
+                if (temp.x == 1)
+                {
+                    if (collision.gameObject.GetComponent<GayatriCharacter>().direction == Direction.Right)
+                    {
+                        PosisiDepan = true;
+                    }
+                    else
+                    {
+                        PosisiDepan = false;
+                    }
+                    //Kanan
+                }
+                else
+                {
+                    if (collision.gameObject.GetComponent<GayatriCharacter>().direction == Direction.Left)
+                    {
+                        PosisiDepan = true;
+                    }
+                    else
+                    {
+                        PosisiDepan = false;
+                    }
+                    //Kiri
+                }
             }
-            attackable.ApplyDamage(damage);
-            //Temporary, nanti ada Poolingnya.
-            Destroy(gameObject);
-        }
-    }
+            else
+            {
+                if (temp.y == 1)
+                {
+                    if (collision.gameObject.GetComponent<GayatriCharacter>().direction == Direction.Back)
+                    {
+                        PosisiDepan = true;
+                    }
+                    else
+                    {
+                        PosisiDepan = false;
+                    }
+                    //Belakang
+                }
+                else
+                {
+                    if (collision.gameObject.GetComponent<GayatriCharacter>().direction == Direction.Front)
+                    {
+                        PosisiDepan = true;
+                    }
+                    else
+                    {
+                        PosisiDepan = false;
+                    }
+                    //Depan
+                }
+            }
 
-    public void OnCollisionEnter2D(Collision2D collision)
-    {
+            if (PosisiDepan && collision.gameObject.GetComponent<GayatriCharacter>().isReflect)
+            {
+                //Temporary
+                Destroy(gameObject);
+            }
+            else
+            {
+                attackable.ApplyDamage(damage);
+                //Temporary
+                Destroy(gameObject);
+            }
+        }
+        
+        
+
+
+        //Updated.
+        /*
+         * Things to do:
+         *  - Ngecek posisi dimana bullet itu ketika dibandingkan sama Gayatri
+         *  - Normalize
+         *  - Dibandingkan dengan Arah Gayatri pada saat itu
+         *  - terus kalo iya destroy atau kalo engga apply damage + destroy
+         */
+
+
+        //Previous
+        /*
         Debug.Log("masuk ke sini?");
         IAttackable attackable = collision.gameObject.GetComponent<IAttackable>();
         if (attackable != null)
         {
+            Debug.Log("Testing_Luar");
             if (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<GayatriCharacter>().isReflect)
             {
-                Flip();
+                Destroy(gameObject);
                 return;
             }
             attackable.ApplyDamage(damage);
             //Temporary, nanti ada Poolingnya.
             Destroy(gameObject);
         }
+        */
     }
 }
