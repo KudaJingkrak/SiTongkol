@@ -121,4 +121,18 @@ public class Bullet : MonoBehaviour {
     public float GetSpeed(){
         return speed;
     }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        IAttackable attackable = collision.gameObject.GetComponent<IAttackable>();
+        if (attackable != null)
+        {
+            if (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<GayatriCharacter>().isReflect)
+            {
+                Flip();
+                return;
+            }
+            attackable.ApplyDamage(damage);
+        }
+    }
 }
