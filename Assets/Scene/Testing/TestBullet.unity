@@ -157,6 +157,11 @@ Prefab:
       propertyPath: isReflect
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 224628650990140160, guid: a73377bf0e4683b4f92d1a36645966e0,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a73377bf0e4683b4f92d1a36645966e0, type: 2}
   m_IsPrefabParent: 0
@@ -389,7 +394,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

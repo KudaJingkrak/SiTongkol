@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GayatriCharacter : MonoBehaviour {
+public class GayatriCharacter : MonoBehaviour, IAttackable {
 	public Rigidbody2D rigid2D;
 	public BoxCollider2D boxCollider2D;
 	public Animator animator;
@@ -384,5 +384,18 @@ public class GayatriCharacter : MonoBehaviour {
         isReflect = true;
     }
 
-    
+    public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None)
+    {
+        Debug.Log("On attack");
+    }
+
+    public void Destruct()
+    {
+        
+    }
+
+    public void Die()
+    {
+        
+    }
 }
