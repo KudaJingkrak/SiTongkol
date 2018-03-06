@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour, IAttackable{
 	public float attackDistance = 1f;
 	
 	[Header("Movement")]
+	private int _step;
 	public MovementType movementType = MovementType.Walk;
 	public float speed = 1f;
 	public GameObject targetObject;
@@ -23,7 +24,15 @@ public class Enemy : MonoBehaviour, IAttackable{
 	public float stuckDistance = 0.25f;
 	private Direction _direction = Direction.Front;
 	public Direction currentDirection {get{return _direction;}}
-	public bool isReachedTarget{
+
+	public int maxStuckStep = 10;
+	public int minStuckStep = 0;
+	[Panda.Task]
+	public bool IsEndStep{
+		get{return _step < 1;}
+	}
+	[Panda.Task]
+	public bool IsReachedTarget{
 		get{
 			if(targetObject){
 				//Debug.Log(Vector3.Distance(targetObject.transform.position, transform.position)+" unit disntace");
@@ -32,6 +41,7 @@ public class Enemy : MonoBehaviour, IAttackable{
 			return false;
 		}
 	}
+	[Panda.Task]
 	public bool IsStuck{
 		get{
 			Vector2 _castDir = Vector2.zero; 
@@ -116,19 +126,42 @@ public class Enemy : MonoBehaviour, IAttackable{
 
 	[Panda.Task]
 	void MoveToPlayer(){
-		if(isReachedTarget){
-			Panda.Task.current.Succeed();
-		}
-
 		if(targetObject.CompareTag("Player")){
 			MoveToTarget();
+			Panda.Task.current.Succeed();
 		}else{
+			SetPlayerTarget();
 			Panda.Task.current.Fail();
 		}
 		
 	}
 
-	#region Movement	
+	[Panda.Task]
+	void SetRandomStep(){
+		_step =	Random.Range(minStuckStep, maxStuckStep);
+		Panda.Task.current.Succeed();
+	}
+
+	[Panda.Task]
+	void MoveUntilEndStep()
+	{
+		_step--;
+		MoveByDirection();
+		if(_step < 1){
+			Panda.Task.current.Succeed();
+		}else{
+			Panda.Task.current.Fail();
+		}
+	}
+
+	#region Movement
+
+	[Panda.Task]
+	public void SetRandomDirection(){
+		SetDirection((Direction)Random.Range(0, 4));
+		Panda.Task.current.Succeed();
+	}
+
 	public void SetDirection(){
 		if(Mathf.Abs(x) > Mathf.Abs(y)){
 			if(x > 0){
@@ -166,7 +199,6 @@ public class Enemy : MonoBehaviour, IAttackable{
 				break;
 		}
 	}
-
 	public void MoveByDirection(){
 		SetDirection(_direction);
 		Move(x,y);
@@ -187,9 +219,6 @@ public class Enemy : MonoBehaviour, IAttackable{
 	}
 
 	public void MoveToTarget(){
-		if(IsStuck){
-			Debug.Log("Stuck coeg");
-		}
 		if(targetObject){
 			Vector3 dir = Vector3.Normalize(targetObject.transform.position - transform.position);
 			Move(dir);			

@@ -1,9 +1,29 @@
 tree("Root")
 	fallback
 		tree("ChasePlayer")
+		tree("StuckDirection")
+		tree("StuckMovement")
 
 tree("ChasePlayer")
+	while 
+		sequence
+			not IsStuck
+			IsEndStep
+			not IsReachedTarget
 		sequence
 			SetPlayerTarget
 			MoveToPlayer
-			Wait(1.0)
+
+tree("StuckDirection")
+	while sequence IsStuck IsEndStep
+		sequence
+			SetRandomDirection
+			SetRandomStep
+			
+tree("StuckMovement")
+	while not IsEndStep
+		sequence
+			MoveUntilEndStep
+
+
+			
