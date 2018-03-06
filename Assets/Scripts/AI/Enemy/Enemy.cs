@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour, IAttackable{
 	public float attackDistance = 1f;
 	
 	[Header("Movement")]
-	public bool isFlying = false;
+	public MovementType movementType = MovementType.Walk;
 	public float speed = 1f;
 	public GameObject targetObject;
 	public List<Transform> targetPoints;
@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour, IAttackable{
 
 			RaycastHit2D hit = Physics2D.BoxCast(boxColl2D.transform.position, boxColl2D.size, 0, _castDir, stuckDistance);
 			if(hit && hit.collider.CompareTag("Wall")){
-				return !isFlying;
+				return movementType != MovementType.Fly;
 			}
 			return false;
 		}

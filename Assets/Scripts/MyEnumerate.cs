@@ -40,5 +40,5 @@ public enum ButtonDoor_Type
 }
 
 public enum MovementType{
-	walk, swim, fly
+	Walk, Swim, Fly
 }
