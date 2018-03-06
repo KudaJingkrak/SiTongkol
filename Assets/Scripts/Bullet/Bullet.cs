@@ -124,6 +124,7 @@ public class Bullet : MonoBehaviour {
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("masuk ke sini?");
         IAttackable attackable = collision.gameObject.GetComponent<IAttackable>();
         if (attackable != null)
         {
@@ -133,6 +134,25 @@ public class Bullet : MonoBehaviour {
                 return;
             }
             attackable.ApplyDamage(damage);
+            //Temporary, nanti ada Poolingnya.
+            Destroy(gameObject);
+        }
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("masuk ke sini?");
+        IAttackable attackable = collision.gameObject.GetComponent<IAttackable>();
+        if (attackable != null)
+        {
+            if (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<GayatriCharacter>().isReflect)
+            {
+                Flip();
+                return;
+            }
+            attackable.ApplyDamage(damage);
+            //Temporary, nanti ada Poolingnya.
+            Destroy(gameObject);
         }
     }
 }
