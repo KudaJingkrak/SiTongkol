@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour, IAttackable{
 			return false;
 		}
 	}
-	public bool isStuck{
+	public bool IsStuck{
 		get{
 			Vector2 _castDir = Vector2.zero; 
 			
@@ -51,9 +51,11 @@ public class Enemy : MonoBehaviour, IAttackable{
 					break;
 			}
 
-			RaycastHit2D hit = Physics2D.BoxCast(boxColl2D.transform.position, boxColl2D.size, 0, _castDir, stuckDistance);
-			if(hit && hit.collider.CompareTag("Wall")){
-				return movementType != MovementType.Fly;
+			RaycastHit2D[] hits = Physics2D.BoxCastAll(boxColl2D.transform.position, boxColl2D.size, 0, _castDir, stuckDistance);
+			for(int i =0; i < hits.Length; i++){
+				if(hits[i].collider.CompareTag("Wall")){
+					return movementType != MovementType.Fly;	
+				}
 			}
 			return false;
 		}
@@ -185,6 +187,9 @@ public class Enemy : MonoBehaviour, IAttackable{
 	}
 
 	public void MoveToTarget(){
+		if(IsStuck){
+			Debug.Log("Stuck coeg");
+		}
 		if(targetObject){
 			Vector3 dir = Vector3.Normalize(targetObject.transform.position - transform.position);
 			Move(dir);			
