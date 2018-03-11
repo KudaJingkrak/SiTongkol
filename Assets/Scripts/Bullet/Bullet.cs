@@ -6,17 +6,28 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 
     public float speed = 50f;
+    public float turnRate = 30f;
     public float damage = 1f;
     public float lifetime = float.MaxValue;
     public bool isHoming = false;
     public Transform target;
+
     SpriteRenderer _sprite;
     Collider2D _collider2D;
     public bool _isActive = false;
     float _speed;
+    private Transform _up;
     private bool _isEnable;
     
     void Awake(){
+        for(int i = 0; i < transform.childCount; i++){
+            Transform child = transform.GetChild(i);
+            if(child.name.Equals("Up")){
+                _up = child;
+                break;
+            }
+        }
+
         _sprite = GetComponent<SpriteRenderer>();
         _collider2D = GetComponent<Collider2D>();
         _speed = speed;
@@ -29,17 +40,15 @@ public class Bullet : MonoBehaviour {
             if(!_isEnable){
                 Enable();
             }
-            if(target){
-                transform.position = Vector2.MoveTowards(transform.position, target.position, _speed * Time.deltaTime);
-            }else{
-                for(int i = 0; i < transform.childCount; i++){
-                    Transform child = transform.GetChild(i);
-                    if(child.name.Equals("UpTransform")){
-                        target = child;
-                        break;
-                    }
-                }
+
+            if(isHoming && target){
+               Quaternion newRotation  = Quaternion.LookRotation(transform.position - target.position, Vector3.forward);
+                newRotation.x = transform.rotation.x;
+                newRotation.y = transform.rotation.y;
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * turnRate );
             }
+
+            transform.position = Vector2.MoveTowards(transform.position, _up.position, _speed * Time.deltaTime);
 
             lifetime -= Time.deltaTime;  
         }
@@ -126,8 +135,10 @@ public class Bullet : MonoBehaviour {
     {
         bool PosisiDepan;
         IAttackable attackable = collision.gameObject.GetComponent<IAttackable>();
+        
         if (collision.gameObject.CompareTag("Player"))
         {
+           
             Vector2 temp = new Vector2(transform.position.x - collision.gameObject.transform.position.x, transform.position.y - collision.gameObject.transform.position.y);
             temp.Normalize();
             if (Mathf.Abs(temp.x) > Mathf.Abs(temp.y))
