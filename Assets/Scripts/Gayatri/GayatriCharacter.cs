@@ -17,6 +17,9 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 	public bool isInteracting;
 	public bool onDialogue;
     public bool isReflect;
+    public bool isDodging;
+    public bool isFreeze;
+    public bool onceDodging;
 	private IInteractable interactable;
 	private float linearDrag;
     public BombSystem systemBomb;
@@ -44,6 +47,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 		linearDrag = rigid2D.drag;
         combo_Sys = Slider_Gayatri.GetComponentInParent<ComboSystem>();
         isReflect = false;
+        isFreeze = false;
 	}
 	
 	// Update is called once per frame
@@ -62,6 +66,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 		animator.SetFloat("Speed", rigid2D.velocity.sqrMagnitude);
 		animator.SetBool("IsPulling", isPulling);
 		animator.SetBool("IsLifting", isLifting);
+        animator.SetBool("isDodging", isDodging);
 		
 		switch(direction){
 			case Direction.Front:
@@ -154,18 +159,28 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 		}else{
 			rigid2D.drag = linearDrag;
 		}
-		
-		if(rigid2D.velocity.sqrMagnitude < _speed){
-			if(!isPulling){
-				rigid2D.AddForce(new Vector2(x,y)*rigid2D.mass / Time.fixedDeltaTime);
-			}else{
-				if(isHorizontalPulling){
-					rigid2D.AddForce(new Vector2(x,0f)*rigid2D.mass / Time.fixedDeltaTime);
-				}else{
-					rigid2D.AddForce(new Vector2(0f,y)*rigid2D.mass / Time.fixedDeltaTime);
-				}
-			}
-		}
+
+        if (!isFreeze)
+        {
+            if (rigid2D.velocity.sqrMagnitude < _speed)
+            {
+                if (!isPulling)
+                {
+                    rigid2D.AddForce(new Vector2(x, y) * rigid2D.mass / Time.fixedDeltaTime);
+                }
+                else
+                {
+                    if (isHorizontalPulling)
+                    {
+                        rigid2D.AddForce(new Vector2(x, 0f) * rigid2D.mass / Time.fixedDeltaTime);
+                    }
+                    else
+                    {
+                        rigid2D.AddForce(new Vector2(0f, y) * rigid2D.mass / Time.fixedDeltaTime);
+                    }
+                }
+            }
+        }
 	}
 	public void Interact(){
 		if(!isInteracting){
@@ -228,15 +243,15 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 
 		isAttacking = true;
 		float TempDamage = 0;
-		if(combo_Sys.FilterCombo(senjata,comboCounter) == ComboEnum.Perfect)
+		if(combo_Sys.FilterCombo(comboCounter) == ComboEnum.Perfect)
 		{
 			TempDamage = (senjata.Damage/100) * Persentase_Perfect;
 		}
-		else if(combo_Sys.FilterCombo(senjata,comboCounter) == ComboEnum.Good)
+		else if(combo_Sys.FilterCombo(comboCounter) == ComboEnum.Good)
 		{
 			TempDamage = (senjata.Damage/100) * Persentase_Good;
 		}
-		else if(combo_Sys.FilterCombo(senjata,comboCounter) == ComboEnum.Miss)
+		else if(combo_Sys.FilterCombo(comboCounter) == ComboEnum.Miss)
 		{
 			TempDamage = (senjata.Damage/100) * Persentase_Miss;
 		}
@@ -382,6 +397,56 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
     public void OnReflect()
     {
         isReflect = true;
+    }
+
+    public void OnDodging()
+    {
+        animator.SetFloat("Speed", 0);
+        if (!onceDodging)
+            {
+                StartCoroutine(Dodging());
+                onceDodging = true;
+                isFreeze = true;
+            }
+     
+        /*
+         * TO DO:
+         * if (isDodging)
+         * 1. Sprite Change
+         * 2. 
+         * 3.
+         * 
+         */
+    }
+
+    IEnumerator Dodging()
+    {
+        isDodging = true;
+        boxCollider2D.enabled = false;
+
+        switch (direction)
+        {
+            case Direction.Back:
+                rigid2D.AddForce(Vector2.up * rigid2D.mass * 35 / Time.deltaTime);
+                break;
+            case Direction.Front:
+                rigid2D.AddForce(Vector2.down * rigid2D.mass * 35 / Time.deltaTime);
+                break;
+            case Direction.Left:
+                rigid2D.AddForce(Vector2.left * rigid2D.mass * 35 / Time.deltaTime);
+                break;
+            case Direction.Right:
+                rigid2D.AddForce(Vector2.right * rigid2D.mass * 35 / Time.deltaTime);
+                break;
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        //Mestinya ini tergantung dari animasinya berapa lama
+        //tapi ada masalah kalo dia tembus ke tembok gimana (?)
+        isDodging = false;
+        boxCollider2D.enabled = true;
+        onceDodging = false;
+        isFreeze = false;
     }
 
     public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None)

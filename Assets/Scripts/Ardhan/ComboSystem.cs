@@ -4,122 +4,132 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ComboSystem : MonoBehaviour {
-	public int MaxCombo;
-	public bool PlayerHit;
-	public Slider SliderPointer;
-	public Text Status_UI;
-	public Text Combo_UI;
-	public float Interval;
-	public float speed;
-	public float valueMarginAwal;
-	public float valueMarginAkhir;
-	public RectTransform Perfect_Region;
-	public RectTransform Good_Region;
-	public int comboCurrent = 0;
+    public ComboEnum kondisi_Player;
+    public Slider Slider_Combo;
+    public Image[] Visual_Cues;
 
-	// Use this for initialization
-	void Start () {
-		StartCoroutine(AddValue(Interval));
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if(Input.GetKeyDown(KeyCode.Space))
-		{
-			PlayerHit = true;
-		}
-		else if(Input.GetKeyUp(KeyCode.Space))
-		{
-			PlayerHit = false;
-		}
-		//intinya disini gue 
-	}
+    public int value_Slider;
+    public int Current_Combo;
+    int Maximum_Combo = 5;
 
-	public ComboEnum FilterCombo(Equipment senjata,int comboBerapa)
-	{
-        //perfect Filter;
-        comboCurrent = comboBerapa;
-		if(comboCurrent < senjata.maxCombo)
-		{
-            if (comboCurrent == 0)
+
+    public float Time;
+    public float value_added;
+
+    float[] Threshold_Margin_Awal = new float[5];
+    float[] Threshold_Margin_Akhir = new float[5];
+    float[] Attack_Speed;
+
+    public bool isHit;
+
+    void Start()
+    {
+        Slider_Combo.value = 0;
+        Current_Combo = 0;
+        //initializing component
+
+        //Unfilled Bawah
+        Threshold_Margin_Awal[0] = 0;
+        Threshold_Margin_Akhir[0] = 0.29f;
+        //Next Hit Bawah
+        Threshold_Margin_Awal[1] = 0.3f;
+        Threshold_Margin_Akhir[1] = 0.49f;
+        //Critical Damage
+        Threshold_Margin_Awal[2] = 0.5f;
+        Threshold_Margin_Akhir[2] = 0.59f;
+        //Next Hit Atas
+        Threshold_Margin_Awal[3] = 0.6f;
+        Threshold_Margin_Akhir[3] = 0.79f;
+        //Unfilled Atas
+        Threshold_Margin_Awal[4] = 0.8f;
+        Threshold_Margin_Akhir[4] = 1;
+        StartCoroutine(Adding_Value());
+    }
+
+    void Update()
+    {
+
+    }
+
+    IEnumerator Adding_Value()
+    {
+        //this is just filling the Slider
+        while (Slider_Combo.value < 1)
+        {
+            yield return new WaitForSeconds(Time);
+            Slider_Combo.value += value_added;
+        }
+        if (Slider_Combo.value == 1)
+        {
+            Reset_Counter();
+        }
+    }
+
+    void Reset_Value()
+    {
+        Slider_Combo.value = 0;
+    }
+
+    void Reset_Counter()
+    {
+        Current_Combo = 0;
+    }
+
+    public bool Check_Threshold(int Current_Combo)
+    {
+        if (Current_Combo < Maximum_Combo)
+        {
+            if (Slider_Combo.value >= Threshold_Margin_Awal[Current_Combo] && Slider_Combo.value <= Threshold_Margin_Akhir[Current_Combo])
             {
-                //change the speed to senjata.speed [0]
-
-                Interval = senjata.attackSpeed[0].wait;
-                speed = senjata.attackSpeed[0].value;
+                return true;
             }
-            if (comboCurrent == 1)
+            else
             {
-                Interval = senjata.attackSpeed[1].wait;
-                speed = senjata.attackSpeed[1].value;
-                //change the speed to senjata.speed [1]
+                return false;
             }
+        }
+        Reset_Value();
+        return false;
+    }
 
-            if (comboCurrent == 2)
-            {
-                Interval = senjata.attackSpeed[2].wait;
-                speed = senjata.attackSpeed[2].value;
-                //change the speed to senjata.speed [2]
-            }
-            if (comboCurrent == 3)
-            {
-                Interval = senjata.attackSpeed[3].wait;
-                speed = senjata.attackSpeed[3].value;
+    public ComboEnum FilterCombo(int comboCounter)
+    {
+        if (Current_Combo < Maximum_Combo)
+        {
 
-                //change the speed to senjata.speed [3]
-            }
-            if (comboCurrent == 4)
+            //Unfilled Bawah
+            if (Slider_Combo.value >= Threshold_Margin_Awal[0] && Slider_Combo.value <= Threshold_Margin_Akhir[0])
             {
-                Interval = senjata.attackSpeed[4].wait;
-                speed = senjata.attackSpeed[4].value;
-                 
-                //change the speed to senjata.speed [4]
+                comboCounter = 0;
+                return ComboEnum.Miss;
             }
-			Perfect_Region.sizeDelta = new Vector2(4.5f*(senjata.perfect[comboCurrent].top-senjata.perfect[comboCurrent].bottom),Perfect_Region.sizeDelta.y);
-			Perfect_Region.anchoredPosition = new Vector2(4.5f*senjata.perfect[comboCurrent].bottom,Perfect_Region.anchoredPosition.y);
-			
-			Good_Region.sizeDelta = new Vector2(4.5f*(senjata.good[comboBerapa].top-senjata.good[comboBerapa].bottom),Good_Region.sizeDelta.y);
-			Good_Region.anchoredPosition = new Vector2(4.5f*senjata.good[comboBerapa].bottom,Good_Region.anchoredPosition.y);
+            //nextHit Bawah
+            if (Slider_Combo.value >= Threshold_Margin_Awal[1] && Slider_Combo.value <= Threshold_Margin_Akhir[1])
+            {
+                comboCounter++;
+                return ComboEnum.Good;
+            }
+            //Critical Damage
+            if (Slider_Combo.value >= Threshold_Margin_Awal[2] && Slider_Combo.value <= Threshold_Margin_Akhir[2])
+            {
+                comboCounter++;
+                return ComboEnum.Perfect;
+            }
+            //nextHit Atas
+            if (Slider_Combo.value >= Threshold_Margin_Awal[3] && Slider_Combo.value <= Threshold_Margin_Awal[3])
+            {
+                comboCounter++;
+                return ComboEnum.Good;
+            }
+            //Unfilled Atas
+            if (Slider_Combo.value >= Threshold_Margin_Awal[4] && Slider_Combo.value <= Threshold_Margin_Akhir[4])
+            {
+                comboCounter = 0;
+                return ComboEnum.Miss;
+            }
+            return ComboEnum.Miss;
+        }
+        return ComboEnum.Default;
+    }
 
-			if(SliderPointer.value >= senjata.perfect[comboBerapa].bottom && SliderPointer.value <= senjata.perfect[comboBerapa].top)
-			{
-				SliderPointer.value = 0;
-				return ComboEnum.Perfect;
-			}
-			else if(SliderPointer.value >= senjata.good[comboBerapa].bottom && SliderPointer.value <= senjata.good[comboBerapa].top)
-			{
-				SliderPointer.value = 0;
-				return ComboEnum.Good;
-			}
-			else if(SliderPointer.value >= 1)
-			{
-				SliderPointer.value = 0;
-				return ComboEnum.Good;
-				/*
-				Harus make sure disini dia nge hide visibility dari slidePointernya
-				bedanya sama miss apa ya?
-				 */
-			}
-            //emang comboBerapanya bisa di set
-		}
-        SliderPointer.value = 0;
-        comboCurrent = 0;
-		return ComboEnum.Miss;
-	}
-	IEnumerator AddValue(float second)
-	{
-		while(true)
-		{
-			if(SliderPointer.value < 1)
-			{
-				SliderPointer.value += speed;
-			}
-			else
-			{
-				SliderPointer.value = 1;
-				SliderPointer.enabled = false;
-			}
-			yield return new WaitForSeconds(second);
-		}
-	}
 }

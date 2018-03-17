@@ -160,6 +160,17 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 520b9f74097ba69468eb45a558342ffb, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &86282980 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1697104647621506, guid: a73377bf0e4683b4f92d1a36645966e0,
+    type: 2}
+  m_PrefabInternal: {fileID: 537957337}
+--- !u!114 &247727397 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114983426473529910, guid: a73377bf0e4683b4f92d1a36645966e0,
+    type: 2}
+  m_PrefabInternal: {fileID: 537957337}
+  m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &537957337
 Prefab:
   m_ObjectHideFlags: 0
@@ -167,6 +178,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114580150644827922, guid: a73377bf0e4683b4f92d1a36645966e0,
+        type: 2}
+      propertyPath: Visual_Cues.Array.size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4750467999090118, guid: a73377bf0e4683b4f92d1a36645966e0, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0.072280884
@@ -209,9 +225,34 @@ Prefab:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 212342472358662556, guid: a73377bf0e4683b4f92d1a36645966e0,
+    - target: {fileID: 114580150644827922, guid: a73377bf0e4683b4f92d1a36645966e0,
         type: 2}
-      propertyPath: m_FlipX
+      propertyPath: Slider_Combo
+      value: 
+      objectReference: {fileID: 247727397}
+    - target: {fileID: 114580150644827922, guid: a73377bf0e4683b4f92d1a36645966e0,
+        type: 2}
+      propertyPath: Time
+      value: 0.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 114580150644827922, guid: a73377bf0e4683b4f92d1a36645966e0,
+        type: 2}
+      propertyPath: value_added
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 114305175123565108, guid: a73377bf0e4683b4f92d1a36645966e0,
+        type: 2}
+      propertyPath: Slider_Gayatri
+      value: 
+      objectReference: {fileID: 86282980}
+    - target: {fileID: 114983426473529910, guid: a73377bf0e4683b4f92d1a36645966e0,
+        type: 2}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224628650990140160, guid: a73377bf0e4683b4f92d1a36645966e0,
+        type: 2}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

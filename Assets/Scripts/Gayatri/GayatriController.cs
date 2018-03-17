@@ -25,6 +25,10 @@ public class GayatriController : MonoBehaviour {
 			myCharacter.Interact();
 			myCharacter.Pickup();
 		}
+        if (Input.GetButtonUp("Right_Bumper"))
+        {
+            myCharacter.OnDodging();
+        }
 	}
 
 	void FixedUpdate(){
