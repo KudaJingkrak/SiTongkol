@@ -229,7 +229,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 		}
 	}
 	
-	public void Attack(float delay = 0.1f){
+	public void Attack(float delay){
 		if(!isAttacking){
 			StartCoroutine(Attacking(delay));
 		}
@@ -243,6 +243,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 
 		isAttacking = true;
 		float TempDamage = 0;
+        print("masuk kesini");
 		if(combo_Sys.FilterCombo(comboCounter) == ComboEnum.Perfect)
 		{
 			TempDamage = (senjata.Damage/100) * Persentase_Perfect;
@@ -422,7 +423,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
     IEnumerator Dodging()
     {
         isDodging = true;
-        boxCollider2D.enabled = false;
+        boxCollider2D.isTrigger = true;
 
         switch (direction)
         {
@@ -444,7 +445,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
         //Mestinya ini tergantung dari animasinya berapa lama
         //tapi ada masalah kalo dia tembus ke tembok gimana (?)
         isDodging = false;
-        boxCollider2D.enabled = true;
+        boxCollider2D.isTrigger = false;
         onceDodging = false;
         isFreeze = false;
     }

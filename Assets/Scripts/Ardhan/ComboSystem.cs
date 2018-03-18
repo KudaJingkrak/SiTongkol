@@ -96,35 +96,44 @@ public class ComboSystem : MonoBehaviour {
     {
         if (Current_Combo < Maximum_Combo)
         {
-
             //Unfilled Bawah
             if (Slider_Combo.value >= Threshold_Margin_Awal[0] && Slider_Combo.value <= Threshold_Margin_Akhir[0])
             {
                 comboCounter = 0;
+                Reset_Value();
+                print("Miss");
                 return ComboEnum.Miss;
             }
             //nextHit Bawah
             if (Slider_Combo.value >= Threshold_Margin_Awal[1] && Slider_Combo.value <= Threshold_Margin_Akhir[1])
             {
                 comboCounter++;
+                Reset_Value();
+                print("Good");
                 return ComboEnum.Good;
             }
             //Critical Damage
             if (Slider_Combo.value >= Threshold_Margin_Awal[2] && Slider_Combo.value <= Threshold_Margin_Akhir[2])
             {
                 comboCounter++;
+                Reset_Value();
+                print("Perfect");
                 return ComboEnum.Perfect;
             }
             //nextHit Atas
             if (Slider_Combo.value >= Threshold_Margin_Awal[3] && Slider_Combo.value <= Threshold_Margin_Awal[3])
             {
                 comboCounter++;
+                Reset_Value();
+                print("Good");
                 return ComboEnum.Good;
             }
             //Unfilled Atas
             if (Slider_Combo.value >= Threshold_Margin_Awal[4] && Slider_Combo.value <= Threshold_Margin_Akhir[4])
             {
                 comboCounter = 0;
+                Reset_Value();
+                print("Miss");
                 return ComboEnum.Miss;
             }
             return ComboEnum.Miss;
