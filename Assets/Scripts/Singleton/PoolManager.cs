@@ -5,18 +5,19 @@ using UnityEngine;
 public class PoolManager : MonoBehaviour {
 	Dictionary<int, Queue<ObjectInstance>> poolDictionary = new Dictionary<int, Queue<ObjectInstance>>();
 
-	static PoolManager _instance;
-
-	public static PoolManager instance{
-		get{
-			if(_instance == null){
-				_instance = FindObjectOfType<PoolManager>();
+	private static PoolManager _instance;
+    public static PoolManager Instance
+    {
+        get
+        {
+			if (_instance == null) {
+				_instance = FindObjectOfType<PoolManager> ();
 			}
-			return _instance;
-		}
-	}
+            return _instance;
+        }
+    }
 
-	public void CreatePool(GameObject prefab, int poolSize) {
+    public void CreatePool(GameObject prefab, int poolSize) {
 		int poolKey = prefab.GetInstanceID ();
 
 		if (!poolDictionary.ContainsKey (poolKey)) {
