@@ -6,7 +6,7 @@ public class PoolManager : MonoBehaviour {
 	Dictionary<int, Queue<ObjectInstance>> poolDictionary = new Dictionary<int, Queue<ObjectInstance>>();
 	
 	private static PoolManager _instance;
-	
+
     public static PoolManager Instance
     {
         get

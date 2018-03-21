@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
-public class Bullet : MonoBehaviour {
+public class Bullet : PoolObject {
 
     public float speed = 50f;
     public float turnRate = 30f;
@@ -18,8 +18,10 @@ public class Bullet : MonoBehaviour {
     float _speed;
     private Transform _up;
     private bool _isEnable;
+    private float _lifetime;
     
     void Awake(){
+        _lifetime = lifetime;
         for(int i = 0; i < transform.childCount; i++){
             Transform child = transform.GetChild(i);
             if(child.name.Equals("Up")){
@@ -39,24 +41,35 @@ public class Bullet : MonoBehaviour {
         if(_isActive){
             if(!_isEnable){
                 Enable();
+            } else {
+                if(isHoming && target){
+                Quaternion newRotation  = Quaternion.LookRotation(transform.position - target.position, Vector3.forward);
+                    newRotation.x = transform.rotation.x;
+                    newRotation.y = transform.rotation.y;
+                    transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * turnRate );
+                }
+
+                transform.position = Vector2.MoveTowards(transform.position, _up.position, _speed * Time.deltaTime);
+
+                _lifetime -= Time.deltaTime;
+                //Debug.Log(_lifetime);
             }
-
-            if(isHoming && target){
-               Quaternion newRotation  = Quaternion.LookRotation(transform.position - target.position, Vector3.forward);
-                newRotation.x = transform.rotation.x;
-                newRotation.y = transform.rotation.y;
-                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * turnRate );
-            }
-
-            transform.position = Vector2.MoveTowards(transform.position, _up.position, _speed * Time.deltaTime);
-
-            lifetime -= Time.deltaTime;  
         }
 
-        if(lifetime < 0 || !_isActive){
+        if(_lifetime < 0 || !_isActive){
             Disable();
         }
 	}
+
+    public override void OnObjectReuse(){
+        gameObject.SetActive(true);
+        Enable();
+    }
+
+    protected override void Destroy(){
+        Disable();
+        gameObject.SetActive(false);
+    }
 
     public void SetTarget(Transform target){
         if(target){
@@ -99,6 +112,7 @@ public class Bullet : MonoBehaviour {
     }
 
     public void Disable(){
+        _isActive = false;
         _isEnable = false;
         // stop bullet moving
         _speed = 0;
@@ -109,6 +123,8 @@ public class Bullet : MonoBehaviour {
     }
 
     public void Enable(){
+        _lifetime = lifetime;
+        _isActive = true;
         _isEnable = true;
         // set bullet moving
         _speed = speed;

@@ -6,7 +6,7 @@ public class PoolObject : MonoBehaviour {
 	
 	public virtual void OnObjectReuse(){}
 
-	protected void Destroy(){
-	
+	protected virtual void Destroy(){
+		gameObject.SetActive(false);
 	}
 }
