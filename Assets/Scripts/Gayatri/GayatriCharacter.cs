@@ -244,6 +244,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 		isAttacking = true;
 		float TempDamage = 0;
         print("masuk kesini");
+        
 		if(combo_Sys.FilterCombo(comboCounter) == ComboEnum.Perfect)
 		{
 			TempDamage = (senjata.Damage/100) * Persentase_Perfect;

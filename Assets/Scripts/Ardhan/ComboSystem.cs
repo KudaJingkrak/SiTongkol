@@ -54,15 +54,20 @@ public class ComboSystem : MonoBehaviour {
     IEnumerator Adding_Value()
     {
         //this is just filling the Slider
-        while (Slider_Combo.value < 1)
+        while (Slider_Combo.value <= 1)
         {
             yield return new WaitForSeconds(Time);
             Slider_Combo.value += value_added;
+            if (Slider_Combo.value == 1)
+            {
+                Reset_Value();
+            }
         }
-        if (Slider_Combo.value == 1)
-        {
-            Reset_Counter();
-        }
+    }
+
+    void Start_Value()
+    {
+
     }
 
     void Reset_Value()
@@ -136,6 +141,7 @@ public class ComboSystem : MonoBehaviour {
                 print("Miss");
                 return ComboEnum.Miss;
             }
+            Reset_Value();
             return ComboEnum.Miss;
         }
         return ComboEnum.Default;
