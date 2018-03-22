@@ -12,6 +12,8 @@ public class Bullet : PoolObject {
     public bool isHoming = false;
     public Transform target;
 
+    TrailRenderer trail;
+    float trailTime;
     SpriteRenderer _sprite;
     Collider2D _collider2D;
     public bool _isActive = false;
@@ -21,6 +23,8 @@ public class Bullet : PoolObject {
     private float _lifetime;
     
     void Awake(){
+        trail = GetComponent<TrailRenderer>();
+        trailTime = trail.time;
         _lifetime = lifetime;
         for(int i = 0; i < transform.childCount; i++){
             Transform child = transform.GetChild(i);
@@ -62,6 +66,8 @@ public class Bullet : PoolObject {
 	}
 
     public override void OnObjectReuse(){
+        trail.time = -1;
+        Invoke("ResetTrail", 0.1f);
         gameObject.SetActive(true);
         Enable();
     }
@@ -69,6 +75,12 @@ public class Bullet : PoolObject {
     protected override void Destroy(){
         Disable();
         gameObject.SetActive(false);
+    }
+
+    void ResetTrail(){
+        if(trail){
+            trail.time = trailTime;
+        }
     }
 
     public void SetTarget(Transform target){
@@ -112,6 +124,7 @@ public class Bullet : PoolObject {
     }
 
     public void Disable(){
+        trail.time = -1;
         _isActive = false;
         _isEnable = false;
         // stop bullet moving
