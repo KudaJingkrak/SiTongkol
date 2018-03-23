@@ -7,7 +7,7 @@ public enum AmuletType{
 	Normal, Fire, Water, Earth, Air //blablablabal.....
 }
 public enum DamageType{
-	Normal, Magic
+	Normal, Magic, Critical
 }
 public enum DamageEffect{
 	None, Fuzzy, Poison, Confused, Sleep //blablabla....

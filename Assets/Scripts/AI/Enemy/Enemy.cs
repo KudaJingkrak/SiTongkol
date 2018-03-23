@@ -93,8 +93,15 @@ public class Enemy : MonoBehaviour, IAttackable{
 		anim.SetFloat("MoveY", y);
 	}
 
-	public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None){
-        textDamage_Manager.Add("" + damage, transform, "default");
+	public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type, DamageEffect effect = DamageEffect.None){
+        if (type == DamageType.Normal)
+        {
+            textDamage_Manager.Add("" + damage, transform, "default");
+        }
+        else if (type == DamageType.Critical)
+        {
+            textDamage_Manager.Add("" + damage, transform, "critical");
+        }
         Debug.Log("harusnya ada damage");
         _health -= damage;
 

@@ -240,7 +240,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 	 */
 	
 	IEnumerator Attacking(float delay){
-
+        ComboEnum comboPlayer = combo_Sys.FilterCombo(comboCounter);
 		isAttacking = true;
 		float TempDamage = 0;
         print("masuk kesini");
@@ -287,7 +287,14 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 				IAttackable attackable = hits[i].collider.gameObject.GetComponent<IAttackable>();
 				if(attackable != null){
 					Debug.Log("Menyerang "+ hits[i].collider.gameObject.name);
-					attackable.ApplyDamage(TempDamage);
+                    if (comboPlayer == ComboEnum.Perfect)
+                    {
+                        attackable.ApplyDamage(TempDamage, null, DamageType.Critical);
+                    }
+                    else
+                    {
+                        attackable.ApplyDamage(TempDamage, null, DamageType.Normal);
+                    }
 				}
 			}
 		}
