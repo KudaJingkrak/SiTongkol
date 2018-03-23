@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Panda;
+using Guirao.UltimateTextDamage;  
 
 [RequireComponent(typeof(Droppable), typeof(Rigidbody2D), typeof(Animator))]
 public class Enemy : MonoBehaviour, IAttackable{
+    public UltimateTextDamageManager textDamage_Manager;
 	public MonsterName label; 	
 	public float health = 10f;
 	public BoxCollider2D boxColl2D;
@@ -92,6 +94,8 @@ public class Enemy : MonoBehaviour, IAttackable{
 	}
 
 	public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None){
+        textDamage_Manager.Add("" + damage, transform, "default");
+        Debug.Log("harusnya ada damage");
         _health -= damage;
 
 		Debug.Log("Health "+gameObject.name+" : " + _health);
