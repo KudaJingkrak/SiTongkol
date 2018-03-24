@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[RequireComponent(typeof(GayatriCharacter))]
 public class GayatriController : MonoBehaviour {
-	public GayatriCharacter myCharacter;
+	GayatriCharacter myCharacter;
 	public DialogueManager m_Dialogue;
 	float _axisX = 0f, _axisY = 0f;
 	// Use this for initialization
+	void Awake(){
+		myCharacter = gameObject.GetComponent<GayatriCharacter>();
+	}
 	void Start () {
 		
 	}
@@ -25,7 +28,7 @@ public class GayatriController : MonoBehaviour {
 			myCharacter.Interact();
 			myCharacter.Pickup();
 		}
-        if (Input.GetButtonUp("Right_Bumper"))
+        if (Input.GetButtonDown("Right_Bumper"))
         {
             myCharacter.OnDodging();
         }

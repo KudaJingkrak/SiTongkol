@@ -93,7 +93,7 @@ public class Enemy : MonoBehaviour, IAttackable{
 		anim.SetFloat("MoveY", y);
 	}
 
-	public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type, DamageEffect effect = DamageEffect.None){
+	public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None){
         if (type == DamageType.Normal)
         {
             textDamage_Manager.Add("" + damage, transform, "default");

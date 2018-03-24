@@ -10,26 +10,38 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 	public float speed;
 	public float attackDistance = 0.1f;
 	public float inteactDistance = 0.1f;
+
+	// Pull
 	public bool isPulling;
 	public bool isHorizontalPulling;
 	public bool isLifting;
-	public bool isAttacking;
+	private float linearDrag;
+	
+	// Dodge
+	public bool isDodging;
+	public bool onceDodging;
+	public bool isFreeze;
+	Coroutine DodgeCoroutine;
+	
+	// Reflect or Defend
+	public bool isReflect;
+
+	// Bomb
+	public BombSystem systemBomb;
+
+	// Interact
 	public bool isInteracting;
 	public bool onDialogue;
-    public bool isReflect;
-    public bool isDodging;
-    public bool isFreeze;
-    public bool onceDodging;
 	private IInteractable interactable;
-	private float linearDrag;
-    public BombSystem systemBomb;
-
+	
 	//Movable
 	private Moveable _moveable;
 	private float _moveX = 0.0f, _moveY = 0.0f;
 	private Direction _moveDir  = Direction.Front;
 	private BoxCollider2D _moveableColl = null;
 
+	// Attacking
+	public bool isAttacking;
 	private int comboCounter = 0;
 	public Equipment senjata;
 
@@ -39,7 +51,6 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 	public float Persentase_Perfect;
 	public float Persentase_Good;
 	public float Persentase_Miss;
-
 
 	//private float _slower = 0.0f;
 	// Use this for initialization
@@ -57,7 +68,6 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
             //ngetest
             DeployBomb();
         }
-		//_slower = 1 - linearDampling;
 	}
 
 	void FixedUpdate(){
@@ -66,7 +76,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 		animator.SetFloat("Speed", rigid2D.velocity.sqrMagnitude);
 		animator.SetBool("IsPulling", isPulling);
 		animator.SetBool("IsLifting", isLifting);
-        animator.SetBool("isDodging", isDodging);
+        animator.SetBool("IsDodging", isDodging);
 		
 		switch(direction){
 			case Direction.Front:
@@ -121,6 +131,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 		}
 		
 	}
+
 
 	public void SetDirection(Direction _direction){
 		if(!isPulling){
@@ -228,18 +239,16 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 			}
 		}
 	}
-	
+
+	#region Attack	
 	public void Attack(float delay){
 		if(!isAttacking){
 			StartCoroutine(Attacking(delay));
 		}
 	}
-
-	/*
-	Ketika dia men
-	 */
 	
-	IEnumerator Attacking(float delay){
+	IEnumerator Attacking(float delay)
+	{
         ComboEnum comboPlayer = combo_Sys.FilterCombo(comboCounter);
 		isAttacking = true;
 		float TempDamage = 0;
@@ -304,10 +313,15 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 	}
 
 	void UnAttack(){
+
 		isAttacking = false;
 	}
 
-	public bool Pull(){
+	#endregion Attack
+
+	#region Pull
+	public bool Pull()
+	{
 		if(isPulling) return false;
 
 		animator.SetFloat("TempX", _moveX);
@@ -353,7 +367,8 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 		return false;
 	}
 
-	IEnumerator MovingObject(float delay){
+	IEnumerator MovingObject(float delay)
+	{
 		yield return new WaitForSeconds(delay);
 		if(_moveable != null){
 			switch(direction){
@@ -374,7 +389,8 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 		
 	}
 
-	public void UnPull(){
+	public void UnPull()
+	{
 		if(isPulling){
 			_moveable.transform.SetParent(null);
 			_moveable.rb_Object.isKinematic = false;
@@ -383,7 +399,10 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 		}
 	}
 
-	public void Pickup(){
+	#endregion Pull
+
+	public void Pickup()
+	{
 		Debug.Log("Pickup");
 		RaycastHit2D[] hits = Physics2D.BoxCastAll(boxCollider2D.transform.position, boxCollider2D.size, 0.0f, Vector3.zero);
 		for(int i =0; i < hits.Length; i++){
@@ -408,56 +427,90 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
         isReflect = true;
     }
 
+	#region Dodge
     public void OnDodging()
     {
         animator.SetFloat("Speed", 0);
         if (!onceDodging)
             {
-                StartCoroutine(Dodging());
-                onceDodging = true;
+				onceDodging = true;
                 isFreeze = true;
+                DodgeCoroutine = StartCoroutine(Dodging());
             }
-     
-        /*
-         * TO DO:
-         * if (isDodging)
-         * 1. Sprite Change
-         * 2. 
-         * 3.
-         * 
-         */
     }
+	public bool CheckCanDodge()
+	{
+		Vector2 _castDir = Vector2.zero; 
+		switch(direction){
+			case Direction.Back:
+				_castDir = Vector2.up;
+				break;
+			case Direction.Front:
+				_castDir = Vector2.down;
+				break;
+			case Direction.Left:
+				_castDir = Vector2.left;
+				break;
+			case Direction.Right:
+				_castDir = Vector2.right;
+				break;
+		}
+
+		RaycastHit2D[] hits = Physics2D.BoxCastAll((boxCollider2D.transform.position + (Vector3)boxCollider2D.offset), boxCollider2D.size, 0.0f, _castDir, 0.25f);
+		for(int i =0; i < hits.Length; i++){
+			if(hits[i].collider != null && !hits[i].collider.gameObject.Equals(this.gameObject)){
+				if(hits[i].collider.gameObject.layer == 9) // Jika unwalkable
+				{
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
 
     IEnumerator Dodging()
     {
-        isDodging = true;
-        boxCollider2D.isTrigger = true;
-
-        switch (direction)
-        {
-            case Direction.Back:
-                rigid2D.AddForce(Vector2.up * rigid2D.mass * 35 / Time.deltaTime);
-                break;
-            case Direction.Front:
-                rigid2D.AddForce(Vector2.down * rigid2D.mass * 35 / Time.deltaTime);
-                break;
-            case Direction.Left:
-                rigid2D.AddForce(Vector2.left * rigid2D.mass * 35 / Time.deltaTime);
-                break;
-            case Direction.Right:
-                rigid2D.AddForce(Vector2.right * rigid2D.mass * 35 / Time.deltaTime);
-                break;
-        }
-
-        yield return new WaitForSeconds(0.5f);
-        //Mestinya ini tergantung dari animasinya berapa lama
-        //tapi ada masalah kalo dia tembus ke tembok gimana (?)
-        isDodging = false;
-        boxCollider2D.isTrigger = false;
-        onceDodging = false;
-        isFreeze = false;
+        StartDodge();  
+		yield return new WaitForSeconds(0.5f); // waktu anim dodge
+		EndDodge();
     }
 
+	public void StartDodge()
+	{
+		isDodging = true;
+        boxCollider2D.isTrigger = true;
+		if(CheckCanDodge()){
+			rigid2D.velocity = Vector2.zero;
+			switch (direction)
+			{
+				case Direction.Back:
+					rigid2D.AddForce(Vector2.up * rigid2D.mass * 35 / Time.deltaTime);
+					break;
+				case Direction.Front:
+					rigid2D.AddForce(Vector2.down * rigid2D.mass * 35 / Time.deltaTime);
+					break;
+				case Direction.Left:
+					rigid2D.AddForce(Vector2.left * rigid2D.mass * 35 / Time.deltaTime);
+					break;
+				case Direction.Right:
+					rigid2D.AddForce(Vector2.right * rigid2D.mass * 35 / Time.deltaTime);
+					break;
+			}
+		}
+	}
+
+	public void EndDodge()
+	{
+		StopCoroutine(DodgeCoroutine);
+		boxCollider2D.isTrigger = false;
+        isDodging = false;
+        onceDodging = false;
+        isFreeze = false;
+	}
+
+	#endregion Dodge
+	
     public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None)
     {
         Debug.Log("On attack");
@@ -472,4 +525,24 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
     {
         
     }
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if(other){
+			if(onceDodging && other.gameObject.layer == 9) //jika dodge dan layer unwalkable
+			{
+				rigid2D.velocity = Vector2.zero;
+			}
+		}
+	}
+
+	void OnTriggerStay2D(Collider2D other){
+		if(other){
+			if(onceDodging && other.gameObject.layer == 9) //jika dodge dan layer unwalkable
+			{
+				rigid2D.velocity = Vector2.zero;
+			}
+		}
+	}
+
 }
