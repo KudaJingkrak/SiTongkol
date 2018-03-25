@@ -526,6 +526,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
         
     }
 
+<<<<<<< Updated upstream
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if(other){
@@ -545,4 +546,14 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 		}
 	}
 
+=======
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+        {
+            boxCollider2D.isTrigger = false;
+            rigid2D.velocity = new Vector2(0, 0);
+        }
+    }
+>>>>>>> Stashed changes
 }
