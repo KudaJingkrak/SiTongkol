@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class dummyBase : MonoBehaviour {
+public class AITargetComp : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
