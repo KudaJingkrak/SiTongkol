@@ -21,6 +21,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 	public bool isDodging;
 	public bool onceDodging;
 	public bool isFreeze;
+    public bool isCrouching;
 	Coroutine DodgeCoroutine;
 	
 	// Reflect or Defend
@@ -59,6 +60,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
         combo_Sys = Slider_Gayatri.GetComponentInParent<ComboSystem>();
         isReflect = false;
         isFreeze = false;
+        isCrouching = false;
 	}
 	
 	// Update is called once per frame
@@ -71,12 +73,22 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 	}
 
 	void FixedUpdate(){
-		//rigid2D.velocity = rigid2D.velocity * _slower;
+        //rigid2D.velocity = rigid2D.velocity * _slower;
+        if (isCrouching)
+        {
+            rigid2D.velocity = rigid2D.velocity * 2 / 5;
+            boxCollider2D.isTrigger = true;
+        }
+        else
+        {
+            boxCollider2D.isTrigger = false;
+        }
 
 		animator.SetFloat("Speed", rigid2D.velocity.sqrMagnitude);
 		animator.SetBool("IsPulling", isPulling);
 		animator.SetBool("IsLifting", isLifting);
         animator.SetBool("IsDodging", isDodging);
+        animator.SetBool("isCrouching", isCrouching);
 		
 		switch(direction){
 			case Direction.Front:
@@ -501,7 +513,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 	}
 
 	public void EndDodge()
-	{
+    {
 		StopCoroutine(DodgeCoroutine);
 		boxCollider2D.isTrigger = false;
         isDodging = false;
@@ -509,8 +521,27 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
         isFreeze = false;
 	}
 
-	#endregion Dodge
-	
+    #endregion Dodge
+
+    #region Crouch
+    public void Crouch()
+    {
+        if (!isCrouching)
+        {
+            isCrouching = true;
+            //spritenya diganti sama yang Crouch
+        }
+        else
+        {
+            isCrouching = false;
+            //sprite diganti sama yang Idle
+        }
+        /*
+         * Tinggal Switching Crouch aja si.
+         */
+    }
+
+#endregion
     public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None)
     {
         Debug.Log("On attack");
@@ -529,20 +560,29 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if(other){
-			if(onceDodging && other.gameObject.layer == 9) //jika dodge dan layer unwalkable
-			{
-				rigid2D.velocity = Vector2.zero;
-			}
+            if (onceDodging && other.gameObject.layer == 9) //jika dodge dan layer unwalkable
+            {
+                rigid2D.velocity = Vector2.zero;
+            }
+            else if (isCrouching && other.gameObject.layer == 9)
+            {
+                rigid2D.velocity = Vector2.zero;
+                isCrouching = false;
+            }
 		}
 	}
 
 	void OnTriggerStay2D(Collider2D other){
 		if(other){
-			if(onceDodging && other.gameObject.layer == 9) //jika dodge dan layer unwalkable
-			{
-				rigid2D.velocity = Vector2.zero;
-			}
+            if (onceDodging && other.gameObject.layer == 9) //jika dodge dan layer unwalkable
+            {
+                rigid2D.velocity = Vector2.zero;
+            }
+            else if (isCrouching && other.gameObject.layer == 9)
+            {
+                rigid2D.velocity = Vector2.zero;
+                isCrouching = false;
+            }
 		}
 	}
-
 }
