@@ -18,6 +18,10 @@ public class PoolManager : MonoBehaviour {
         }
     }
 
+	public bool CheckObject(GameObject prefab){
+		return poolDictionary.ContainsKey(prefab.GetInstanceID());
+	}
+
     public void CreatePool(GameObject prefab, int poolSize) {
 		int poolKey = prefab.GetInstanceID ();
 

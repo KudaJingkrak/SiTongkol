@@ -54,6 +54,10 @@ public class AIMovementComp : MonoBehaviour {
 			}
 		}
 	}
+
+	public Direction GetDirection(){
+		return _dir;
+	}
 	
 	public bool SetRandomDirection(){
 		SetDirection((Direction)Random.Range(0, 4));
@@ -249,7 +253,7 @@ public class AIMovementComp : MonoBehaviour {
 	}
 
 	void Start(){
-		StartCoroutine(abc(2f));
+		
 	}
 
 	void Update(){

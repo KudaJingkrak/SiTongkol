@@ -227,14 +227,12 @@ public class Bullet : PoolObject {
 
             if (PosisiDepan && collision.gameObject.GetComponent<GayatriCharacter>().isReflect)
             {
-                //Temporary
-                Destroy(gameObject);
+               gameObject.SetActive(false);
             }
             else
             {
                 attackable.ApplyDamage(damage);
-                //Temporary
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
         

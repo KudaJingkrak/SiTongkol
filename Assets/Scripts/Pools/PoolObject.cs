@@ -10,3 +10,9 @@ public class PoolObject : MonoBehaviour {
 		gameObject.SetActive(false);
 	}
 }
+
+[System.Serializable]
+public class PoolStruct{
+	public GameObject prefab;
+	public int size;
+}
