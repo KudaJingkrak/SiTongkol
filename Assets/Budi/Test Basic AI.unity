@@ -742,35 +742,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114305175123565108, guid: a73377bf0e4683b4f92d1a36645966e0,
-        type: 2}
-      propertyPath: senjata.attackSpeed.Array.data[0].value
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114305175123565108, guid: a73377bf0e4683b4f92d1a36645966e0,
-        type: 2}
-      propertyPath: senjata.attackSpeed.Array.data[1].value
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114305175123565108, guid: a73377bf0e4683b4f92d1a36645966e0,
-        type: 2}
-      propertyPath: senjata.attackSpeed.Array.data[2].value
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114305175123565108, guid: a73377bf0e4683b4f92d1a36645966e0,
-        type: 2}
-      propertyPath: senjata.attackSpeed.Array.data[3].value
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114305175123565108, guid: a73377bf0e4683b4f92d1a36645966e0,
-        type: 2}
-      propertyPath: senjata.attackSpeed.Array.data[4].value
-      value: 0.01
-      objectReference: {fileID: 0}
     - target: {fileID: 224628650990140160, guid: a73377bf0e4683b4f92d1a36645966e0,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a73377bf0e4683b4f92d1a36645966e0, type: 2}
