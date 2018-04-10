@@ -261,20 +261,24 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 	
 	IEnumerator Attacking(float delay)
 	{
-        ComboEnum comboPlayer = combo_Sys.FilterCombo(comboCounter);
 		isAttacking = true;
-		float TempDamage = 0;
-        print("masuk kesini");
         
-		if(combo_Sys.FilterCombo(comboCounter) == ComboEnum.Perfect)
+		ComboFeedback feedback = combo_Sys.FilterCombo(comboCounter, senjata);
+		ComboEnum comboPlayer = feedback.combo;
+		comboCounter = feedback.counter;
+		
+		float TempDamage = 0;
+    	Debug.Log("Attacking is " + comboPlayer + " dengan combo " + comboCounter);
+        
+		if(comboPlayer == ComboEnum.Perfect)
 		{
 			TempDamage = (senjata.Damage/100) * Persentase_Perfect;
 		}
-		else if(combo_Sys.FilterCombo(comboCounter) == ComboEnum.Good)
+		else if(comboPlayer == ComboEnum.Good)
 		{
 			TempDamage = (senjata.Damage/100) * Persentase_Good;
 		}
-		else if(combo_Sys.FilterCombo(comboCounter) == ComboEnum.Miss)
+		else if(comboPlayer == ComboEnum.Miss)
 		{
 			TempDamage = (senjata.Damage/100) * Persentase_Miss;
 		}
@@ -319,7 +323,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 				}
 			}
 		}
-		CancelInvoke("");
+		CancelInvoke("UnAttack");
 		yield return new WaitForSeconds(0.02f);
 		Invoke("UnAttack",senjata.attackSpeed[comboCounter].wait);
 	}

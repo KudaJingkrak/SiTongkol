@@ -51,7 +51,7 @@ public class Margin{
 [System.Serializable]
 public class AttackSpeed{
 	public float wait;
-	public float value;
+	[Range(1,100)]public float value;
 }
 [System.Serializable]
 public class Amulet: Item{

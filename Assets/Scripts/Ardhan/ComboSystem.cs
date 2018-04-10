@@ -4,147 +4,99 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ComboSystem : MonoBehaviour {
+    public const float SPEED_MUL = 0.0001f;
     public ComboEnum kondisi_Player;
-    public Slider Slider_Combo;
+    public Slider sliderCombo;
     public Image[] Visual_Cues;
 
     public int value_Slider;
     public int Current_Combo;
-    int Maximum_Combo = 5;
+    
+    [Header("UI Fill Region")]
+    public RectTransform fillArea;
+    public RectTransform perfectRegion;
+    public RectTransform goodRegion;
 
-
-    public float Time;
-    public float value_added;
-
-    float[] Threshold_Margin_Awal = new float[5];
-    float[] Threshold_Margin_Akhir = new float[5];
-    float[] Attack_Speed;
-
-    public bool isHit;
+    float addedValue;
+    float initAttackSpeed = 30f;
 
     void Start()
     {
-        Slider_Combo.value = 0;
-        Current_Combo = 0;
+        sliderCombo.value = 1;
         //initializing component
+        
+        goodRegion.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 0.3f, 3f);
 
-        //Unfilled Bawah
-        Threshold_Margin_Awal[0] = 0;
-        Threshold_Margin_Akhir[0] = 0.29f;
-        //Next Hit Bawah
-        Threshold_Margin_Awal[1] = 0.3f;
-        Threshold_Margin_Akhir[1] = 0.49f;
-        //Critical Damage
-        Threshold_Margin_Awal[2] = 0.5f;
-        Threshold_Margin_Akhir[2] = 0.59f;
-        //Next Hit Atas
-        Threshold_Margin_Awal[3] = 0.6f;
-        Threshold_Margin_Akhir[3] = 0.79f;
-        //Unfilled Atas
-        Threshold_Margin_Awal[4] = 0.8f;
-        Threshold_Margin_Akhir[4] = 1;
-        StartCoroutine(Adding_Value());
+        Debug.Log("Panjanaaan " + fillArea.rect.width);
     }
 
     void Update()
     {
-
-    }
-
-    IEnumerator Adding_Value()
-    {
-        //this is just filling the Slider
-        while (Slider_Combo.value <= 1)
-        {
-            yield return new WaitForSeconds(Time);
-            Slider_Combo.value += value_added;
-            if (Slider_Combo.value == 1)
-            {
-                Reset_Value();
-            }
+        if(sliderCombo.value <= 1){
+            sliderCombo.value += addedValue;
         }
     }
+    
+    public void SetMargin(int comboCounter, Equipment equipment){
+        float perfectInset = fillArea.rect.width * equipment.perfect[comboCounter].bottom;
+        float perfectSize = (equipment.perfect[comboCounter].top - equipment.perfect[comboCounter].bottom) * fillArea.rect.width;
+        float goodInset = fillArea.rect.width * equipment.good[comboCounter].bottom;
+        float goodSize = (equipment.good[comboCounter].top - equipment.good[comboCounter].bottom) * fillArea.rect.width;
 
-    void Start_Value()
-    {
-
+        perfectRegion.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, perfectInset, perfectSize);
+        goodRegion.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, goodInset, goodSize);
     }
 
-    void Reset_Value()
+    void ResetValue()
     {
-        Slider_Combo.value = 0;
+        sliderCombo.value = 0;
     }
 
-    void Reset_Counter()
-    {
-        Current_Combo = 0;
+    public void CalcAddedValue(float attackSpeed){
+        addedValue = (1f / Time.deltaTime) * (attackSpeed * SPEED_MUL);
     }
 
-    public bool Check_Threshold(int Current_Combo)
-    {
-        if (Current_Combo < Maximum_Combo)
-        {
-            if (Slider_Combo.value >= Threshold_Margin_Awal[Current_Combo] && Slider_Combo.value <= Threshold_Margin_Akhir[Current_Combo])
-            {
-                return true;
+    public bool IsBetween(float value, Margin margin){
+        return value >= margin.bottom && value <= margin.top;
+    }
+
+    public ComboFeedback FilterCombo(int comboCounter, Equipment equipment){
+        
+        ComboFeedback feedback = new ComboFeedback();
+        initAttackSpeed = equipment.attackSpeed[0].value;
+
+        if(comboCounter > 0 && sliderCombo.value >= 1){ // jika bar sudah penuh otomatis good dan combo = 1
+            feedback.combo = ComboEnum.Good;
+            feedback.counter = 1;
+
+        }else if(comboCounter < equipment.perfect.Length){
+                        
+            if(IsBetween(sliderCombo.value, equipment.perfect[comboCounter])){  //cek perfect
+                feedback.combo = ComboEnum.Perfect;
+                feedback.counter = comboCounter + 1;
+
+            }else if(IsBetween(sliderCombo.value, equipment.good[comboCounter])){ //cek good
+                feedback.combo = ComboEnum.Good;
+                feedback.counter = comboCounter + 1;
+
+            }else{ //else miss
+                feedback.combo = ComboEnum.Miss;
+                feedback.counter = 0;
             }
-            else
-            {
-                return false;
+
+            if(feedback.counter > 0 && feedback.counter >= equipment.perfect.Length){ // if after max combo
+                feedback.counter = 0;
             }
         }
-        Reset_Value();
-        return false;
-    }
 
-    public ComboEnum FilterCombo(int comboCounter)
-    {
-        if (Current_Combo < Maximum_Combo)
-        {
-            //Unfilled Bawah
-            if (Slider_Combo.value >= Threshold_Margin_Awal[0] && Slider_Combo.value <= Threshold_Margin_Akhir[0])
-            {
-                comboCounter = 0;
-                Reset_Value();
-                print("Miss");
-                return ComboEnum.Miss;
-            }
-            //nextHit Bawah
-            if (Slider_Combo.value >= Threshold_Margin_Awal[1] && Slider_Combo.value <= Threshold_Margin_Akhir[1])
-            {
-                comboCounter++;
-                Reset_Value();
-                print("Good");
-                return ComboEnum.Good;
-            }
-            //Critical Damage
-            if (Slider_Combo.value >= Threshold_Margin_Awal[2] && Slider_Combo.value <= Threshold_Margin_Akhir[2])
-            {
-                comboCounter++;
-                Reset_Value();
-                print("Perfect");
-                return ComboEnum.Perfect;
-            }
-            //nextHit Atas
-            if (Slider_Combo.value >= Threshold_Margin_Awal[3] && Slider_Combo.value <= Threshold_Margin_Awal[3])
-            {
-                comboCounter++;
-                Reset_Value();
-                print("Good");
-                return ComboEnum.Good;
-            }
-            //Unfilled Atas
-            if (Slider_Combo.value >= Threshold_Margin_Awal[4] && Slider_Combo.value <= Threshold_Margin_Akhir[4])
-            {
-                comboCounter = 0;
-                Reset_Value();
-                print("Miss");
-                return ComboEnum.Miss;
-            }
-            Reset_Value();
-            return ComboEnum.Miss;
-        }
-        return ComboEnum.Default;
+        CalcAddedValue(equipment.attackSpeed[feedback.counter].value);
+        SetMargin(feedback.counter, equipment);
+        ResetValue();
+        return feedback;
     }
+}
 
+public class ComboFeedback{
+    public ComboEnum combo = ComboEnum.Miss;
+    public int counter = 0;
 }

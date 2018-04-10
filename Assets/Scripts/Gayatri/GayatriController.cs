@@ -16,7 +16,7 @@ public class GayatriController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetButtonUp("B")){
+		if(Input.GetButtonDown("B")){
 			myCharacter.Attack(0.3f);
 		}
 
