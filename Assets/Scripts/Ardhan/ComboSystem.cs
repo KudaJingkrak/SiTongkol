@@ -8,7 +8,7 @@ public class ComboSystem : MonoBehaviour {
     public Slider Slider_Combo;
     public Image[] Visual_Cues;
 
-    public int value_Slider;
+    public float value_Slider;
     public int Current_Combo;
     int Maximum_Combo = 5;
 
@@ -58,6 +58,7 @@ public class ComboSystem : MonoBehaviour {
         {
             yield return new WaitForSeconds(Time);
             Slider_Combo.value += value_added;
+            value_Slider = Slider_Combo.value;
             if (Slider_Combo.value == 1)
             {
                 Reset_Value();
@@ -101,22 +102,6 @@ public class ComboSystem : MonoBehaviour {
     {
         if (Current_Combo < Maximum_Combo)
         {
-            //Unfilled Bawah
-            if (Slider_Combo.value >= Threshold_Margin_Awal[0] && Slider_Combo.value <= Threshold_Margin_Akhir[0])
-            {
-                comboCounter = 0;
-                Reset_Value();
-                print("Miss");
-                return ComboEnum.Miss;
-            }
-            //nextHit Bawah
-            if (Slider_Combo.value >= Threshold_Margin_Awal[1] && Slider_Combo.value <= Threshold_Margin_Akhir[1])
-            {
-                comboCounter++;
-                Reset_Value();
-                print("Good");
-                return ComboEnum.Good;
-            }
             //Critical Damage
             if (Slider_Combo.value >= Threshold_Margin_Awal[2] && Slider_Combo.value <= Threshold_Margin_Akhir[2])
             {
@@ -125,6 +110,16 @@ public class ComboSystem : MonoBehaviour {
                 print("Perfect");
                 return ComboEnum.Perfect;
             }
+
+            //nextHit Bawah
+            if (Slider_Combo.value >= Threshold_Margin_Awal[1] && Slider_Combo.value <= Threshold_Margin_Akhir[1])
+            {
+                comboCounter++;
+                Reset_Value();
+                print("Good");
+                return ComboEnum.Good;
+            }
+
             //nextHit Atas
             if (Slider_Combo.value >= Threshold_Margin_Awal[3] && Slider_Combo.value <= Threshold_Margin_Awal[3])
             {
@@ -133,6 +128,16 @@ public class ComboSystem : MonoBehaviour {
                 print("Good");
                 return ComboEnum.Good;
             }
+
+            //Unfilled Bawah
+            if (Slider_Combo.value >= Threshold_Margin_Awal[0] && Slider_Combo.value <= Threshold_Margin_Akhir[0])
+            {
+                comboCounter = 0;
+                Reset_Value();
+                print("Miss");
+                return ComboEnum.Miss;
+            }
+
             //Unfilled Atas
             if (Slider_Combo.value >= Threshold_Margin_Awal[4] && Slider_Combo.value <= Threshold_Margin_Akhir[4])
             {

@@ -11,7 +11,7 @@ namespace Guirao.UltimateTextDamage
 
         private void OnEnable( )
         {
-            animator.SetFloat( offsetParamName , Random.value );
+            animator.SetFloat( offsetParamName , Random.Range(-0.01f,0.001f));
         }
     }
 }

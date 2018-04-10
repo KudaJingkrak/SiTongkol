@@ -264,7 +264,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
         ComboEnum comboPlayer = combo_Sys.FilterCombo(comboCounter);
 		isAttacking = true;
 		float TempDamage = 0;
-        print("masuk kesini");
+        Debug.Log(comboPlayer);
         
 		if(combo_Sys.FilterCombo(comboCounter) == ComboEnum.Perfect)
 		{
