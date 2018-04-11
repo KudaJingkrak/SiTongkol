@@ -18,6 +18,11 @@ public class AIMovementComp : MonoBehaviour {
 	private Rigidbody2D _rigid2D;
 
 	#region Movement
+	public void SetSpeed(float speed){
+		movementSpeed = speed;
+		_speed = speed;
+	}
+
 	public void SetDirection(Direction direction){
 		this._dir = direction;
 		switch(_dir){
@@ -56,6 +61,15 @@ public class AIMovementComp : MonoBehaviour {
 		}
 	}
 
+	public void SetDirectionByTarget(){
+		if(target){
+			Vector2 dirTarget = (target.position - transform.position).normalized;
+			x = dirTarget.x;
+			y = dirTarget.y;
+			SetDirection();
+		}
+	}
+
 	public Direction GetDirection(){
 		return _dir;
 	}
@@ -73,6 +87,7 @@ public class AIMovementComp : MonoBehaviour {
 		}
 		return Vector2.zero;
 	}
+
 	[Panda.Task]
 	public bool SetRandomDirection(){
 		SetDirection((Direction)Random.Range(0, 4));
@@ -92,10 +107,15 @@ public class AIMovementComp : MonoBehaviour {
 		_rigid2D.velocity = new Vector3(x,y,0) * Mathf.Lerp(0f, _speed, 1f);
 		SetDirection();
 	}
+	
 	[Panda.Task]
 	public void MoveByDirection(){
 		Move(x,y);
 		Panda.Task.current.Succeed();
+	}
+
+	public void Launch(float x, float y, float power = 1f){
+		Launch(new Vector2(x,y), power);
 	}
 
 	public void Launch(Vector2 direction, float power = 1f){
@@ -106,6 +126,10 @@ public class AIMovementComp : MonoBehaviour {
 		SetDirection();
 	}
 	private IEnumerator QMoveEnum;
+	public void QuickMove(float x, float y, float power = 1f, float timeStop = 0.1f){
+		Vector2 velocity = new Vector2(x,y) * power;
+		QuickMove(velocity, timeStop);
+	}
 	public void QuickMove(Vector2 direction, float power = 1f, float timeStop = 0.1f){
 		Vector2 velocity = direction * power;
 		QuickMove(velocity, timeStop);
@@ -116,11 +140,10 @@ public class AIMovementComp : MonoBehaviour {
 		if(QMoveEnum != null){
 			StopCoroutine(QMoveEnum);
 		}
-		QMoveEnum = QMove(velocity, timeStop);
+		QMoveEnum = QuickMoveItr(velocity, timeStop);
 		StartCoroutine(QMoveEnum);
 	}
-
-	IEnumerator QMove(Vector2 velocity, float delay){
+	IEnumerator QuickMoveItr(Vector2 velocity, float delay){
 		_rigid2D.velocity = velocity;
 		yield return new WaitForSeconds(delay);
 		_rigid2D.velocity = Vector2.zero;
