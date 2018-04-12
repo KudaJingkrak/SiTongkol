@@ -1,0 +1,32 @@
+tree("Root")
+	fallback
+		tree("Attacking")
+		tree("MoveToPlayer")
+
+tree("MoveToPlayer")
+	while
+		sequence
+			isPlayerAsTarget 
+			isNearPlayer
+			not canAttackPlayer
+		sequence
+			Wait(1.0)
+			SetDirectionToTarget
+			QuickMoveByDirection(7.5, 0.1)
+
+
+
+tree("Attacking")
+	while
+		canAttackPlayer
+		sequence
+			Wait(1.75)
+			while not isAttacking
+				doAttack
+
+tree("Idle")
+	sequence
+		SetStep
+		while not isEndStep
+			sequence
+				CircularMove(0)

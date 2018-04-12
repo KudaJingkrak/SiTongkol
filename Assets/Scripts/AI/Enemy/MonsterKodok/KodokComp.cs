@@ -28,18 +28,29 @@ public class KodokComp : MonoBehaviour, IAttackable {
 			return false;
 		}
 	}
+
 	[Panda.Task]
-	public void Attack(){
+	public void doAttack(){
 		isAttacking = true;
-		Vector2 dir = _movementComp.GetVectorDirection();
-		_movementComp.QuickMove(dir, 20, 0.1f);
+		//TODO set anim attack
+
+		RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, _boxColl2D.size, 0f, _movementComp.GetVectorDirection(), attackRange);
+		for(int i =0; i < hits.Length; i++){
+			if(hits[i].collider.CompareTag("Player")){
+				Debug.Log("Apply Damage to Player");
+			}
+		}
+		//Delay until anim done
 		StartCoroutine(StopAttack(0.1f));
 		Panda.Task.current.Succeed();
+
 	}
+
 	IEnumerator StopAttack(float delay){
 		yield return new WaitForSeconds(delay);
 		isAttacking = false;
 	}
+
 	#endregion
 
 	#region Attackable
@@ -67,6 +78,9 @@ public class KodokComp : MonoBehaviour, IAttackable {
     void Start () {
 		_movementComp = GetComponent<AIMovementComp>();
 		_boxColl2D = GetComponent<BoxCollider2D>();
+
+		//TODO nanti ganti
+		_movementComp.SetPlayerAsTarget();
 	}
 	
 	// Update is called once per frame
@@ -76,9 +90,7 @@ public class KodokComp : MonoBehaviour, IAttackable {
 
 	void OnCollisionEnter2D(Collision2D other)
 	{
-		if(isAttacking && other.gameObject.CompareTag("Player")){
-			Debug.Log("Apply " + damage + " damage to player");
-		}	
+			
 	}
 
 

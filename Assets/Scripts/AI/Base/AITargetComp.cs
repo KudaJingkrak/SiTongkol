@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Panda;
 
 [RequireComponent(typeof(AIMovementComp))]
 public class AITargetComp : MonoBehaviour {
@@ -10,8 +11,10 @@ public class AITargetComp : MonoBehaviour {
 	[Header("Projectile")]
 	public GameObject prefab;
 
+	[Panda.Task]
 	public void Fire(){
 		Fire(transform.position, transform.rotation);
+		Panda.Task.current.Succeed();
 	}
 	
 	public void Fire(Vector2 position, Quaternion rotation){
@@ -39,6 +42,12 @@ public class AITargetComp : MonoBehaviour {
 				break;
 		}
 		PoolManager.Instance.ReuseObject(prefab, position, rotation);
+	}
+
+	[Panda.Task]
+	public void FireDirection(float x, float y){
+		FireDirection(new Vector2(x,y));
+		Panda.Task.current.Succeed();
 	}
 
 	// Use this for initialization

@@ -18,9 +18,12 @@ public class AIMovementComp : MonoBehaviour {
 	private Rigidbody2D _rigid2D;
 
 	#region Movement
+	[Panda.Task]
 	public void SetSpeed(float speed){
 		movementSpeed = speed;
 		_speed = speed;
+
+		Panda.Task.current.Succeed();
 	}
 
 	public void SetDirection(Direction direction){
@@ -61,15 +64,6 @@ public class AIMovementComp : MonoBehaviour {
 		}
 	}
 
-	public void SetDirectionByTarget(){
-		if(target){
-			Vector2 dirTarget = (target.position - transform.position).normalized;
-			x = dirTarget.x;
-			y = dirTarget.y;
-			SetDirection();
-		}
-	}
-
 	public Direction GetDirection(){
 		return _dir;
 	}
@@ -107,15 +101,21 @@ public class AIMovementComp : MonoBehaviour {
 		_rigid2D.velocity = new Vector3(x,y,0) * Mathf.Lerp(0f, _speed, 1f);
 		SetDirection();
 	}
+
+	public void Move(Direction direction){
+		SetDirection(direction);
+		Move(x,y);
+	}
 	
 	[Panda.Task]
 	public void MoveByDirection(){
 		Move(x,y);
 		Panda.Task.current.Succeed();
 	}
-
+	[Panda.Task]
 	public void Launch(float x, float y, float power = 1f){
 		Launch(new Vector2(x,y), power);
+		Panda.Task.current.Succeed();
 	}
 
 	public void Launch(Vector2 direction, float power = 1f){
@@ -126,9 +126,17 @@ public class AIMovementComp : MonoBehaviour {
 		SetDirection();
 	}
 	private IEnumerator QMoveEnum;
+	[Panda.Task]
 	public void QuickMove(float x, float y, float power = 1f, float timeStop = 0.1f){
 		Vector2 velocity = new Vector2(x,y) * power;
 		QuickMove(velocity, timeStop);
+		Panda.Task.current.Succeed();
+	}
+	[Panda.Task]
+	public void QuickMoveByDirection(float power = 1f, float timeStop = 0.1f){
+		Vector2 velocity = new Vector2(this.x,this.y) * power;
+		QuickMove(velocity, timeStop);
+		Panda.Task.current.Succeed();
 	}
 	public void QuickMove(Vector2 direction, float power = 1f, float timeStop = 0.1f){
 		Vector2 velocity = direction * power;
@@ -158,7 +166,24 @@ public class AIMovementComp : MonoBehaviour {
 	[Tooltip("Max step after stucked")] public int maxStep = 10;
 	[Tooltip("Min step after stucked")] public int minStep = 0;
 	private int _step;
+	[Panda.Task]
 	public bool isEndStep{get{return _step < 1;}}
+	[Panda.Task]
+	public void SetStep(){
+		_step =	Random.Range(minStep, maxStep);
+		Panda.Task.current.Succeed();
+	}
+	[Panda.Task]
+	public void SetStep(int step){
+		_step = step;
+		Panda.Task.current.Succeed();
+	}
+	[Panda.Task]
+	public void MoveStep(){
+		Move(_dir);
+		_step--;
+		Panda.Task.current.Succeed();
+	}
 	public bool isStuck{
 		get{
 			Vector2 _castDir;
@@ -197,9 +222,13 @@ public class AIMovementComp : MonoBehaviour {
 	#region  Movement_Point
 	[Header("Movement Point")]
 	public Transform target;
+	public Vector2 destination;
 	[Tooltip("Distance tolerance to target")]public float distanceError = 1f;
+	[Tooltip("Distance tolerance to destination")]public float destinationError = 0.1f;
+	[Tooltip("Distance tolerance is near to target")]public float nearDistance = 5f;
 	public List<Transform> targetPoints;
 	private int _indexPoint;
+	[Panda.Task]
 	public bool isReachTarget{
 		get{
 			if(target){
@@ -210,7 +239,43 @@ public class AIMovementComp : MonoBehaviour {
 		}
 	}
 
-	public bool SetPlayerToTarget(){
+	[Panda.Task]
+	public bool isPlayerAsTarget{
+		get{
+			if(target){
+				return target.gameObject.CompareTag("Player");
+			}
+			return false;
+		}
+	}
+
+	[Panda.Task]
+	public bool isReachDestination{
+		get{
+			return Vector2.Distance(destination, transform.position) <= destinationError;
+		}
+	}
+	
+	[Panda.Task]
+	public bool isNearPlayer{
+		get{
+			if(target && target.gameObject.CompareTag("Player")){
+				return Vector2.Distance(target.position, transform.position) <= nearDistance;
+			}else{
+				//TODO kalo udah ada global manager diganti
+				GayatriCharacter player = FindObjectOfType<GayatriCharacter>();	
+				if(player){
+					return Vector2.Distance(player.gameObject.transform.position, transform.position) <= nearDistance;
+				}
+				
+			}
+			return false;
+
+		}
+	}
+
+	[Panda.Task]
+	public bool SetPlayerAsTarget(){
 		if(target && target.gameObject.CompareTag("Player")) return true;
 
 		//TODO kalo udah ada global manager diganti
@@ -223,45 +288,88 @@ public class AIMovementComp : MonoBehaviour {
 		return false;
 	}
 
+	[Panda.Task]
+	public bool SetPlayerAsDestination(){
+		if(target && target.gameObject.CompareTag("Player")){
+			destination = target.position;
+			return true;
+		}else{
+			//TODO kalo udah ada global manager diganti
+			GayatriCharacter player = FindObjectOfType<GayatriCharacter>();	
+			if(player){
+				destination = player.gameObject.transform.position;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	[Panda.Task]
+	public void SetDirectionToTarget(){
+		if(target){
+			Vector2 dirTarget = (target.position - transform.position).normalized;
+			x = dirTarget.x;
+			y = dirTarget.y;
+			SetDirection();
+		}
+		Panda.Task.current.Succeed();
+	}
+	
+	[Panda.Task]
+	public void SetDirectionByDestination(){
+		Vector2 dirTarget = (destination - (Vector2)transform.position).normalized;
+		x = dirTarget.x;
+		y = dirTarget.y;
+		SetDirection();
+		Panda.Task.current.Succeed();
+	}
+
+	[Panda.Task]
 	public void MoveToTarget(){
 		if(target && !isReachTarget){
 			Vector3 dir = (target.position - transform.position).normalized;
-			Move(dir);			
+			Move(dir);
+			Panda.Task.current.Succeed();			
 		}
+		Panda.Task.current.Fail();
 	}
 
 	/**
 	 * Move 1,2,3,1,2,3,1,...
 	 */
-	public void CircularMove(int index = -1){
-		if(index >= targetPoints.Count) return;
+	 [Panda.Task]
+	public bool CircularMove(int index = -1){
+		if(index >= targetPoints.Count) return false;
 		
-		if(!target.position.Equals(targetPoints[_indexPoint].position)){
-			target = targetPoints[_indexPoint];
+		if(!destination.Equals(targetPoints[_indexPoint].position)){
+			destination = targetPoints[_indexPoint].position;
 		}
 
-		if(isReachTarget){
+		if(Vector2.Distance(destination, transform.position) <= destinationError){
 			_indexPoint++;
 			if(_indexPoint >= targetPoints.Count){
 				_indexPoint = 0;
 			}
 		}
 
-		MoveToTarget();
+		Vector3 dir = ((Vector3)destination - transform.position).normalized;
+		Move(dir);	
+		return true;
 	}
 
 	private bool isMoveDec = false; // move decrement or increment
 	/**
 	 * Move 1,2,3,2,1,2,3,2,...
 	 */
-	public void SequenceMove(int index = -1){
-		if(index >= targetPoints.Count || targetPoints.Count < 2) return;
+	 [Panda.Task]
+	public bool SequenceMove(int index = -1){
+		if(index >= targetPoints.Count || targetPoints.Count < 2) return false;
 		
-		if(!target.position.Equals(targetPoints[_indexPoint].position)){
-			target = targetPoints[_indexPoint];
+		if(!destination.Equals(targetPoints[_indexPoint].position)){
+			destination = targetPoints[_indexPoint].position;
 		}
 
-		if(isReachTarget){
+		if(Vector2.Distance(destination, transform.position) <= destinationError){
 			if(!isMoveDec){
 				_indexPoint++;
 				if(_indexPoint >= targetPoints.Count){
@@ -277,7 +385,9 @@ public class AIMovementComp : MonoBehaviour {
 			}
 		}
 
-		MoveToTarget();
+		Vector3 dir = ((Vector3)destination - transform.position).normalized;
+		Move(dir);
+		return true;
 	}
 
 	#endregion
@@ -292,7 +402,7 @@ public class AIMovementComp : MonoBehaviour {
 	}
 
 	void Start(){
-		
+		SetDirection(_dir);
 	}
 
 	void Update(){
