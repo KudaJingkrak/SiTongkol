@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Panda;
 
 [RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D), typeof(Animator))]
 public class AIMovementComp : MonoBehaviour {
@@ -17,6 +18,11 @@ public class AIMovementComp : MonoBehaviour {
 	private Rigidbody2D _rigid2D;
 
 	#region Movement
+	public void SetSpeed(float speed){
+		movementSpeed = speed;
+		_speed = speed;
+	}
+
 	public void SetDirection(Direction direction){
 		this._dir = direction;
 		switch(_dir){
@@ -55,10 +61,34 @@ public class AIMovementComp : MonoBehaviour {
 		}
 	}
 
+	public void SetDirectionByTarget(){
+		if(target){
+			Vector2 dirTarget = (target.position - transform.position).normalized;
+			x = dirTarget.x;
+			y = dirTarget.y;
+			SetDirection();
+		}
+	}
+
 	public Direction GetDirection(){
 		return _dir;
 	}
-	
+
+	public Vector2 GetVectorDirection(){
+		switch(_dir){
+			case Direction.Back:
+				return Vector2.up;
+			case Direction.Right:
+				return Vector2.right;
+			case Direction.Front:
+				return Vector2.down;
+			case Direction.Left:
+				return Vector2.left;
+		}
+		return Vector2.zero;
+	}
+
+	[Panda.Task]
 	public bool SetRandomDirection(){
 		SetDirection((Direction)Random.Range(0, 4));
 		return true;
@@ -77,9 +107,15 @@ public class AIMovementComp : MonoBehaviour {
 		_rigid2D.velocity = new Vector3(x,y,0) * Mathf.Lerp(0f, _speed, 1f);
 		SetDirection();
 	}
-
+	
+	[Panda.Task]
 	public void MoveByDirection(){
 		Move(x,y);
+		Panda.Task.current.Succeed();
+	}
+
+	public void Launch(float x, float y, float power = 1f){
+		Launch(new Vector2(x,y), power);
 	}
 
 	public void Launch(Vector2 direction, float power = 1f){
@@ -89,7 +125,11 @@ public class AIMovementComp : MonoBehaviour {
 		_rigid2D.AddForce(force);
 		SetDirection();
 	}
-	private IEnumerator FlashingEnum;
+	private IEnumerator QMoveEnum;
+	public void QuickMove(float x, float y, float power = 1f, float timeStop = 0.1f){
+		Vector2 velocity = new Vector2(x,y) * power;
+		QuickMove(velocity, timeStop);
+	}
 	public void QuickMove(Vector2 direction, float power = 1f, float timeStop = 0.1f){
 		Vector2 velocity = direction * power;
 		QuickMove(velocity, timeStop);
@@ -97,14 +137,13 @@ public class AIMovementComp : MonoBehaviour {
 	public void QuickMove(Vector2 velocity, float timeStop = 0.1f){
 		this.x = velocity.normalized.x;
 		this.y = velocity.normalized.y;
-		if(FlashingEnum != null){
-			StopCoroutine(FlashingEnum);
+		if(QMoveEnum != null){
+			StopCoroutine(QMoveEnum);
 		}
-		FlashingEnum = FlashingMove(velocity, timeStop);
-		StartCoroutine(FlashingEnum);
+		QMoveEnum = QuickMoveItr(velocity, timeStop);
+		StartCoroutine(QMoveEnum);
 	}
-
-	IEnumerator FlashingMove(Vector2 velocity, float delay){
+	IEnumerator QuickMoveItr(Vector2 velocity, float delay){
 		_rigid2D.velocity = velocity;
 		yield return new WaitForSeconds(delay);
 		_rigid2D.velocity = Vector2.zero;

@@ -9,6 +9,10 @@ public class AITargetComp : MonoBehaviour {
 	
 	[Header("Projectile")]
 	public GameObject prefab;
+
+	public void Fire(){
+		Fire(transform.position, transform.rotation);
+	}
 	
 	public void Fire(Vector2 position, Quaternion rotation){
 		PoolManager.Instance.ReuseObject(prefab, position, rotation);	
