@@ -262,8 +262,10 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 	IEnumerator Attacking(float delay)
 	{
 		isAttacking = true;
-        
-		ComboFeedback feedback = combo_Sys.FilterCombo(comboCounter, senjata);
+
+        GameManager.Stat.Stop_Regenerating();
+
+        ComboFeedback feedback = combo_Sys.FilterCombo(comboCounter, senjata);
 		ComboEnum comboPlayer = feedback.combo;
 		comboCounter = feedback.counter;
 		
@@ -436,11 +438,14 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
     public void DeployBomb()
     {
         systemBomb.DeployBomb(transform.position);
+
+        GameManager.Stat.Stop_Regenerating();
     }
 
     public void OnReflect()
     {
         isReflect = true;
+        
     }
 
 	#region Dodge
@@ -548,6 +553,11 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 #endregion
     public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None)
     {
+        if (isReflect)
+        {
+            GameManager.Stat.Stop_Regenerating();
+        }
+
         Debug.Log("On attack");
         if (GameManager.Stat.CheckBelow_Health(damage))
         {

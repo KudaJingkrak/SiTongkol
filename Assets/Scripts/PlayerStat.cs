@@ -80,6 +80,9 @@ public class PlayerStat : MonoBehaviour {
     #endregion Mana Function
 
     #region Stamina Function
+
+    IEnumerator Stamina_itr;
+
     public void Initiated_Stamina()
     {
         Current_Stamina = Max_Stamina;
@@ -117,6 +120,18 @@ public class PlayerStat : MonoBehaviour {
     public void Stop_Regenerating()
     {
         isRegenStamina = false;
+        if (Stamina_itr != null)
+        {
+            StopCoroutine(Stamina_itr);
+        }
+        Stamina_itr = Regenerate_Stamina(1f);
+        StartCoroutine(Stamina_itr);
+    }
+
+    IEnumerator Regenerate_Stamina(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        isRegenStamina = true;
     }
     #endregion Stamina Function
 

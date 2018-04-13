@@ -12,14 +12,9 @@ public class GameManager : MonoBehaviour {
 
     //Player Status Inheritence.
     public static GameManager Instance;
+
     public PlayerStat player_Status;
     public UI_Manager ui_Manager;
-
-    //Slidernya
-    public Slider Health_Slider;
-    public Slider Mana_Slider;
-    public Slider Stamina_Slider;
-
 
     public PlayerStat Stat
     {
