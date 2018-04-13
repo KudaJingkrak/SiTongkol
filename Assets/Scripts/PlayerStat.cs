@@ -12,6 +12,10 @@ public class PlayerStat : MonoBehaviour {
     public float Max_Mana;
     public float Max_Stamina;
 
+    //How much speedRate Stamina
+    public float staminaPoint;
+    public bool isRegenStamina;
+
     #region Health Function
     public void Initiated_Health()
     {
@@ -99,19 +103,36 @@ public class PlayerStat : MonoBehaviour {
         }
         return false;
     }
+
     public float get_Stamina()
     {
         return Current_Stamina;
+    }
+
+    public void Regenerating_Stamina()
+    {
+        isRegenStamina = true;
+    }
+
+    public void Stop_Regenerating()
+    {
+        isRegenStamina = false;
     }
     #endregion Stamina Function
 
     // Use this for initialization
     void Start () {
-		
+        isRegenStamina = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (isRegenStamina)
+        {
+            if (Current_Stamina <= Max_Stamina)
+            {
+                Current_Stamina += staminaPoint * Time.deltaTime;
+            }
+        }
 	}
 }

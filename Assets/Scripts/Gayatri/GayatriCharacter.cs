@@ -552,10 +552,12 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
         if (GameManager.Stat.CheckBelow_Health(damage))
         {
             //DEAD_END
+            //Back to Checkpoints.
         }
         else
         {
             GameManager.Stat.Decreased_Health(damage);
+            //nanti disini dimasukin DamageType, DamageEffect, dll.
         }
     }
 
