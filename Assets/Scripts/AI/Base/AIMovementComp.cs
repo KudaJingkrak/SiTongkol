@@ -138,6 +138,14 @@ public class AIMovementComp : MonoBehaviour {
 		QuickMove(velocity, timeStop);
 		Panda.Task.current.Succeed();
 	}
+	[Panda.Task]
+	public void QuickMoveByDirection4(float power = 1f, float timeStop = 0.1f){
+		SetDirection();
+		SetDirection(_dir);
+		Vector2 velocity = new Vector2(this.x,this.y) * power;
+		QuickMove(velocity, timeStop);
+		Panda.Task.current.Succeed();
+	}
 	public void QuickMove(Vector2 direction, float power = 1f, float timeStop = 0.1f){
 		Vector2 velocity = direction * power;
 		QuickMove(velocity, timeStop);
@@ -181,6 +189,29 @@ public class AIMovementComp : MonoBehaviour {
 	[Panda.Task]
 	public void MoveStep(){
 		Move(_dir);
+		_step--;
+		Panda.Task.current.Succeed();
+	}
+	[Panda.Task]
+	public void QuickMoveStep(float x, float y, float power = 1f, float timeStop = 0.1f){
+		Vector2 velocity = new Vector2(x,y) * power;
+		QuickMove(velocity, timeStop);
+		_step--;
+		Panda.Task.current.Succeed();
+	}
+	[Panda.Task]
+	public void QuickMoveByDirectionStep(float power = 1f, float timeStop = 0.1f){
+		Vector2 velocity = new Vector2(this.x,this.y) * power;
+		QuickMove(velocity, timeStop);
+		_step--;
+		Panda.Task.current.Succeed();
+	}
+	[Panda.Task]
+	public void QuickMoveByDirection4Step(float power = 1f, float timeStop = 0.1f){
+		SetDirection();
+		SetDirection(_dir);
+		Vector2 velocity = new Vector2(this.x,this.y) * power;
+		QuickMove(velocity, timeStop);
 		_step--;
 		Panda.Task.current.Succeed();
 	}
