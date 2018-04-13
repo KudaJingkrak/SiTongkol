@@ -36,6 +36,11 @@ public class PlayerStat : MonoBehaviour {
         }
         return false;
     }
+
+    public int get_Health()
+    {
+        return Current_Health;
+    }
     #endregion 
 
 #region Mana Function
@@ -62,6 +67,12 @@ public class PlayerStat : MonoBehaviour {
         }
         return false;
     }
+
+    public int get_Mana()
+    {
+        return Current_Mana;
+    }
+
     #endregion Mana Function
 
     #region Stamina Function
@@ -88,7 +99,11 @@ public class PlayerStat : MonoBehaviour {
         }
         return false;
     }
-#endregion Stamina Function
+    public int get_Stamina()
+    {
+        return Current_Stamina;
+    }
+    #endregion Stamina Function
 
     // Use this for initialization
     void Start () {
