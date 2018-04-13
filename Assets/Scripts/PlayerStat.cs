@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStat : MonoBehaviour {
-    public int Current_Health;
-    public int Current_Mana;
-    public int Current_Stamina;
+    public float Current_Health;
+    public float Current_Mana;
+    public float Current_Stamina;
     
     //Boundary MAX Health
-    public int Max_Health;
-    public int Max_Mana;
-    public int Max_Stamina;
+    public float Max_Health;
+    public float Max_Mana;
+    public float Max_Stamina;
 
     #region Health Function
     public void Initiated_Health()
@@ -18,17 +18,17 @@ public class PlayerStat : MonoBehaviour {
         Current_Health = Max_Health;
     }
 
-    public void Increased_Health(int banyak_Health)
+    public void Increased_Health(float banyak_Health)
     {
         Current_Health += banyak_Health;
     }
 
-    public void Decreased_Health(int banyak_Health)
+    public void Decreased_Health(float banyak_Health)
     {
         Current_Health -= banyak_Health;
     }
 
-    public bool CheckBelow_Health(int banyak_Health)
+    public bool CheckBelow_Health(float banyak_Health)
     {
         if (Current_Health < banyak_Health)
         {
@@ -37,7 +37,7 @@ public class PlayerStat : MonoBehaviour {
         return false;
     }
 
-    public int get_Health()
+    public float get_Health()
     {
         return Current_Health;
     }
@@ -49,17 +49,17 @@ public class PlayerStat : MonoBehaviour {
         Current_Mana = Max_Mana;
     }
 
-    public void Increased_Mana(int banyak_Mana)
+    public void Increased_Mana(float banyak_Mana)
     {
         Current_Mana += banyak_Mana;
     }
 
-    public void Decreased_Mana(int banyak_Mana)
+    public void Decreased_Mana(float banyak_Mana)
     {
         Current_Mana -= banyak_Mana;
     }
 
-    public bool CheckBelow_Mana(int banyak_Mana)
+    public bool CheckBelow_Mana(float banyak_Mana)
     {
         if (Current_Mana < banyak_Mana)
         {
@@ -68,7 +68,7 @@ public class PlayerStat : MonoBehaviour {
         return false;
     }
 
-    public int get_Mana()
+    public float get_Mana()
     {
         return Current_Mana;
     }
@@ -81,17 +81,17 @@ public class PlayerStat : MonoBehaviour {
         Current_Stamina = Max_Stamina;
     }
 
-    public void Increased_Stamina(int banyak_Stamina)
+    public void Increased_Stamina(float banyak_Stamina)
     {
         Current_Stamina += banyak_Stamina;
     }
 
-    public void Decreased_Stamina(int banyak_Stamina)
+    public void Decreased_Stamina(float banyak_Stamina)
     {
         Current_Stamina -= banyak_Stamina;
     }
 
-    public bool CheckBelow_Stamina(int banyak_Stamina)
+    public bool CheckBelow_Stamina(float banyak_Stamina)
     {
         if (Current_Stamina < banyak_Stamina)
         {
@@ -99,7 +99,7 @@ public class PlayerStat : MonoBehaviour {
         }
         return false;
     }
-    public int get_Stamina()
+    public float get_Stamina()
     {
         return Current_Stamina;
     }

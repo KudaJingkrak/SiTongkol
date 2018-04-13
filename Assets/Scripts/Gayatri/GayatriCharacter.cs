@@ -549,6 +549,14 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
     public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None)
     {
         Debug.Log("On attack");
+        if (GameManager.Stat.CheckBelow_Health(damage))
+        {
+            //DEAD_END
+        }
+        else
+        {
+            GameManager.Stat.Decreased_Health(damage);
+        }
     }
 
     public void Destruct()
