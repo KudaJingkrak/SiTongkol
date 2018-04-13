@@ -219,12 +219,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2449aa94b93232a4884f6802b515617f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectAiming: {fileID: 68939560}
-  offsetProjectile:
-  - {fileID: 806277174}
-  - {fileID: 742991556}
-  turnRate: 1
-  fireRate: 30
+  spawners:
+  - rootAiming: {fileID: 68939560}
+    offsetsProjectile:
+    - {fileID: 806277174}
+    - {fileID: 742991556}
+  turnRate: 10
+  fireRate: 60
   prefab: {fileID: 1892677331318414, guid: 520b9f74097ba69468eb45a558342ffb, type: 2}
 --- !u!114 &63170900
 MonoBehaviour:

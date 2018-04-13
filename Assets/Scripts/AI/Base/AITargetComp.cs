@@ -7,9 +7,8 @@ using Panda;
 public class AITargetComp : MonoBehaviour {
 	
 	[Panda.Task]
-	public bool isCanFire{get{return fireRateCounter <= 0;}}	
-	public GameObject objectAiming;
-	public Transform[] offsetProjectile;
+	public bool isCanFire{get{return fireRateCounter <= 0;}}
+	public ProjectileSpawner[] spawners;
 	public float turnRate = 30f;
 	public float fireRate = 1f;
 	private float fireRateCounter, tempFireRate = -1f, tempFireCacl;
@@ -21,46 +20,101 @@ public class AITargetComp : MonoBehaviour {
 	[Panda.Task]
 	public void Fire(){
 		Fire(transform.position, transform.rotation);
-		Panda.Task.current.Succeed();
+		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
 	}
 
 	[Panda.Task]
 	public void FireWithOffset(){
-		if(offsetProjectile.Length > 0){
-			for(int i = 0; i < offsetProjectile.Length; i++){
-				Fire(offsetProjectile[i].position, offsetProjectile[i].rotation);
+		if(spawners != null)
+		{
+			for(int i = 0; i < spawners.Length; i++)
+			{
+				for(int j = 0; j < spawners[i].offsetsProjectile.Length; j++)
+				{
+					Fire(spawners[i].offsetsProjectile[j].transform);
+				
+				}
+			
 			}
-			Panda.Task.current.Succeed();
-		}else{
-			Panda.Task.current.Fail();
+		
 		}
+
+		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
 	}
 
 	[Panda.Task]
-	public void FireWithOffset(int index){
-		if(offsetProjectile.Length > 0 && index < offsetProjectile.Length){
-			Fire(offsetProjectile[index].position, offsetProjectile[index].rotation);
-			Panda.Task.current.Succeed();
-		}else{
-			Panda.Task.current.Fail();
+	public void FireWithOffset(int spawnerIndex = 0){
+		if(spawners != null)
+		{
+			if(spawnerIndex > -1 && spawnerIndex < spawners.Length)
+			{
+				for(int j = 0; j < spawners[spawnerIndex].offsetsProjectile.Length; j++)
+				{
+					Fire(spawners[spawnerIndex].offsetsProjectile[j].transform);
+
+				}
+
+			}
+
 		}
+
+		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
 	}
 
 	[Panda.Task]
-	public void FireWithRandomOffset(){
-		int index = Random.Range(0, offsetProjectile.Length);
-		if(offsetProjectile.Length > 0 && index < offsetProjectile.Length){
-			Fire(offsetProjectile[index].position, offsetProjectile[index].rotation);
-			Panda.Task.current.Succeed();
-		}else{
-			Panda.Task.current.Fail();
+	public void FireWithOffset(int spawnerIndex, int offsetIndex){
+		if(spawners != null)
+		{
+			if(spawnerIndex > -1 && spawnerIndex < spawners.Length)
+			{
+				if(offsetIndex > -1 && offsetIndex < spawners[spawnerIndex].offsetsProjectile.Length)
+				{
+					Fire(spawners[spawnerIndex].offsetsProjectile[offsetIndex].transform);
+
+				}
+
+			}
+
 		}
+		
+		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+	}
+
+	[Panda.Task]
+	public void FireWithRandomSpawner(){
+		int spawnerIndex = Random.Range(0, spawners.Length);
+		
+		for(int i = 0; i < spawners[spawnerIndex].offsetsProjectile.Length; i++)
+		{
+			Fire(spawners[spawnerIndex].offsetsProjectile[i].transform);
+
+		}
+		
+		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+	}
+
+	[Panda.Task]
+	public void FireWithRandomOffset(int spawnerIndex){
+		if(spawnerIndex > -1 && spawnerIndex < spawners.Length)
+		{
+			int offsetIndex = Random.Range(0, spawners[spawnerIndex].offsetsProjectile.Length);
+			Fire(spawners[spawnerIndex].offsetsProjectile[offsetIndex].transform);
+
+		}
+
+		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
 	}
 
 	[Panda.Task]
 	public void FireDirection(float x, float y){
 		FireDirection(new Vector2(x,y));
-		Panda.Task.current.Succeed();
+		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+
+	}
+
+	public void Fire(Transform objTransform){
+		CalcFireRate();
+		PoolManager.Instance.ReuseObject(prefab, objTransform.position, objTransform.rotation);	
 	}
 	
 	public void Fire(Vector2 position, Quaternion rotation){
@@ -100,25 +154,111 @@ public class AITargetComp : MonoBehaviour {
 		fireRateCounter = tempFireCacl;
 	}
 
+	[Panda.Task]
 	public void AimTarget(){
-		if(objectAiming && _movementComp.target){
-			Quaternion newRotation  = Quaternion.LookRotation(objectAiming.transform.position - _movementComp.target.position, Vector3.forward);
-			newRotation.x = objectAiming.transform.rotation.x;
-			newRotation.y = objectAiming.transform.rotation.y;
-			objectAiming.transform.rotation = Quaternion.Slerp(objectAiming.transform.rotation, newRotation, Time.deltaTime * turnRate );
+		if(_movementComp.target){
+			for (int i= 0; i < spawners.Length; i++)
+			{
+				Quaternion newRotation  = Quaternion.LookRotation(spawners[i].rootAiming.transform.position - _movementComp.target.position, Vector3.forward);
+				newRotation.x = spawners[i].rootAiming.transform.rotation.x;
+				newRotation.y = spawners[i].rootAiming.transform.rotation.y;
+				spawners[i].rootAiming.transform.rotation = Quaternion.Slerp(spawners[i].rootAiming.transform.rotation, newRotation, Time.deltaTime * turnRate );
+
+			}
+			if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+		}else{
+			if(Panda.Task.isInspected) Panda.Task.current.Fail();
+		}
+
+	}
+
+	[Panda.Task]
+	public void AimTarget(int spawnerIndex = 0){
+		if(_movementComp.target){
+			if (spawnerIndex > -1 && spawnerIndex < spawners.Length)
+			{
+				Quaternion newRotation  = Quaternion.LookRotation(spawners[spawnerIndex].rootAiming.transform.position - _movementComp.target.position, Vector3.forward);
+				newRotation.x = spawners[spawnerIndex].rootAiming.transform.rotation.x;
+				newRotation.y = spawners[spawnerIndex].rootAiming.transform.rotation.y;
+				spawners[spawnerIndex].rootAiming.transform.rotation = Quaternion.Slerp(spawners[spawnerIndex].rootAiming.transform.rotation, newRotation, Time.deltaTime * turnRate );
+
+			}
+			if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+		}else{
+			if(Panda.Task.isInspected) Panda.Task.current.Fail();
+		}
+
+	}
+
+	[Panda.Task]
+	public void AimTurnClockwise(float speed = 10f){
+		for (int i= 0; i < spawners.Length; i++)
+		{
+			spawners[i].rootAiming.transform.Rotate(Vector3.back * speed * turnRate * Time.deltaTime);
+		}
+		
+		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+		
+	}
+
+	[Panda.Task]
+	public void AimTurnClockwise(float speed = 10f, int index = 0){
+		if(index > 0 && index < spawners.Length)
+		{
+			spawners[index].rootAiming.transform.Rotate(Vector3.back * speed * turnRate * Time.deltaTime);
+			if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+
+		}
+		else
+		{
+			if(Panda.Task.isInspected) Panda.Task.current.Fail();
 		}
 	}
 
-	public void AimTurnClockwise(float speed = 10f){
-		objectAiming.transform.Rotate(Vector3.back * speed * turnRate * Time.deltaTime);
-	}
-
+	[Panda.Task]
 	public void AimTurnCounterClockwise(float speed = 10f){
-		objectAiming.transform.Rotate(Vector3.forward * speed * turnRate * Time.deltaTime);
+		for (int i= 0; i < spawners.Length; i++)
+		{
+			spawners[i].rootAiming.transform.Rotate(Vector3.forward * speed * turnRate * Time.deltaTime);
+		}
+		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
 	}
 
+	[Panda.Task]
+	public void AimTurnCounterClockwise(float speed = 10f, int index = 0){
+		if(index > 0 && index < spawners.Length){
+			spawners[index].rootAiming.transform.Rotate(Vector3.forward * speed * turnRate * Time.deltaTime);
+			if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+		}
+		else
+		{
+			if(Panda.Task.isInspected) Panda.Task.current.Fail();
+
+		}
+	}
+
+	[Panda.Task]
 	public void SetAimRotation(float angle){
-		objectAiming.transform.Rotate(0,0,angle);
+		for (int i= 0; i < spawners.Length; i++)
+		{
+			spawners[i].rootAiming.transform.Rotate(0,0,angle);
+		}
+		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+	}
+
+	[Panda.Task]
+	public void SetAimRotation(float angle, int index = 0){
+		if(index > 0 && index < spawners.Length)
+		{
+			spawners[index].rootAiming.transform.Rotate(0,0,angle);
+			if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+
+		}
+		else
+		{
+			if(Panda.Task.isInspected) Panda.Task.current.Fail();
+		
+		}
 	}
 
 	// Use this for initialization
@@ -129,15 +269,15 @@ public class AITargetComp : MonoBehaviour {
 
 	void Update(){
 		
-		if(isCanFire){
-			//SetAimRotation(Random.Range(0,360));
-			for(int i = 0; i < offsetProjectile.Length; i++){
-				Fire(offsetProjectile[i].position, offsetProjectile[i].rotation);
-			}
-		}
 		if(fireRateCounter > 0 ){
 			fireRateCounter -= Time.deltaTime;
 		}
 	}
 	
+}
+
+[System.Serializable]
+public class ProjectileSpawner{
+	public GameObject rootAiming;
+	public Transform[] offsetsProjectile;
 }
