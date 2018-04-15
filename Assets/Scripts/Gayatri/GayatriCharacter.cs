@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GayatriCharacter : MonoBehaviour, IAttackable {
+public class GayatriCharacter : BaseClass, IAttackable {
 	public Rigidbody2D rigid2D;
 	public BoxCollider2D boxCollider2D;
 	public Animator animator;
@@ -263,7 +263,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
 	{
 		isAttacking = true;
 
-        GameManager.Stat.Stop_Regenerating();
+        GameManager.Instance.m_StatusManager.Stop_Regenerating();
 
         ComboFeedback feedback = combo_Sys.FilterCombo(comboCounter, senjata);
 		ComboEnum comboPlayer = feedback.combo;
@@ -439,7 +439,7 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
     {
         systemBomb.DeployBomb(transform.position);
 
-        GameManager.Stat.Stop_Regenerating();
+        Status.Stop_Regenerating();
     }
 
     public void OnReflect()
@@ -555,18 +555,18 @@ public class GayatriCharacter : MonoBehaviour, IAttackable {
     {
         if (isReflect)
         {
-            GameManager.Stat.Stop_Regenerating();
+            Status.Stop_Regenerating();
         }
 
         Debug.Log("On attack");
-        if (GameManager.Stat.CheckBelow_Health(damage))
+        if (Status.CheckBelow_Health(damage))
         {
             //DEAD_END
             //Back to Checkpoints.
         }
         else
         {
-            GameManager.Stat.Decreased_Health(damage);
+            Status.Decreased_Health(damage);
             //nanti disini dimasukin DamageType, DamageEffect, dll.
         }
     }

@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStat : MonoBehaviour {
-    public float Current_Health;
-    public float Current_Mana;
-    public float Current_Stamina;
+public class StatusManager : BaseClass {
+
+	public float currentHealth;
+    public float currentMana;
+    public float currentStamina;
     
     //Boundary MAX Health
-    public float Max_Health;
-    public float Max_Mana;
-    public float Max_Stamina;
+    public float maxHealth;
+    public float maxMana;
+    public float maxStamina;
+
+    public float percentHealth{ get{return currentHealth/maxHealth;}}
+    public float percentMana{get{return currentMana/maxMana;}}
+    public float percentStamina{get{return currentStamina/maxStamina;}}
 
     //How much speedRate Stamina
     public float staminaPoint;
@@ -19,22 +24,22 @@ public class PlayerStat : MonoBehaviour {
     #region Health Function
     public void Initiated_Health()
     {
-        Current_Health = Max_Health;
+        currentHealth = maxHealth;
     }
 
     public void Increased_Health(float banyak_Health)
     {
-        Current_Health += banyak_Health;
+        currentHealth += banyak_Health;
     }
 
     public void Decreased_Health(float banyak_Health)
     {
-        Current_Health -= banyak_Health;
+        currentHealth -= banyak_Health;
     }
 
     public bool CheckBelow_Health(float banyak_Health)
     {
-        if (Current_Health < banyak_Health)
+        if (currentHealth < banyak_Health)
         {
             return true;
         }
@@ -43,29 +48,29 @@ public class PlayerStat : MonoBehaviour {
 
     public float get_Health()
     {
-        return Current_Health;
+        return currentHealth;
     }
     #endregion 
 
 #region Mana Function
     public void Initiated_Mana()
     {
-        Current_Mana = Max_Mana;
+        currentMana = maxMana;
     }
 
     public void Increased_Mana(float banyak_Mana)
     {
-        Current_Mana += banyak_Mana;
+        currentMana += banyak_Mana;
     }
 
     public void Decreased_Mana(float banyak_Mana)
     {
-        Current_Mana -= banyak_Mana;
+        currentMana -= banyak_Mana;
     }
 
     public bool CheckBelow_Mana(float banyak_Mana)
     {
-        if (Current_Mana < banyak_Mana)
+        if (currentMana < banyak_Mana)
         {
             return true;
         }
@@ -74,7 +79,7 @@ public class PlayerStat : MonoBehaviour {
 
     public float get_Mana()
     {
-        return Current_Mana;
+        return currentMana;
     }
 
     #endregion Mana Function
@@ -85,22 +90,22 @@ public class PlayerStat : MonoBehaviour {
 
     public void Initiated_Stamina()
     {
-        Current_Stamina = Max_Stamina;
+        currentStamina = maxStamina;
     }
 
     public void Increased_Stamina(float banyak_Stamina)
     {
-        Current_Stamina += banyak_Stamina;
+        currentStamina += banyak_Stamina;
     }
 
     public void Decreased_Stamina(float banyak_Stamina)
     {
-        Current_Stamina -= banyak_Stamina;
+        currentStamina -= banyak_Stamina;
     }
 
     public bool CheckBelow_Stamina(float banyak_Stamina)
     {
-        if (Current_Stamina < banyak_Stamina)
+        if (currentStamina < banyak_Stamina)
         {
             return true;
         }
@@ -109,7 +114,7 @@ public class PlayerStat : MonoBehaviour {
 
     public float get_Stamina()
     {
-        return Current_Stamina;
+        return currentStamina;
     }
 
     public void Regenerating_Stamina()
@@ -144,9 +149,9 @@ public class PlayerStat : MonoBehaviour {
 	void Update () {
         if (isRegenStamina)
         {
-            if (Current_Stamina <= Max_Stamina)
+            if (currentStamina <= maxStamina)
             {
-                Current_Stamina += staminaPoint * Time.deltaTime;
+                currentStamina += staminaPoint * Time.deltaTime;
             }
         }
 	}

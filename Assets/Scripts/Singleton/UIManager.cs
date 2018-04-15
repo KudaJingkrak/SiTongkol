@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_Manager : MonoBehaviour {
+public class UIManager : BaseClass {
 
     public Slider Health_Slider;
     public Slider Mana_Slider;
@@ -19,9 +19,9 @@ public class UI_Manager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        Health_Slider.value = GameManager.Stat.get_Health() / GameManager.Stat.Max_Health;
-        Mana_Slider.value = GameManager.Stat.get_Mana() / GameManager.Stat.Max_Mana;
-        Stamina_Slider.value = GameManager.Stat.get_Stamina() / GameManager.Stat.Max_Stamina;
+        Health_Slider.value = Status.percentHealth;
+        Mana_Slider.value = Status.percentMana;
+        Stamina_Slider.value = Status.percentStamina;
 	}
 
     public void Hidden()

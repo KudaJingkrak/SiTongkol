@@ -11,28 +11,26 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
 
     //Player Status Inheritence.
-    public static GameManager Instance;
-
-    public PlayerStat player_Status;
-    public UI_Manager ui_Manager;
-
-    public PlayerStat Stat
-    {
-        get { return Instance.player_Status; }
+    private static GameManager _instance;
+    public static GameManager Instance{
+        get{
+            if(_instance == null){
+                _instance = FindObjectOfType<GameManager>();
+            }
+            return _instance;
+        }
     }
 
-    public UI_Manager UI
-    {
-        get { return Instance.ui_Manager; }
-    }
+    public StatusManager m_StatusManager;
+    public UIManager m_UIManager;
 
     void Awake()
     {
-        if (Instance == null)
+        if (_instance == null)
         {
-            Instance = this;
+            _instance = this;
         }
-        else if (Instance != this)
+        else if (_instance != this)
         {
             Destroy(gameObject);
         }
