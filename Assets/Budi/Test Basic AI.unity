@@ -225,7 +225,7 @@ MonoBehaviour:
     - {fileID: 806277174}
     - {fileID: 742991556}
   turnRate: 10
-  fireRate: 60
+  fireRate: 5
   prefab: {fileID: 1892677331318414, guid: 520b9f74097ba69468eb45a558342ffb, type: 2}
 --- !u!114 &63170900
 MonoBehaviour:

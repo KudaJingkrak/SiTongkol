@@ -19,9 +19,9 @@ public class UIManager : BaseClass {
 	// Update is called once per frame
 	void Update () {
 
-        Health_Slider.value = Status.percentHealth;
-        Mana_Slider.value = Status.percentMana;
-        Stamina_Slider.value = Status.percentStamina;
+       // Health_Slider.value = Status.percentHealth;
+        //Mana_Slider.value = Status.percentMana;
+        //Stamina_Slider.value = Status.percentStamina;
 	}
 
     public void Hidden()

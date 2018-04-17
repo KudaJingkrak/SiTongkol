@@ -268,7 +268,11 @@ public class AITargetComp : MonoBehaviour {
 	}
 
 	void Update(){
-		
+
+        if (isCanFire)
+        {
+            FireWithOffset();
+        }
 		if(fireRateCounter > 0 ){
 			fireRateCounter -= Time.deltaTime;
 		}

@@ -14,7 +14,6 @@ public class GayatriCharacter : BaseClass, IAttackable {
 	// Pull
 	public bool isPulling;
 	public bool isHorizontalPulling;
-	public bool isLifting;
 	private float linearDrag;
 	
 	// Dodge
@@ -23,6 +22,7 @@ public class GayatriCharacter : BaseClass, IAttackable {
 	public bool isFreeze;
     public bool isCrouching;
 	Coroutine DodgeCoroutine;
+    public float dodgePower;
 	
 	// Reflect or Defend
 	public bool isReflect;
@@ -45,6 +45,7 @@ public class GayatriCharacter : BaseClass, IAttackable {
 	public bool isAttacking;
 	private int comboCounter = 0;
 	public Equipment senjata;
+    public float attackLaunch;
 
 	public GameObject Slider_Gayatri;
 	private ComboSystem combo_Sys;
@@ -81,14 +82,14 @@ public class GayatriCharacter : BaseClass, IAttackable {
         }
         else
         {
-            boxCollider2D.isTrigger = false;
+           // boxCollider2D.isTrigger = false;
         }
 
 		animator.SetFloat("Speed", rigid2D.velocity.sqrMagnitude);
 		animator.SetBool("IsPulling", isPulling);
-		animator.SetBool("IsLifting", isLifting);
         animator.SetBool("IsDodging", isDodging);
         animator.SetBool("isCrouching", isCrouching);
+        animator.SetBool("isAttacking", isAttacking);
 		
 		switch(direction){
 			case Direction.Front:
@@ -158,7 +159,8 @@ public class GayatriCharacter : BaseClass, IAttackable {
 	}
 
 	public void Move(float x, float y){
-		if(onDialogue)
+
+		if(onDialogue || isAttacking)
 		{
 			return;
 		}
@@ -262,6 +264,7 @@ public class GayatriCharacter : BaseClass, IAttackable {
 	IEnumerator Attacking(float delay)
 	{
 		isAttacking = true;
+        rigid2D.velocity = Vector2.zero;
 
         GameManager.Instance.m_StatusManager.Stop_Regenerating();
 
@@ -306,6 +309,7 @@ public class GayatriCharacter : BaseClass, IAttackable {
 				break;
 		}
 
+        rigid2D.AddForce(_castDir * attackLaunch);
 		RaycastHit2D[] hits = Physics2D.BoxCastAll(boxCollider2D.transform.position, boxCollider2D.size, 0.0f, _castDir, attackDistance);
 		//Debug.Log("Jumlah hits ada "+hits.Length);
 
@@ -325,12 +329,12 @@ public class GayatriCharacter : BaseClass, IAttackable {
 				}
 			}
 		}
-		CancelInvoke("UnAttack");
+		//CancelInvoke("UnAttack");
 		yield return new WaitForSeconds(0.02f);
-		Invoke("UnAttack",senjata.attackSpeed[comboCounter].wait);
+		//Invoke("UnAttack",senjata.attackSpeed[comboCounter].wait);
 	}
 
-	void UnAttack(){
+	public void UnAttack(){
 
 		isAttacking = false;
 	}
@@ -456,8 +460,11 @@ public class GayatriCharacter : BaseClass, IAttackable {
             {
 				onceDodging = true;
                 isFreeze = true;
-                DodgeCoroutine = StartCoroutine(Dodging());
-            }
+                isDodging = true;
+            //DodgeCoroutine = 
+            // StartCoroutine(Dodging());
+            //StartDodge();
+        }
     }
 	public bool CheckCanDodge()
 	{
@@ -506,16 +513,16 @@ public class GayatriCharacter : BaseClass, IAttackable {
 			switch (direction)
 			{
 				case Direction.Back:
-					rigid2D.AddForce(Vector2.up * rigid2D.mass * 35 / Time.deltaTime);
+					rigid2D.AddForce(Vector2.up * rigid2D.mass * dodgePower / Time.deltaTime);
 					break;
 				case Direction.Front:
-					rigid2D.AddForce(Vector2.down * rigid2D.mass * 35 / Time.deltaTime);
+					rigid2D.AddForce(Vector2.down * rigid2D.mass * dodgePower / Time.deltaTime);
 					break;
 				case Direction.Left:
-					rigid2D.AddForce(Vector2.left * rigid2D.mass * 35 / Time.deltaTime);
+					rigid2D.AddForce(Vector2.left * rigid2D.mass * dodgePower / Time.deltaTime);
 					break;
 				case Direction.Right:
-					rigid2D.AddForce(Vector2.right * rigid2D.mass * 35 / Time.deltaTime);
+					rigid2D.AddForce(Vector2.right * rigid2D.mass * dodgePower / Time.deltaTime);
 					break;
 			}
 		}
@@ -523,7 +530,7 @@ public class GayatriCharacter : BaseClass, IAttackable {
 
 	public void EndDodge()
     {
-		StopCoroutine(DodgeCoroutine);
+		//StopCoroutine(DodgeCoroutine);
 		boxCollider2D.isTrigger = false;
         isDodging = false;
         onceDodging = false;
