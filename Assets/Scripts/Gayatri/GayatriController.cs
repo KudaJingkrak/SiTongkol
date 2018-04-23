@@ -32,9 +32,14 @@ public class GayatriController : MonoBehaviour {
         {
             myCharacter.OnDodging();
         }
-        if (Input.GetButtonUp("Y"))
+
+        if (Input.GetButtonDown("Y"))
         {
-            myCharacter.Crouch();
+            myCharacter.StartCrouch();
+        }
+        else if (Input.GetButtonUp("Y"))
+        {
+            myCharacter.EndCrouch();
         }
 	}
 

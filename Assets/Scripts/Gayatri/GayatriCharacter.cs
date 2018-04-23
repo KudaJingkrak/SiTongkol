@@ -15,12 +15,15 @@ public class GayatriCharacter : BaseClass, IAttackable {
 	public bool isPulling;
 	public bool isHorizontalPulling;
 	private float linearDrag;
-	
-	// Dodge
-	public bool isDodging;
+
+    //Crouch 
+    public bool isCrouching;
+    public float Crouch_Stamina;
+
+    // Dodge
+    public bool isDodging;
 	public bool onceDodging;
 	public bool isFreeze;
-    public bool isCrouching;
 	Coroutine DodgeCoroutine;
     public float dodgePower;
 	
@@ -81,6 +84,7 @@ public class GayatriCharacter : BaseClass, IAttackable {
         {
             rigid2D.velocity = rigid2D.velocity * 2 / 5;
             boxCollider2D.isTrigger = true;
+            Status.Decreased_Stamina(Crouch_Stamina*Time.deltaTime) ;
         }
         else
         {
@@ -556,6 +560,32 @@ public class GayatriCharacter : BaseClass, IAttackable {
         }
         /*
          * Tinggal Switching Crouch aja si.
+         */
+    }
+
+    public void StartCrouch()
+    {
+        isCrouching = true;
+
+        /*         
+            Apa yang dilakukan disini?
+            -  isCrouching is true
+            - Animate Crouching.
+            - Start Decreasing Stamina
+        */
+
+
+    }
+
+    public void EndCrouch()
+    {
+        isCrouching = false;
+
+        //Apa yang dilakukan disini?
+        /*
+         * - isCrouching is False
+         * - Stop Animate Crouching
+         * - Stop Decreasing Stamina
          */
     }
 
