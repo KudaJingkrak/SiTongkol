@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour {
 
     public StatusManager m_StatusManager;
     public UIManager m_UIManager;
+    public GameObject m_Player;
 
     void Awake()
     {

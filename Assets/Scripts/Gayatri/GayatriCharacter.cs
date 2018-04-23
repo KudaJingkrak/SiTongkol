@@ -53,10 +53,12 @@ public class GayatriCharacter : BaseClass, IAttackable {
 	public float Persentase_Perfect;
 	public float Persentase_Good;
 	public float Persentase_Miss;
+    
 
 	//private float _slower = 0.0f;
 	// Use this for initialization
 	void Start () {
+        SetPlayer(this.gameObject);
 		linearDrag = rigid2D.drag;
         combo_Sys = Slider_Gayatri.GetComponentInParent<ComboSystem>();
         isReflect = false;
