@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ComboSystem : MonoBehaviour {
-    public const float SPEED_MUL = 0.0001f;
+    public const float SPEED_MUL = 0.05f;
     public ComboEnum kondisi_Player;
     public Slider sliderCombo;
     public Image[] Visual_Cues;
@@ -33,7 +33,7 @@ public class ComboSystem : MonoBehaviour {
     void Update()
     {
         if(sliderCombo.value <= 1){
-            sliderCombo.value += addedValue;
+            sliderCombo.value += addedValue * Time.deltaTime;
         }
     }
     
@@ -53,7 +53,7 @@ public class ComboSystem : MonoBehaviour {
     }
 
     public void CalcAddedValue(float attackSpeed){
-        addedValue = (1f / Time.deltaTime) * (attackSpeed * SPEED_MUL);
+        addedValue = attackSpeed * SPEED_MUL;
     }
 
     public bool IsBetween(float value, Margin margin){

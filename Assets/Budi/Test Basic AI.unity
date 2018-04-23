@@ -558,6 +558,84 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 921292025d5a2fa4b96ea6138442a1e6, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &347974925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 347974929}
+  - component: {fileID: 347974928}
+  - component: {fileID: 347974927}
+  - component: {fileID: 347974926}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &347974926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 347974925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a30d72848fba65b4fbe85a7dfec6e85a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health_Slider: {fileID: 0}
+  Mana_Slider: {fileID: 0}
+  Stamina_Slider: {fileID: 0}
+  Container: {fileID: 0}
+--- !u!114 &347974927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 347974925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de91adcd0bb714b44a7aca45a06211a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  currentMana: 0
+  currentStamina: 0
+  maxHealth: 0
+  maxMana: 0
+  maxStamina: 0
+  staminaPoint: 0
+  isRegenStamina: 0
+--- !u!114 &347974928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 347974925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba00fb7984d844e40b4a39f8b0ce5800, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StatusManager: {fileID: 347974927}
+  m_UIManager: {fileID: 347974926}
+--- !u!4 &347974929
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 347974925}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.24158867, y: -1.7208967, z: -0.1015625}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &422525856
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,7 +1081,7 @@ Prefab:
     - target: {fileID: 224628650990140160, guid: a73377bf0e4683b4f92d1a36645966e0,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a73377bf0e4683b4f92d1a36645966e0, type: 2}
@@ -2400,7 +2478,7 @@ GameObject:
   - component: {fileID: 1743992686}
   - component: {fileID: 1743992685}
   - component: {fileID: 1743992692}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MonsterKodok
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2562,7 +2640,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1743992684}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.97, y: -0.18, z: 0.12552227}
+  m_LocalPosition: {x: -10.97, y: -0.18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1663014756}
