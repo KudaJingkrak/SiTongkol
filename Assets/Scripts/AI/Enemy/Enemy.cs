@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Panda;
-using Guirao.UltimateTextDamage;  
+using Guirao.UltimateTextDamage;
 
 [RequireComponent(typeof(Droppable), typeof(Rigidbody2D), typeof(Animator))]
 public class Enemy : MonoBehaviour, IAttackable{
@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour, IAttackable{
 	[Header("Attack")]
 	public float attackSpeed = 1f;
 	public float attackDistance = 1f;
+    public float knockbackForce = 3f;
 	
 	[Header("Movement")]
 	private int _step;
@@ -123,7 +124,18 @@ public class Enemy : MonoBehaviour, IAttackable{
 		gameObject.SetActive(false);
     }
 
-	[Panda.Task]
+    public void Knockback(Transform causer)
+    {
+        Knockback(causer, knockbackForce);
+    }
+
+    public void Knockback(Transform causer, float power = 0)
+    {
+        Vector2 force = (causer.position - transform.position).normalized * power;
+        rigid2D.AddForce(force);
+    }
+
+    [Panda.Task]
 	bool SetPlayerTarget(){
 		if(targetObject && targetObject.CompareTag("Player")) return true;
 
@@ -264,5 +276,5 @@ public class Enemy : MonoBehaviour, IAttackable{
 		return float.MaxValue;
 	}
 
-	#endregion
+    #endregion
 }

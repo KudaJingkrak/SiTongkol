@@ -16,6 +16,18 @@ public class AIMovementComp : MonoBehaviour {
 	private BoxCollider2D _boxColl2D;
 	private Animator _anim;
 	private Rigidbody2D _rigid2D;
+    public Rigidbody2D Rigid2D
+    {
+        get
+        {
+            if(_rigid2D == null)
+            {
+                _rigid2D = GetComponent<Rigidbody2D>();
+            }
+
+            return _rigid2D;
+        }
+    }
 
 	#region Movement
 	[Panda.Task]

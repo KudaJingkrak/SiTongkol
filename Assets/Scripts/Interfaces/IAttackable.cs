@@ -5,4 +5,8 @@ public interface IAttackable{
 	void Destruct();
 
 	void Die();
+
+    void Knockback(Transform causer);
+
+    void Knockback(Transform causer, float power = 0f);
 }

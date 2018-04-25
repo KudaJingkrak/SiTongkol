@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,44 +12,45 @@ public class GayatriCharacter : BaseClass, IAttackable {
 	public float attackDistance = 0.1f;
 	public float inteactDistance = 0.1f;
 
-	// Pull
+	[Header("Pull")]
 	public bool isPulling;
 	public bool isHorizontalPulling;
 	private float linearDrag;
 
-    //Crouch 
+    [Header("Crouch")] 
     public bool isCrouching;
     public float Crouch_Stamina;
 
-    // Dodge
+    [Header("Dodge")]
     public bool isDodging;
 	public bool onceDodging;
 	public bool isFreeze;
 	Coroutine DodgeCoroutine;
     public float dodgePower;
 	
-	// Reflect or Defend
+	[Header("Reflect or Defend")]
 	public bool isReflect;
 
-	// Bomb
+	[Header("Bomb")]
 	public BombSystem systemBomb;
 
-	// Interact
+	[Header("Interact")]
 	public bool isInteracting;
 	public bool onDialogue;
 	private IInteractable interactable;
 	
-	//Movable
-	private Moveable _moveable;
+	[Header("Movable")]
+    private Moveable _moveable;
 	private float _moveX = 0.0f, _moveY = 0.0f;
 	private Direction _moveDir  = Direction.Front;
 	private BoxCollider2D _moveableColl = null;
 
-	// Attacking
+	[Header("Attacking")]
 	public bool isAttacking;
 	private int comboCounter = 0;
 	public Equipment senjata;
     public float attackLaunch;
+    public float knockbackForce;
 
 	public GameObject Slider_Gayatri;
 	private ComboSystem combo_Sys;
@@ -607,7 +609,18 @@ public class GayatriCharacter : BaseClass, IAttackable {
         
     }
 
-	void OnTriggerEnter2D(Collider2D other)
+    public void Knockback(Transform causer)
+    {
+        Knockback(causer, knockbackForce);
+    }
+
+    public void Knockback(Transform causer, float power = 0)
+    {
+        Vector2 force = (causer.position - transform.position).normalized * power;
+        rigid2D.AddForce(force);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
 	{
 		if(other){
             if (onceDodging && other.gameObject.layer == 9) //jika dodge dan layer unwalkable
@@ -635,4 +648,5 @@ public class GayatriCharacter : BaseClass, IAttackable {
             }
 		}
 	}
+
 }

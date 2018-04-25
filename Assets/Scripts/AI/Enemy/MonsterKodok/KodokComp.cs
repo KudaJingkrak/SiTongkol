@@ -93,5 +93,14 @@ public class KodokComp : MonoBehaviour, IAttackable {
 			
 	}
 
+    public void Knockback(Transform causer)
+    {
+        Knockback(causer, 0f);
+    }
 
+    public void Knockback(Transform causer, float power = 0)
+    {
+        Vector2 force = (causer.position - transform.position).normalized * power;
+        _movementComp.Rigid2D.AddForce(force);
+    }
 }
