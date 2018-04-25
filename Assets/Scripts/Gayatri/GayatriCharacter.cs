@@ -447,9 +447,11 @@ public class GayatriCharacter : BaseClass, IAttackable {
 
     public void DeployBomb()
     {
-        systemBomb.DeployBomb(transform.position);
+        /*
+         * Disini harusnya masuk ke state Start_Bomb(transform.position)
+         */
+        systemBomb.Start_Bomb(transform.position);
 
-        Status.Stop_Regenerating();
     }
 
     public void OnReflect()
@@ -514,23 +516,24 @@ public class GayatriCharacter : BaseClass, IAttackable {
 	{
 		isDodging = true;
         boxCollider2D.isTrigger = true;
+        rigid2D.AddForce(new Vector2(Input.GetAxis("Horizontal"),-Input.GetAxis("Vertical")) * rigid2D.mass * dodgePower / Time.deltaTime);
 		if(CheckCanDodge()){
 			rigid2D.velocity = Vector2.zero;
-			switch (direction)
-			{
-				case Direction.Back:
-					rigid2D.AddForce(Vector2.up * rigid2D.mass * dodgePower / Time.deltaTime);
-					break;
-				case Direction.Front:
-					rigid2D.AddForce(Vector2.down * rigid2D.mass * dodgePower / Time.deltaTime);
-					break;
-				case Direction.Left:
-					rigid2D.AddForce(Vector2.left * rigid2D.mass * dodgePower / Time.deltaTime);
-					break;
-				case Direction.Right:
-					rigid2D.AddForce(Vector2.right * rigid2D.mass * dodgePower / Time.deltaTime);
-					break;
-			}
+			//switch (direction)
+			//{
+			//	case Direction.Back:
+			//		rigid2D.AddForce(Vector2.up * rigid2D.mass * dodgePower / Time.deltaTime);
+			//		break;
+			//	case Direction.Front:
+			//		rigid2D.AddForce(Vector2.down * rigid2D.mass * dodgePower / Time.deltaTime);
+			//		break;
+			//	case Direction.Left:
+			//		rigid2D.AddForce(Vector2.left * rigid2D.mass * dodgePower / Time.deltaTime);
+			//		break;
+			//	case Direction.Right:
+			//		rigid2D.AddForce(Vector2.right * rigid2D.mass * dodgePower / Time.deltaTime);
+			//		break;
+			//}
 		}
 	}
 
@@ -546,22 +549,6 @@ public class GayatriCharacter : BaseClass, IAttackable {
     #endregion Dodge
 
     #region Crouch
-    public void Crouch()
-    {
-        if (!isCrouching)
-        {
-            isCrouching = true;
-            //spritenya diganti sama yang Crouch
-        }
-        else
-        {
-            isCrouching = false;
-            //sprite diganti sama yang Idle
-        }
-        /*
-         * Tinggal Switching Crouch aja si.
-         */
-    }
 
     public void StartCrouch()
     {

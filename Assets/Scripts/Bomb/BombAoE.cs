@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BombAoE : MonoBehaviour {
     public int Damage;
+    public BombSystem sysBomb;
 	// Use this for initialization
 	void Start () {
 		
@@ -13,6 +14,11 @@ public class BombAoE : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void EndExplosion()
+    {
+        sysBomb.End_Explosion();
+    }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {

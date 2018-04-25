@@ -41,6 +41,10 @@ public class GayatriController : MonoBehaviour {
         {
             myCharacter.EndCrouch();
         }
+        if (Input.GetButtonDown("Left_Bumper"))
+        {
+            myCharacter.DeployBomb();
+        }
 	}
 
 	void FixedUpdate(){
