@@ -27,12 +27,14 @@ public class GayatriCharacter : BaseClass, IAttackable {
 	public bool isFreeze;
 	Coroutine DodgeCoroutine;
     public float dodgePower;
+    public float Dodge_Stamina;
 	
 	[Header("Reflect or Defend")]
 	public bool isReflect;
 
 	[Header("Bomb")]
 	public BombSystem systemBomb;
+    public float Bomb_Stamina;
 
 	[Header("Interact")]
 	public bool isInteracting;
@@ -45,7 +47,8 @@ public class GayatriCharacter : BaseClass, IAttackable {
 	private Direction _moveDir  = Direction.Front;
 	private BoxCollider2D _moveableColl = null;
 
-	[Header("Attacking")]
+    [Header("Attacking")]
+    public float Attack_Stamina;
 	public bool isAttacking;
 	private int comboCounter = 0;
 	public Equipment senjata;
@@ -260,21 +263,43 @@ public class GayatriCharacter : BaseClass, IAttackable {
 				isInteracting = false;
 			}
 		}
-	}
+    }
 
-	#region Attack	
-	public void Attack(float delay){
-		if(!isAttacking){
-			StartCoroutine(Attacking(delay));
-		}
-	}
-	
-	IEnumerator Attacking(float delay)
+    public void Stop_RegenStamina()
+    {
+        GameManager.Instance.m_StatusManager.Stop_Regenerating_Stamina();
+    }
+
+    public void Start_RegenStamina()
+    {
+        GameManager.Instance.m_StatusManager.Start_Regenerating_Stamina();
+    }
+
+    public void Decreased_Stamina()
+    {
+        if (isAttacking)
+        {
+            //disini diisi Attacknya berapa
+            Status.Decreased_Stamina(Attack_Stamina);
+        }
+        if (isDodging)
+        {
+            Status.Decreased_Stamina(Dodge_Stamina);
+        }
+    }
+
+    #region Attack	
+    
+    public void Start_Attacking()
+    {
+        if (Status.currentStamina > Attack_Stamina)
+        {
+            isAttacking = true;
+        }
+    }
+	public void Attacking()
 	{
-		isAttacking = true;
         rigid2D.velocity = Vector2.zero;
-
-        GameManager.Instance.m_StatusManager.Stop_Regenerating();
 
         ComboFeedback feedback = combo_Sys.FilterCombo(comboCounter, senjata);
 		ComboEnum comboPlayer = feedback.combo;
@@ -338,7 +363,6 @@ public class GayatriCharacter : BaseClass, IAttackable {
 			}
 		}
 		//CancelInvoke("UnAttack");
-		yield return new WaitForSeconds(0.02f);
 		//Invoke("UnAttack",senjata.attackSpeed[comboCounter].wait);
 	}
 
@@ -452,7 +476,11 @@ public class GayatriCharacter : BaseClass, IAttackable {
         /*
          * Disini harusnya masuk ke state Start_Bomb(transform.position)
          */
-        systemBomb.Start_Bomb(transform.position);
+        if (Status.currentStamina >= Bomb_Stamina)
+        {
+            systemBomb.Start_Bomb(transform.position);
+            Status.Decreased_Stamina(Bomb_Stamina);
+        }
 
     }
 
@@ -507,37 +535,38 @@ public class GayatriCharacter : BaseClass, IAttackable {
 		return true;
 	}
 
-    IEnumerator Dodging()
-    {
-        StartDodge();  
-		yield return new WaitForSeconds(0.5f); // waktu anim dodge
-		EndDodge();
-    }
-
 	public void StartDodge()
 	{
-		isDodging = true;
-        boxCollider2D.isTrigger = true;
-        rigid2D.AddForce(new Vector2(Input.GetAxis("Horizontal"),-Input.GetAxis("Vertical")) * rigid2D.mass * dodgePower / Time.deltaTime);
-		if(CheckCanDodge()){
-			rigid2D.velocity = Vector2.zero;
-			//switch (direction)
-			//{
-			//	case Direction.Back:
-			//		rigid2D.AddForce(Vector2.up * rigid2D.mass * dodgePower / Time.deltaTime);
-			//		break;
-			//	case Direction.Front:
-			//		rigid2D.AddForce(Vector2.down * rigid2D.mass * dodgePower / Time.deltaTime);
-			//		break;
-			//	case Direction.Left:
-			//		rigid2D.AddForce(Vector2.left * rigid2D.mass * dodgePower / Time.deltaTime);
-			//		break;
-			//	case Direction.Right:
-			//		rigid2D.AddForce(Vector2.right * rigid2D.mass * dodgePower / Time.deltaTime);
-			//		break;
-			//}
-		}
+        if (Status.currentStamina >= Dodge_Stamina)
+        {
+            isDodging = true;
+        }
 	}
+
+    public void Dodge()
+    {
+        boxCollider2D.isTrigger = true;
+        rigid2D.AddForce(new Vector2(Input.GetAxis("Horizontal"), -Input.GetAxis("Vertical")) * rigid2D.mass * dodgePower / Time.deltaTime);
+        if (CheckCanDodge())
+        {
+            rigid2D.velocity = Vector2.zero;
+            //switch (direction)
+            //{
+            //	case Direction.Back:
+            //		rigid2D.AddForce(Vector2.up * rigid2D.mass * dodgePower / Time.deltaTime);
+            //		break;
+            //	case Direction.Front:
+            //		rigid2D.AddForce(Vector2.down * rigid2D.mass * dodgePower / Time.deltaTime);
+            //		break;
+            //	case Direction.Left:
+            //		rigid2D.AddForce(Vector2.left * rigid2D.mass * dodgePower / Time.deltaTime);
+            //		break;
+            //	case Direction.Right:
+            //		rigid2D.AddForce(Vector2.right * rigid2D.mass * dodgePower / Time.deltaTime);
+            //		break;
+            //}
+        }
+    }
 
 	public void EndDodge()
     {
@@ -583,7 +612,7 @@ public class GayatriCharacter : BaseClass, IAttackable {
     {
         if (isReflect)
         {
-            Status.Stop_Regenerating();
+            Status.Stop_Regenerating_Stamina();
         }
 
         Debug.Log("On attack");

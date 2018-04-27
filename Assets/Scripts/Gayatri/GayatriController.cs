@@ -17,7 +17,7 @@ public class GayatriController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetButtonDown("B")){
-			myCharacter.Attack(0.3f);
+            myCharacter.Start_Attacking();
 		}
 
 		if(Input.GetButtonDown("A")){
@@ -30,7 +30,7 @@ public class GayatriController : MonoBehaviour {
 		}
         if (Input.GetButtonDown("Right_Bumper"))
         {
-            myCharacter.OnDodging();
+            myCharacter.StartDodge();
         }
 
         if (Input.GetButtonDown("Y"))

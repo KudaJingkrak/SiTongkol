@@ -95,19 +95,43 @@ public class StatusManager : BaseClass {
 
     public void Increased_Stamina(float banyak_Stamina)
     {
-        currentStamina += banyak_Stamina;
+        //float percentStamina = banyak_Stamina / maxStamina;
+        if (CheckBoundaryUpper(banyak_Stamina))
+        {
+            currentStamina += banyak_Stamina;
+        }
     }
 
     public void Decreased_Stamina(float banyak_Stamina)
     {
-        currentStamina -= banyak_Stamina;
+        if (CheckBoundaryBelow(currentStamina))
+        {
+            currentStamina -= banyak_Stamina;
+        }
     }
 
-    public bool CheckBelow_Stamina(float banyak_Stamina)
+    public bool CheckBoundaryBelow(float banyak_value)
     {
-        if (currentStamina < banyak_Stamina)
+        if (banyak_value >= 0)
         {
             return true;
+        }
+        else
+        {
+            return false;
+        }
+        return false;
+    }
+
+    public bool CheckBoundaryUpper(float banyak_value)
+    {
+        if (banyak_value < 100)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
         return false;
     }
@@ -117,42 +141,40 @@ public class StatusManager : BaseClass {
         return currentStamina;
     }
 
-    public void Regenerating_Stamina()
+    //[TODO] NEED IMPROVEMENT.
+    public void Start_Regenerating_Stamina()
     {
+        //ini buat gate aja dari staminanya.
         isRegenStamina = true;
     }
 
-    public void Stop_Regenerating()
+    //[TODO] NEED IMPROVEMENT
+    public void Stop_Regenerating_Stamina()
     {
         isRegenStamina = false;
-        if (Stamina_itr != null)
-        {
-            StopCoroutine(Stamina_itr);
-        }
-        Stamina_itr = Regenerate_Stamina(1f);
-        StartCoroutine(Stamina_itr);
     }
 
-    IEnumerator Regenerate_Stamina(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        isRegenStamina = true;
-    }
     #endregion Stamina Function
 
     // Use this for initialization
     void Start () {
+        //nanti ini diganti pake variable yang di simpen
         isRegenStamina = true;
+        Initiated_Stamina();
+        Initiated_Mana();
+        Initiated_Health();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (isRegenStamina)
-        {
-            if (currentStamina <= maxStamina)
-            {
-                currentStamina += staminaPoint * Time.deltaTime;
-            }
-        }
 	}
+
+    void FixedUpdate()
+    {
+        if (isRegenStamina && CheckBoundaryUpper(currentStamina))
+        {
+            currentStamina = currentStamina + (staminaPoint * Time.deltaTime);
+        }
+    }
 }
