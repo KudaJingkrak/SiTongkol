@@ -353,11 +353,11 @@ public class GayatriCharacter : BaseClass, IAttackable {
 					Debug.Log("Menyerang "+ hits[i].collider.gameObject.name);
                     if (comboPlayer == ComboEnum.Perfect)
                     {
-                        attackable.ApplyDamage(TempDamage, null, DamageType.Critical);
+                        attackable.ApplyDamage(TempDamage, gameObject, DamageType.Critical);
                     }
                     else
                     {
-                        attackable.ApplyDamage(TempDamage, null, DamageType.Normal);
+                        attackable.ApplyDamage(TempDamage, gameObject, DamageType.Normal);
                     }
 				}
 			}
@@ -612,20 +612,16 @@ public class GayatriCharacter : BaseClass, IAttackable {
     {
         if (isReflect)
         {
+            //masih ngaco.
             Status.Stop_Regenerating_Stamina();
-        }
-
-        Debug.Log("On attack");
-        if (Status.CheckBelow_Health(damage))
-        {
-            //DEAD_END
-            //Back to Checkpoints.
         }
         else
         {
+            Debug.Log("On attack");
             Status.Decreased_Health(damage);
-            //nanti disini dimasukin DamageType, DamageEffect, dll.
+            Knockback(causer.transform);
         }
+
     }
 
     public void Destruct()
@@ -645,7 +641,7 @@ public class GayatriCharacter : BaseClass, IAttackable {
 
     public void Knockback(Transform causer, float power = 0)
     {
-        Vector2 force = (causer.position - transform.position).normalized * power;
+        Vector2 force = (transform.position - causer.position).normalized * power;
         rigid2D.AddForce(force);
     }
 

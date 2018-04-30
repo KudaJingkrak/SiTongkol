@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour, IAttackable{
 
 	public int maxStuckStep = 10;
 	public int minStuckStep = 0;
+    public bool isKnockback = false;
 	[Panda.Task]
 	public bool IsEndStep{
 		get{return _step < 1;}
@@ -105,6 +106,7 @@ public class Enemy : MonoBehaviour, IAttackable{
         }
         Debug.Log("harusnya ada damage");
         _health -= damage;
+        Knockback(causer.transform);
 
 		Debug.Log("Health "+gameObject.name+" : " + _health);
 		
@@ -131,8 +133,21 @@ public class Enemy : MonoBehaviour, IAttackable{
 
     public void Knockback(Transform causer, float power = 0)
     {
-        Vector2 force = (causer.position - transform.position).normalized * power;
+        if (isKnockback == false)
+        {
+            StartCoroutine(StartKnockback(0.3f,causer.position,power));
+           
+        }
+    }
+
+    IEnumerator StartKnockback(float delay,Vector3 position,float power)
+    {
+        isKnockback = true;
+        Vector2 force = -(position - transform.position).normalized * power;
+        rigid2D.velocity = force;
         rigid2D.AddForce(force);
+        yield return new WaitForSeconds(delay);
+        isKnockback = false;
     }
 
     [Panda.Task]
@@ -230,6 +245,10 @@ public class Enemy : MonoBehaviour, IAttackable{
 	public void Move(float x, float y){
 		this.x = x;
 		this.y = y;
+        if(isKnockback)
+        {
+            return;
+        }
 		rigid2D.velocity = new Vector3(x,y,0) * Mathf.Lerp(0f, speed, 1f);
 		SetDirection();
 	}
@@ -237,7 +256,10 @@ public class Enemy : MonoBehaviour, IAttackable{
 	public void Move(Vector2 direction){
 		this.x = direction.x;
 		this.y = direction.y;
-		rigid2D.velocity = new Vector3(x,y,0) * Mathf.Lerp(0f, speed, 1f);
+        if (!isKnockback)
+        {
+            rigid2D.velocity = new Vector3(x, y, 0) * Mathf.Lerp(0f, speed, 1f);
+        }
 		SetDirection();
 	}
 
@@ -275,6 +297,14 @@ public class Enemy : MonoBehaviour, IAttackable{
 		}
 		return float.MaxValue;
 	}
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<GayatriCharacter>().ApplyDamage(5,this.gameObject);
+        }
+    }
 
     #endregion
 }

@@ -34,7 +34,15 @@ public class StatusManager : BaseClass {
 
     public void Decreased_Health(float banyak_Health)
     {
-        currentHealth -= banyak_Health;
+        if (currentHealth < banyak_Health)
+        {
+            currentHealth = maxHealth;
+            Application.LoadLevel(Application.loadedLevel);
+        }
+        else
+        {
+            currentHealth -= banyak_Health;
+        }
     }
 
     public bool CheckBelow_Health(float banyak_Health)

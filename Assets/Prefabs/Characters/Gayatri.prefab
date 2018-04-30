@@ -414,10 +414,13 @@ MonoBehaviour:
   onceDodging: 0
   isFreeze: 0
   dodgePower: 40
+  Dodge_Stamina: 35
   isReflect: 1
   systemBomb: {fileID: 0}
+  Bomb_Stamina: 50
   isInteracting: 0
   onDialogue: 0
+  Attack_Stamina: 10
   isAttacking: 0
   senjata:
     sprite: {fileID: 21300000, guid: 9acd9c619f3bd3744a0b84dbeaf5a6fb, type: 3}
@@ -458,7 +461,7 @@ MonoBehaviour:
     - wait: 0.02
       value: 50
   attackLaunch: 300
-  knockbackForce: 0
+  knockbackForce: 500
   Slider_Gayatri: {fileID: 1697104647621506}
   Persentase_Perfect: 120
   Persentase_Good: 50
@@ -793,7 +796,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.625, y: 1.25}
+  m_Size: {x: 1.125, y: 1.1875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0

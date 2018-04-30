@@ -26,7 +26,7 @@ public class BombAoE : MonoBehaviour {
         IAttackable attackable = collision.gameObject.GetComponent<IAttackable>();
         if (attackable != null)
         {
-            attackable.ApplyDamage(Damage);
+            attackable.ApplyDamage(Damage,gameObject);
         }
     }
 }

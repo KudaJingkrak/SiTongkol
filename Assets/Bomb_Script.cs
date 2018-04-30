@@ -13,6 +13,7 @@ public class Bomb_Script : MonoBehaviour {
     {
         sysBomb.Exploded_Bomb();
     }
+    
 	
 	// Update is called once per frame
 	void Update () {

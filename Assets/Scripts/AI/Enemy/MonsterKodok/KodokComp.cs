@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Panda;
+using Guirao.UltimateTextDamage;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(Animator), typeof(AIMovementComp))]
 public class KodokComp : MonoBehaviour, IAttackable {
-	public float health = 1f;
+    public UltimateTextDamageManager textDamage_Manager;
+    public float health = 1f;
 	private float _health;
 	private AIMovementComp _movementComp;
 	private BoxCollider2D _boxColl2D;
@@ -56,7 +58,21 @@ public class KodokComp : MonoBehaviour, IAttackable {
 	#region Attackable
 	public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None)
     {
-        
+        if (type == DamageType.Normal)
+        {
+            textDamage_Manager.Add("" + damage, transform, "default");
+        }
+        else if (type == DamageType.Critical)
+        {
+            textDamage_Manager.Add("" + damage, transform, "critical");
+        }
+        Debug.Log("harusnya ada damage");
+        _health -= damage;
+        Knockback(causer.transform);
+
+        Debug.Log("Health " + gameObject.name + " : " + _health);
+
+        if (_health <= 0) Die();
     }
 
     public void Destruct()
@@ -100,7 +116,8 @@ public class KodokComp : MonoBehaviour, IAttackable {
 
     public void Knockback(Transform causer, float power = 0)
     {
-        Vector2 force = (causer.position - transform.position).normalized * power;
-        _movementComp.Rigid2D.AddForce(force);
+        Vector2 force = -(causer.position - transform.position).normalized * power;
+        _movementComp.Rigid2D.velocity = force;
+
     }
 }
