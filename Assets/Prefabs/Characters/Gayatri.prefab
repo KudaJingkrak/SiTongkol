@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224463711368773116}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224431360349844334}
   - component: {fileID: 114983426473529910}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4341933402892594}
   - component: {fileID: 212994654392291010}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Attack_Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 224260925371092212}
   - component: {fileID: 222605622078952388}
   - component: {fileID: 114512579510975412}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Status_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 224628650990140160}
   - component: {fileID: 222334897104655720}
   - component: {fileID: 114552035518965554}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 114281344752276602}
   - component: {fileID: 114451844727152414}
   - component: {fileID: 114580150644827922}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 224639385496780488}
   - component: {fileID: 222012444060295126}
   - component: {fileID: 114304111579614182}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Perfect_Region
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 224579537518387390}
   - component: {fileID: 222500317482110042}
   - component: {fileID: 114362009203116784}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Combo_Header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 224553306938749068}
   - component: {fileID: 222009774310234566}
   - component: {fileID: 114946989503773852}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Good_Region
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 224534395833060608}
   - component: {fileID: 222344868351786272}
   - component: {fileID: 114093408315358020}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Combo_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 224889025515448818}
   - component: {fileID: 222751503177133154}
   - component: {fileID: 114474725203440144}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1680427194847986}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.36, y: -1.39, z: 0}
+  m_LocalPosition: {x: 0.072280884, y: -0.5967488, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224287353508605162}
@@ -413,14 +413,14 @@ MonoBehaviour:
   isDodging: 0
   onceDodging: 0
   isFreeze: 0
-  dodgePower: 40
-  Dodge_Stamina: 35
+  dodgePower: 0
+  Dodge_Stamina: 0
   isReflect: 1
   systemBomb: {fileID: 0}
-  Bomb_Stamina: 50
+  Bomb_Stamina: 0
   isInteracting: 0
   onDialogue: 0
-  Attack_Stamina: 10
+  Attack_Stamina: 0
   isAttacking: 0
   senjata:
     sprite: {fileID: 21300000, guid: 9acd9c619f3bd3744a0b84dbeaf5a6fb, type: 3}
@@ -460,8 +460,8 @@ MonoBehaviour:
       value: 40
     - wait: 0.02
       value: 50
-  attackLaunch: 300
-  knockbackForce: 500
+  attackLaunch: 0
+  knockbackForce: 0
   Slider_Gayatri: {fileID: 1697104647621506}
   Persentase_Perfect: 120
   Persentase_Good: 50
