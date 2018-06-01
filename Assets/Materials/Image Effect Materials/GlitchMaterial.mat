@@ -35,7 +35,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DispTex:
-        m_Texture: {fileID: 2800000, guid: 571e491eaf28c934eaecaa3c2aedbdb8, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2929a0390a2e40348aa71178f6576162, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -60,14 +60,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
-    - _ColorIntensity: 0
+    - _ColorIntensity: 0.43
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Intensity: 0.892
+    - _Intensity: 0.208
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1

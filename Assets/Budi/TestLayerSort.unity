@@ -41248,6 +41248,32 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c3aad379a9acce440a2ed23cfb3b1bb8, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1917256327 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1393633092710392, guid: c3aad379a9acce440a2ed23cfb3b1bb8,
+    type: 2}
+  m_PrefabInternal: {fileID: 1917256326}
+--- !u!114 &1917256328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1917256327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17fcca37d0d47674388132de51080ce7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mMaterial: {fileID: 2100000, guid: b299060437184f54a823e7c39ea1dc1f, type: 2}
+  displacementMap: {fileID: 2800000, guid: 2929a0390a2e40348aa71178f6576162, type: 3}
+  intensity: 0.208
+  flipIntensity: 0.109
+  colorIntensity: 0.43
+--- !u!20 &1917256334 stripped
+Camera:
+  m_PrefabParentObject: {fileID: 20315014046764072, guid: c3aad379a9acce440a2ed23cfb3b1bb8,
+    type: 2}
+  m_PrefabInternal: {fileID: 1917256326}
 --- !u!1 &2140681009
 GameObject:
   m_ObjectHideFlags: 0
@@ -41415,6 +41441,41 @@ Prefab:
     - target: {fileID: 224330046525554590, guid: 35f849f796581d74792b91d700ad6560,
         type: 2}
       propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 223218843044829928, guid: 35f849f796581d74792b91d700ad6560,
+        type: 2}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 223218843044829928, guid: 35f849f796581d74792b91d700ad6560,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1917256334}
+    - target: {fileID: 223218843044829928, guid: 35f849f796581d74792b91d700ad6560,
+        type: 2}
+      propertyPath: m_PlaneDistance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 223218843044829928, guid: 35f849f796581d74792b91d700ad6560,
+        type: 2}
+      propertyPath: m_PixelPerfect
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 223218843044829928, guid: 35f849f796581d74792b91d700ad6560,
+        type: 2}
+      propertyPath: m_SortingLayerID
+      value: -485714231
+      objectReference: {fileID: 0}
+    - target: {fileID: 223218843044829928, guid: 35f849f796581d74792b91d700ad6560,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114521357135285914, guid: 35f849f796581d74792b91d700ad6560,
+        type: 2}
+      propertyPath: m_MatchWidthOrHeight
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
