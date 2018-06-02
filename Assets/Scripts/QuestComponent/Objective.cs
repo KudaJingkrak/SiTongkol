@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using TaskNS;
 
 [System.Serializable]
 public class Objective{
