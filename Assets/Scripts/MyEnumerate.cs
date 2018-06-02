@@ -42,3 +42,8 @@ public enum ButtonDoor_Type
 public enum MovementType{
 	Walk, Swim, Fly
 }
+
+public enum JenisPuzzle
+{
+    Switching, Destroy, Combination
+}
