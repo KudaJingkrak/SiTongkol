@@ -5631,20 +5631,20 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114801618931001742, guid: a73377bf0e4683b4f92d1a36645966e0,
-        type: 2}
-      propertyPath: m_Dialogue
-      value: 
-      objectReference: {fileID: 348156857}
     - target: {fileID: 114305175123565108, guid: a73377bf0e4683b4f92d1a36645966e0,
         type: 2}
       propertyPath: systemBomb
       value: 
       objectReference: {fileID: 1526423372}
+    - target: {fileID: 114801618931001742, guid: a73377bf0e4683b4f92d1a36645966e0,
+        type: 2}
+      propertyPath: m_Dialogue
+      value: 
+      objectReference: {fileID: 348156857}
     - target: {fileID: 224628650990140160, guid: a73377bf0e4683b4f92d1a36645966e0,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a73377bf0e4683b4f92d1a36645966e0, type: 2}
