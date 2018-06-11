@@ -5,20 +5,25 @@ using UnityEngine;
 public class BombAoE : MonoBehaviour {
     public int Damage;
     public BombSystem sysBomb;
-	// Use this for initialization
-	void Start () {
-		
+    public Animator anim;
+	
+    void Awake(){
+		anim = GetComponent<Animator>();
+        
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     public void EndExplosion()
     {
         sysBomb.End_Explosion();
     }
+
+    public void SetStart(bool isStart){
+		if(!anim){
+			anim = GetComponent<Animator>();
+		}
+
+		anim.SetBool("isStartExploding", isStart);
+	}
 
     public void OnTriggerEnter2D(Collider2D collision)
     {

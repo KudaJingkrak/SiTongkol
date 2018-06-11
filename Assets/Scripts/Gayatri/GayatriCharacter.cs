@@ -476,7 +476,7 @@ public class GayatriCharacter : BaseClass, IAttackable {
         /*
          * Disini harusnya masuk ke state Start_Bomb(transform.position)
          */
-        if (Status.currentStamina >= Bomb_Stamina)
+        if (!systemBomb.isActivated && Status.currentStamina >= Bomb_Stamina)
         {
             systemBomb.Start_Bomb(transform.position);
             Status.Decreased_Stamina(Bomb_Stamina);

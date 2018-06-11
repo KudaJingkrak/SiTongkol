@@ -5,6 +5,8 @@ using UnityEngine;
 public class BaseClass : MonoBehaviour {
 	public StatusManager Status {get{return GameManager.Instance.m_StatusManager;}}
 
+    public BombSystem BombSys {get{return GameManager.Instance.m_BombManager;}}
+
     public void SetPlayer(GameObject player)
     {
         GameManager.Instance.m_Player = player;

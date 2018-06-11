@@ -11,8 +11,8 @@ public class BombSystem : MonoBehaviour {
     public Vector3 positionUser_Outside;
     public bool Damage_Able;
 
-    public Animator Bomb_Anim;
-    public Animator BombExploding_Anim;
+    private Bomb_Script bombScript;
+    private BombAoE bombAOE;
 
     //Harus Buat Animation Bool State untuk Bomb dan Explode nya.
     public bool isStartBomb;
@@ -20,16 +20,33 @@ public class BombSystem : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        positionUser_Outside = new Vector3(28.58f,-12.42f,0);
-        bomb_Sprite.transform.position = positionUser_Outside;
-        area_KenaBomb.transform.position = positionUser_Outside;
+        bombScript = bomb_Sprite.GetComponent<Bomb_Script>();
+        bombAOE = area_KenaBomb.GetComponent<BombAoE>();
+
         Damage_Able = false;
         isStartBomb = false;
         isStartExploding = false;
+
+        Disable();
+        
 	}
+
+    void Enable(){
+        bomb_Sprite.SetActive(true);
+        bombScript = bomb_Sprite.GetComponent<Bomb_Script>();
+        area_KenaBomb.SetActive(true);
+        bombAOE = area_KenaBomb.GetComponent<BombAoE>();
+        area_KenaBomb.SetActive(false);
+    }
+
+    void Disable(){
+        bomb_Sprite.SetActive(false);
+        area_KenaBomb.SetActive(false);
+    }
 
     void Activated()
     {
+        
         StartCoroutine(ActivatedWait());
         //Animation of area_KenaBomb
 
@@ -61,23 +78,28 @@ public class BombSystem : MonoBehaviour {
     //Step 1
     public void Start_Bomb(Vector3 position)
     {
+        Enable();
+        isActivated = true;
         isStartBomb = true;
         positionUser_Inside = position;
         bomb_Sprite.transform.position = positionUser_Inside;
-        Bomb_Anim.SetBool("isStartBomb", true);
-
+        bombScript.SetStart(true);
     }
 
     //Step 2
     public void Exploded_Bomb()
     {
-        bomb_Sprite.transform.position = positionUser_Outside;
+        bomb_Sprite.SetActive(false);
+        area_KenaBomb.SetActive(true);
+        bombAOE = area_KenaBomb.GetComponent<BombAoE>();
         isStartBomb = false;
         area_KenaBomb.transform.position = positionUser_Inside;
         isStartExploding = true;
         Damage_Able = true;
-        Bomb_Anim.SetBool("isStartBomb", false);
-        Bomb_Anim.SetBool("isStartExploding", true);
+        // Bomb_Anim.SetBool("isStartBomb", false);
+        // Bomb_Anim.SetBool("isStartExploding", true);
+        bombScript.SetStart(false);
+        bombAOE.SetStart(true);
     }
 
     //Step 3
@@ -86,12 +108,20 @@ public class BombSystem : MonoBehaviour {
         area_KenaBomb.transform.position = positionUser_Outside;
         isStartExploding = false;
         Damage_Able = false;
-        Bomb_Anim.SetBool("isStartExploding", false);
+        //Bomb_Anim.SetBool("isStartExploding", false);
+        bombAOE.SetStart(false);
+        isActivated = false;
+        Disable();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        Bomb_Anim.SetBool("isStartBomb", isStartBomb);
-        BombExploding_Anim.SetBool("isStartExploding", isStartExploding);
+        if(bombScript){
+            bombScript.SetStart(isStartBomb);
+        }
+
+        if(bombAOE){
+            bombAOE.SetStart(isStartExploding);
+        }
 	}
 }
