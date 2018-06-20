@@ -5,7 +5,8 @@ using Panda;
 
 [RequireComponent(typeof(AIMovementComp))]
 public class AITargetComp : MonoBehaviour {
-	
+	public Transform targetAim;
+
 	[Panda.Task]
 	public bool isCanFire{get{return fireRateCounter <= 0;}}
 	public ProjectileSpawner[] spawners;
@@ -15,7 +16,22 @@ public class AITargetComp : MonoBehaviour {
 	private AIMovementComp _movementComp;
 	
 	[Header("Projectile")]
-	public GameObject prefab;
+	public GameObject prefabSelected;
+	public GameObject[] prefabs = new GameObject[1];
+
+	#region prefabs_management
+	[Task]
+	public void SelectPrefab(int index){
+		if(index < prefabs.Length){
+			prefabSelected = prefabs[index];
+		}
+		if(Task.isInspected){
+			Task.current.Succeed();
+		}
+	}
+
+	#endregion
+	
 
 	[Panda.Task]
 	public void Fire(){
@@ -114,12 +130,12 @@ public class AITargetComp : MonoBehaviour {
 
 	public void Fire(Transform objTransform){
 		CalcFireRate();
-		PoolManager.Instance.ReuseObject(prefab, objTransform.position, objTransform.rotation);	
+		PoolManager.Instance.ReuseObject(prefabSelected, objTransform.position, objTransform.rotation);	
 	}
 	
 	public void Fire(Vector2 position, Quaternion rotation){
 		CalcFireRate();
-		PoolManager.Instance.ReuseObject(prefab, position, rotation);	
+		PoolManager.Instance.ReuseObject(prefabSelected, position, rotation);	
 	}
 
 	public void FireDirection(Vector2 position){
@@ -143,7 +159,7 @@ public class AITargetComp : MonoBehaviour {
 				break;
 		}
 		CalcFireRate();
-		PoolManager.Instance.ReuseObject(prefab, position, rotation);
+		PoolManager.Instance.ReuseObject(prefabSelected, position, rotation);
 	}
 
 	public void CalcFireRate(){
@@ -156,10 +172,14 @@ public class AITargetComp : MonoBehaviour {
 
 	[Panda.Task]
 	public void AimTarget(){
-		if(_movementComp.target){
+		if(!targetAim && _movementComp.target){
+			targetAim = _movementComp.target;
+		}
+
+		if(targetAim){
 			for (int i= 0; i < spawners.Length; i++)
 			{
-				Quaternion newRotation  = Quaternion.LookRotation(spawners[i].rootAiming.transform.position - _movementComp.target.position, Vector3.forward);
+				Quaternion newRotation  = Quaternion.LookRotation(spawners[i].rootAiming.transform.position - targetAim.position, Vector3.forward);
 				newRotation.x = spawners[i].rootAiming.transform.rotation.x;
 				newRotation.y = spawners[i].rootAiming.transform.rotation.y;
 				spawners[i].rootAiming.transform.rotation = Quaternion.Slerp(spawners[i].rootAiming.transform.rotation, newRotation, Time.deltaTime * turnRate );
@@ -174,10 +194,14 @@ public class AITargetComp : MonoBehaviour {
 
 	[Panda.Task]
 	public void AimTarget(int spawnerIndex = 0){
-		if(_movementComp.target){
+		if(!targetAim && _movementComp.target){
+			targetAim = _movementComp.target;
+		}
+
+		if(targetAim){
 			if (spawnerIndex > -1 && spawnerIndex < spawners.Length)
 			{
-				Quaternion newRotation  = Quaternion.LookRotation(spawners[spawnerIndex].rootAiming.transform.position - _movementComp.target.position, Vector3.forward);
+				Quaternion newRotation  = Quaternion.LookRotation(spawners[spawnerIndex].rootAiming.transform.position - targetAim.position, Vector3.forward);
 				newRotation.x = spawners[spawnerIndex].rootAiming.transform.rotation.x;
 				newRotation.y = spawners[spawnerIndex].rootAiming.transform.rotation.y;
 				spawners[spawnerIndex].rootAiming.transform.rotation = Quaternion.Slerp(spawners[spawnerIndex].rootAiming.transform.rotation, newRotation, Time.deltaTime * turnRate );
@@ -265,6 +289,9 @@ public class AITargetComp : MonoBehaviour {
 	void Start () {
 		_movementComp = GetComponent<AIMovementComp>();
 		CalcFireRate();
+		if(prefabSelected == null){
+			prefabSelected = prefabs[0];
+		}
 	}
 
 	void Update(){
