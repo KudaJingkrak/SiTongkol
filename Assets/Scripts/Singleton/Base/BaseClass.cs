@@ -7,6 +7,8 @@ public class BaseClass : MonoBehaviour {
 
     public BombSystem BombSys {get{return GameManager.Instance.m_BombManager;}}
 
+    public GameObject Player{get{return GameManager.Instance.m_Player;}}
+
     public void SetPlayer(GameObject player)
     {
         GameManager.Instance.m_Player = player;
