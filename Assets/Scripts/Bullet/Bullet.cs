@@ -231,7 +231,7 @@ public class Bullet : PoolObject {
             }
             else
             {
-                attackable.ApplyDamage(damage);
+                attackable.ApplyDamage(damage, gameObject);
                 gameObject.SetActive(false);
             }
         }

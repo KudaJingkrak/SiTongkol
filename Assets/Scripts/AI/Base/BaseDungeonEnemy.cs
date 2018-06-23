@@ -2,12 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseDungeonEnemy : MonoBehaviour {
+public class BaseDungeonEnemy : BaseEnemy {
 
-	public int currentRoom{get{return DungeonManager.Instance.pc2dr.ComputeCurrentRoom(transform.position);}}
+	public int currentRoom{
+		get{
+			if(DungeonManager.Instance)
+			{
+				return DungeonManager.Instance.pc2dr.ComputeCurrentRoom(transform.position);
+			
+			}else
+			{
+				return -1;
+			
+			}	
+
+		}
+	}
 	
 	public void ReportLiveToRoom(){
-		DungeonManager.Instance.rooms[currentRoom].AddEnemy(gameObject);
+		if(DungeonManager.Instance)
+		{
+			DungeonManager.Instance.rooms[currentRoom].AddEnemy(gameObject);
+		}
 	}
 
 	public void ReportDieToRoom(){

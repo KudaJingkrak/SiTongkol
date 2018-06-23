@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -5003,11 +5003,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &399432898 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4412800118099188, guid: 0113ab1652087d8419daef925ac723f8,
-    type: 2}
-  m_PrefabInternal: {fileID: 571297140}
 --- !u!4 &478710988 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4249367605509504, guid: 921292025d5a2fa4b96ea6138442a1e6,
@@ -24804,11 +24799,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4709235942977486, guid: c3aad379a9acce440a2ed23cfb3b1bb8, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -2.6
+      value: 0.21
       objectReference: {fileID: 0}
     - target: {fileID: 4709235942977486, guid: c3aad379a9acce440a2ed23cfb3b1bb8, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -17.4
+      value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4709235942977486, guid: c3aad379a9acce440a2ed23cfb3b1bb8, type: 2}
       propertyPath: m_LocalPosition.z
@@ -24834,11 +24829,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114111831487575070, guid: c3aad379a9acce440a2ed23cfb3b1bb8,
-        type: 2}
-      propertyPath: CameraTargets.Array.data[0].TargetTransform
-      value: 
-      objectReference: {fileID: 399432898}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c3aad379a9acce440a2ed23cfb3b1bb8, type: 2}
   m_IsPrefabParent: 0
@@ -26149,22 +26139,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f26c714a93270454d9a2d86a5bc54ef8, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &2041579321 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1393633092710392, guid: c3aad379a9acce440a2ed23cfb3b1bb8,
-    type: 2}
-  m_PrefabInternal: {fileID: 1315213468}
---- !u!114 &2041579328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2041579321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e16ee77e94fb1d4f87401a707d29296, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!20 &2128357745 stripped
 Camera:
   m_PrefabParentObject: {fileID: 20315014046764072, guid: c3aad379a9acce440a2ed23cfb3b1bb8,

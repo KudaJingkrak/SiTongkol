@@ -62,7 +62,6 @@ public class GayatriCharacter : BaseClass, IAttackable {
 	public float Persentase_Good;
 	public float Persentase_Miss;
     
-
 	//private float _slower = 0.0f;
 	// Use this for initialization
 	void Start () {
@@ -617,9 +616,13 @@ public class GayatriCharacter : BaseClass, IAttackable {
         }
         else
         {
-            Debug.Log("On attack");
+            //Debug.Log("On attack");
             Status.Decreased_Health(damage);
-            Knockback(causer.transform);
+			if(causer)
+			{
+				Knockback(causer.transform);	
+			}
+            
         }
 
     }
