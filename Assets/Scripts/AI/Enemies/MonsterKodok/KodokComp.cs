@@ -5,7 +5,7 @@ using Panda;
 using Guirao.UltimateTextDamage;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(Animator), typeof(AIMovementComp))]
-public class KodokComp : MonoBehaviour, IAttackable {
+public class KodokComp : BaseDungeonEnemy, IAttackable {
     public UltimateTextDamageManager textDamage_Manager;
     public float health = 1f;
 	private float _health;
@@ -82,7 +82,9 @@ public class KodokComp : MonoBehaviour, IAttackable {
 
     public void Die()
     {
-		
+		ReportDieToRoom();
+		//Sementara nanti ganti lagi
+		gameObject.SetActive(false);
     }
 	#endregion
 
@@ -97,6 +99,7 @@ public class KodokComp : MonoBehaviour, IAttackable {
 
 		//TODO nanti ganti
 		_movementComp.SetPlayerAsTarget();
+		ReportLiveToRoom();
 	}
 	
 	// Update is called once per frame
