@@ -16,3 +16,9 @@ public class PoolStruct{
 	public GameObject prefab;
 	public int size;
 }
+
+[System.Serializable]
+public class PoolMonsterStruct : PoolStruct
+{
+	public Tier tier;
+}

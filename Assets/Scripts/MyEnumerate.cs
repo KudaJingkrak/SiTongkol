@@ -47,3 +47,8 @@ public enum JenisPuzzle
 {
     Switching, Destroy, Combination
 }
+
+public enum Tier
+{
+	TierOne, TierTwo, TierThree,  
+}
