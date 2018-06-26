@@ -33,6 +33,7 @@ public class PuzzleManager : MonoBehaviour {
                 {
                     if (i == switchedObject.Length - 1)
                     {
+                        PuzzleCompleted = true;
                         Debug.Log("Puzzle Completed");
                     }
                     continue;

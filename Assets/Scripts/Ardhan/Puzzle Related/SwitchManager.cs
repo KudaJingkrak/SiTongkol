@@ -9,6 +9,7 @@ public class SwitchManager : MonoBehaviour {
     public GameObject switchButton;
     public bool boolSwitch;
     public bool isTahan;
+    public bool isOnce;
 
 	// Use this for initialization
 	void Start () {
@@ -39,9 +40,17 @@ public class SwitchManager : MonoBehaviour {
     {
         if (boolSwitch)
         {
-            boolSwitch = false;
-            changeSprite();
-            switchButton.GetComponentInParent<PuzzleManager>().checkPuzzle() ;
+            if (isOnce)
+            {
+
+            }
+            else
+            {
+                boolSwitch = false;
+                changeSprite();
+                switchButton.GetComponentInParent<PuzzleManager>().checkPuzzle();
+            }
+           
         }
         else if (!boolSwitch)
         {
