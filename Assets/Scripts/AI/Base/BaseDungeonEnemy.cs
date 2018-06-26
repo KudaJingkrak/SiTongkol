@@ -26,7 +26,11 @@ public class BaseDungeonEnemy : BaseEnemy {
 		}
 	}
 
-	public void ReportDieToRoom(){
-
+	public void ReportDieToRoom()
+	{
+		if(DungeonManager.Instance)
+		{
+			DungeonManager.Instance.rooms[currentRoom].RemoveEnemy(gameObject);
+		}
 	}
 }

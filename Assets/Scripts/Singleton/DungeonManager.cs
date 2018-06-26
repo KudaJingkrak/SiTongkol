@@ -34,11 +34,11 @@ public class DungeonManager : MonoBehaviour {
 		pc2dr = Camera.main.gameObject.GetComponent<ProCamera2DRooms>();
 		if(pc2dr)
 		{
-			rooms = new DungeonRoom[pc2dr.Rooms.Count];
+			//rooms = new DungeonRoom[pc2dr.Rooms.Count];
 
 			for(int i = 0; i < rooms.Length; i++)
 			{
-				rooms[i] = new DungeonRoom();
+				//rooms[i] = new DungeonRoom();
 				rooms[i].position = pc2dr.Rooms[i].Dimensions.position;
 
 			}
@@ -66,7 +66,7 @@ public class DungeonManager : MonoBehaviour {
 					rooms[i].isPlayerHere = false;
 				}
 
-				Debug.Log("Room " + i + " terdapat " + rooms[i].numberOfEnemies + " musuh");
+				// Debug.Log("Room " + i + " terdapat " + rooms[i].numberOfEnemies + " musuh");
 				
 			}
 		}
@@ -95,6 +95,8 @@ public class DungeonRoom{
 		}
 	}
 
+	public List<Transform> respwanPoint = new List<Transform>();
+
 	public List<GameObject> enemies = new List<GameObject>();
 
 	public void AddEnemy(GameObject enemy){
@@ -102,5 +104,10 @@ public class DungeonRoom{
 		{
 			enemies.Add(enemy);
 		}
+	}
+
+	public void RemoveEnemy(GameObject enemy)
+	{
+		enemies.Remove(enemy);
 	}
 }
