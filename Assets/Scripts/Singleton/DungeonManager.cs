@@ -80,6 +80,7 @@ public class DungeonRoom{
 	public bool isPlayerHere = false;
 	[Header("Enemies Handle")]
 	public bool isRespawnable = true;
+	public bool isSkipale = true;
 	public int numberOfEnemies
 	{
 		get

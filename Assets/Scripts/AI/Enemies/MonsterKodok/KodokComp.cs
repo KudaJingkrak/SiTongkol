@@ -84,7 +84,7 @@ public class KodokComp : BaseDungeonEnemy, IAttackable {
     {
 		ReportDieToRoom();
 		//Sementara nanti ganti lagi
-		gameObject.SetActive(false);
+		Destroy();
     }
 	#endregion
 
