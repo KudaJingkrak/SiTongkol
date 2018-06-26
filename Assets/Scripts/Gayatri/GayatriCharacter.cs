@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GayatriCharacter : BaseClass, IAttackable {
+    public GameObject ColliderKaki;
 	public Rigidbody2D rigid2D;
 	public BoxCollider2D boxCollider2D;
 	public Animator animator;
@@ -544,8 +545,9 @@ public class GayatriCharacter : BaseClass, IAttackable {
 
     public void Dodge()
     {
-        boxCollider2D.isTrigger = true;
+        ColliderKaki.layer = 13;
         rigid2D.AddForce(new Vector2(Input.GetAxis("Horizontal"), -Input.GetAxis("Vertical")) * rigid2D.mass * dodgePower / Time.deltaTime);
+        
         if (CheckCanDodge())
         {
             rigid2D.velocity = Vector2.zero;
@@ -569,8 +571,8 @@ public class GayatriCharacter : BaseClass, IAttackable {
 
 	public void EndDodge()
     {
-		//StopCoroutine(DodgeCoroutine);
-		boxCollider2D.isTrigger = false;
+        //StopCoroutine(DodgeCoroutine);
+        ColliderKaki.layer = 8;
         isDodging = false;
         onceDodging = false;
         isFreeze = false;
