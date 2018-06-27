@@ -450,8 +450,9 @@ public class AIMovementComp : MonoBehaviour {
 
 	void Update(){
 		if(_anim){
-			_anim.SetFloat("MoveX", x);
-			_anim.SetFloat("MoveY", y);
+			//TODO nanti dibetulin
+			// _anim.SetFloat("MoveX", x);
+			// _anim.SetFloat("MoveY", y);
 		}
 	}
 }

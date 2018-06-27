@@ -110,24 +110,31 @@ public class DungeonManager : MonoBehaviour {
 	public void RespawnAllEnemies(DungeonRoom room)
 	{
 		room.isRespawned = true;
+		int baseIndex  = 0;
 		for(int i = 0; i < room.monster.Count; i++)
 		{	
-			MonsterDungeon instance = null;
-			switch(room.monster[i].tier)
+			for(int j = 0; j < room.monster[i].size; j++)
 			{
-				case Tier.TierOne:
-					instance = tierOne[Random.Range(0, tierOne.Count)];
-					MonsterPoolManager.Instance.ReuseObject(Tier.TierOne, instance.monster, room.respwanPoint[i].position, room.respwanPoint[i].rotation);
-					break;
-				case Tier.TierTwo:
-					instance = tierTwo[Random.Range(0, tierTwo.Count)];
-					MonsterPoolManager.Instance.ReuseObject(Tier.TierTwo, instance.monster, room.respwanPoint[i].position, room.respwanPoint[i].rotation);
-					break;
-				case Tier.TierThree:
-					instance = tierThree[Random.Range(0, tierThree.Count)];
-					MonsterPoolManager.Instance.ReuseObject(Tier.TierThree, instance.monster, room.respwanPoint[i].position, room.respwanPoint[i].rotation);
-					break;
+				MonsterDungeon instance = null;
+				switch(room.monster[i].tier)
+				{
+					case Tier.TierOne:
+						instance = tierOne[Random.Range(0, tierOne.Count)];
+						MonsterPoolManager.Instance.ReuseObject(Tier.TierOne, instance.monster, room.respwanPoint[baseIndex + j].position, room.respwanPoint[baseIndex + j].rotation);
+						break;
+					case Tier.TierTwo:
+						instance = tierTwo[Random.Range(0, tierTwo.Count)];
+						MonsterPoolManager.Instance.ReuseObject(Tier.TierTwo, instance.monster, room.respwanPoint[baseIndex + j].position, room.respwanPoint[baseIndex + j].rotation);
+						break;
+					case Tier.TierThree:
+						instance = tierThree[Random.Range(0, tierThree.Count)];
+						MonsterPoolManager.Instance.ReuseObject(Tier.TierThree, instance.monster, room.respwanPoint[baseIndex + j].position, room.respwanPoint[baseIndex + j].rotation);
+						break;
+				}
+
 			}
+			baseIndex += room.monster[i].size;
+
 		}
 	}
 
