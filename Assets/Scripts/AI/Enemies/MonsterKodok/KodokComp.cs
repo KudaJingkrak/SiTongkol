@@ -88,7 +88,9 @@ public class KodokComp : BaseDungeonEnemy, IAttackable {
     }
 	#endregion
 
-	void Awake(){
+	public override void Initialized()
+	{
+		ReportLiveToRoom();
 		_health = health;
 	}
 
@@ -99,7 +101,7 @@ public class KodokComp : BaseDungeonEnemy, IAttackable {
 
 		//TODO nanti ganti
 		_movementComp.SetPlayerAsTarget();
-		ReportLiveToRoom();
+		Initialized();
 	}
 	
 	// Update is called once per frame

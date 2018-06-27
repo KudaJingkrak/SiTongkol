@@ -23,6 +23,7 @@ public class BaseDungeonEnemy : BaseEnemy {
 		if(DungeonManager.Instance)
 		{
 			DungeonManager.Instance.rooms[currentRoom].AddEnemy(gameObject);
+			Debug.Log("Report Live");
 		}
 	}
 

@@ -10,7 +10,7 @@ public class MosnterApi : BaseDungeonEnemy, IAttackable {
 	
 	public override void Initialized()
 	{
-
+        
 	}
 
 	#endregion
