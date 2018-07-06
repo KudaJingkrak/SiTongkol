@@ -23,6 +23,7 @@ TagManager:
   - Tebing
   - Ground
   - Wall
+  - Toward
   layers:
   - Default
   - TransparentFX

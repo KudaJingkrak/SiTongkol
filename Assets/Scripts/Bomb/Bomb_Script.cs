@@ -6,7 +6,7 @@ public class Bomb_Script : MonoBehaviour {
     public BombSystem sysBomb;
 	public Animator anim;
 	void Awake(){
-		anim = GetComponent<Animator>();
+		//anim = GetComponent<Animator>();
 	}
 
     public void StartExplosion()
@@ -19,12 +19,10 @@ public class Bomb_Script : MonoBehaviour {
 			anim = GetComponent<Animator>();
 		}
 
-		anim.SetBool("isStartBomb", isStart);
-	}
-    
-	
-	// Update is called once per frame
-	void Update () {
+		if(anim.isActiveAndEnabled)
+		{
+			anim.SetBool("isStartBomb", isStart);
+		}
 		
 	}
 }

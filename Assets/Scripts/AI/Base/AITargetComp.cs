@@ -265,7 +265,7 @@ public class AITargetComp : MonoBehaviour {
 	public void SetAimRotation(float angle){
 		for (int i= 0; i < spawners.Length; i++)
 		{
-			spawners[i].rootAiming.transform.Rotate(0,0,angle);
+			spawners[i].rootAiming.transform.rotation = Quaternion.Euler(0,0,angle);
 		}
 		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
 	}
@@ -274,7 +274,7 @@ public class AITargetComp : MonoBehaviour {
 	public void SetAimRotation(float angle, int index = 0){
 		if(index > 0 && index < spawners.Length)
 		{
-			spawners[index].rootAiming.transform.Rotate(0,0,angle);
+			spawners[index].rootAiming.transform.rotation = Quaternion.Euler(0,0,angle);
 			if(Panda.Task.isInspected) Panda.Task.current.Succeed();
 
 		}
@@ -289,9 +289,7 @@ public class AITargetComp : MonoBehaviour {
 	void Start () {
 		_movementComp = GetComponent<AIMovementComp>();
 		CalcFireRate();
-		if(prefabSelected == null){
-			prefabSelected = prefabs[0];
-		}
+		SelectPrefab(0);
 	}
 
 	void Update(){

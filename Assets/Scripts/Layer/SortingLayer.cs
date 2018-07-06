@@ -14,7 +14,8 @@ public class SortingLayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
-		tempRenderer.sortingOrder = (int) Camera.main.WorldToScreenPoint(tempRenderer.bounds.min).y * -1;
+		// tempRenderer.sortingOrder = (int) Camera.main.WorldToScreenPoint(tempRenderer.bounds.min).y * -1;
+		tempRenderer.sortingOrder = (int) Camera.main.WorldToScreenPoint(transform.position).y * -1;
 
 		for(int i = 0; i < childs.Length; i++)
 		{

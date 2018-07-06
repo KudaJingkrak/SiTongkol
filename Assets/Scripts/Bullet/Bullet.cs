@@ -24,11 +24,14 @@ public class Bullet : PoolObject {
     
     void Awake(){
         trail = GetComponent<TrailRenderer>();
-        trailTime = trail.time;
+        if(trail)
+        {
+            trailTime = trail.time;
+        }
         _lifetime = lifetime;
         for(int i = 0; i < transform.childCount; i++){
             Transform child = transform.GetChild(i);
-            if(child.name.Equals("Up")){
+            if(child.CompareTag("Toward")){
                 _up = child;
                 break;
             }
@@ -66,7 +69,11 @@ public class Bullet : PoolObject {
 	}
 
     public override void OnObjectReuse(){
-        trail.time = -1;
+        if(trail)
+        {
+            trail.time = -1;
+        }
+        
         Invoke("ResetTrail", 0.1f);
         gameObject.SetActive(true);
         Enable();
