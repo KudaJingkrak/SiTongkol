@@ -7,8 +7,6 @@ using Guirao.UltimateTextDamage;
 [RequireComponent(typeof(SpriteRenderer), typeof(Animator), typeof(AIMovementComp))]
 public class KodokComp : BaseDungeonEnemy, IAttackable {
     public UltimateTextDamageManager textDamage_Manager;
-    public float health = 1f;
-	private float _health;
 	private AIMovementComp _movementComp;
 	private BoxCollider2D _boxColl2D;
 

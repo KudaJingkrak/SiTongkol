@@ -100,6 +100,11 @@ public class AIMovementComp : MonoBehaviour {
 		return true;
 	}
 
+	public void StopMove()
+	{
+		_rigid2D.velocity = Vector2.zero;
+	}
+
 	public void Move(float x, float y){
 		this.x = x;
 		this.y = y;
@@ -188,15 +193,35 @@ public class AIMovementComp : MonoBehaviour {
 	private int _step;
 	[Panda.Task]
 	public bool isEndStep{get{return _step < 1;}}
-	[Panda.Task]
+	[Task]
+	public void ClearStep(){
+		_step =	0;
+		if(Task.isInspected)
+		{
+			Task.current.Succeed();
+		}
+	}
+	[Task]
 	public void SetStep(){
 		_step =	Random.Range(minStep, maxStep);
-		Panda.Task.current.Succeed();
+		if(Task.isInspected)
+		{
+			Task.current.Succeed();
+		}
 	}
 	[Panda.Task]
 	public void SetStep(int step){
 		_step = step;
 		Panda.Task.current.Succeed();
+	}
+	[Task]
+	public void SetStep(int minStep, int maxStep)
+	{
+		_step =	Random.Range(minStep, maxStep);
+		if(Task.isInspected)
+		{
+			Task.current.Succeed();
+		}
 	}
 	[Panda.Task]
 	public void MoveStep(){
@@ -227,6 +252,7 @@ public class AIMovementComp : MonoBehaviour {
 		_step--;
 		Panda.Task.current.Succeed();
 	}
+	[Task]
 	public bool isStuck{
 		get{
 			Vector2 _castDir;

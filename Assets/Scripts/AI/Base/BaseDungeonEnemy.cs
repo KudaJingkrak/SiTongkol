@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseDungeonEnemy : BaseEnemy {
+public class BaseDungeonEnemy : BaseEnemy{
 
 	public int currentRoom{
 		get{

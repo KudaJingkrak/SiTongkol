@@ -4,6 +4,9 @@ using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class BaseEnemy : PoolObject {
+	public float health = 100;
+	protected float _health = 100;
+
 	public override void OnObjectReuse()
 	{
 		gameObject.SetActive(true);

@@ -1,51 +1,185 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Guirao.UltimateTextDamage;
+using UnityEngine.UI;
+using Panda;
+
 [RequireComponent(typeof(AIMovementComp), typeof(AITargetComp))]
 public class GoblinSniper : BaseDungeonEnemy, IAttackable
 {   
+    [Header("UI Manager")]
+    public UltimateTextDamageManager textDamageManager;
+    public GameObject healthCanvas;
+    public float healthTimer = 1;
+    private Slider _healthSlider;
+    private float _healthTimer;
+
     private AIMovementComp _move;
     private AITargetComp _aim;
 
-    #region PandaTask
+    // Attackable Variable
+    private IEnumerator knockbackrator = null;
 
+    //Panda Task Variable
+    [Task]
+    public bool IsAttacking = false;
+    private bool __canAttack = false;
+    private Vector2 __castDir = Vector2.zero;
+
+    #region PandaTask
+    [Task]
+    public bool CanAttackPlayer{
+        get{
+            __canAttack = false; 
+			switch(_move.GetDirection()){
+				case Direction.Back:
+					__castDir = Vector2.up;
+					break;
+				case Direction.Front:
+					__castDir = Vector2.down;
+					break;
+				case Direction.Left:
+					__castDir = Vector2.left;
+					break;
+				case Direction.Right:
+					__castDir = Vector2.right;
+					break;
+			}
+
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, new Vector2(1f,1f), 0f, __castDir, 10f); 
+
+            for(int i = 0 ; i < hits.Length; i++)
+            {
+                //Debug.Log(hits[i].transform.name);
+                if(hits[i].transform.CompareTag("Player"))
+                {
+                    __canAttack = true;
+                    break;
+                }
+            }
+            // __canAttack = hit && hit.transform.CompareTag("Player");
+            
+
+            return __canAttack;
+        }
+    }
+
+    [Task]
+    public void StartAttack(){
+        IsAttacking = true;
+
+        if(Task.isInspected)
+        {
+            Task.current.Succeed();
+        }
+    }
+
+    [Task]
+    public void StopAttack(){
+        IsAttacking = false;
+
+        if(Task.isInspected)
+        {
+            Task.current.Succeed();
+        }
+    }
+    #endregion
+
+    #region BaseEnemy
+    public override void Initialized()
+    {
+        _health = health;
+    }
     #endregion
 
 	#region Attackable
     public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None)
     {
-        Debug.Log("Diserang player");
         doFlash();
+        _health -= damage;
+        if(causer)
+        {
+            if(knockbackrator != null)
+            {
+                StopCoroutine(knockbackrator);
+            }
+
+            knockbackrator = doKnockback(causer.transform, 5f, 0.075f);
+            StartCoroutine(knockbackrator);
+        }
+        // Debug.Log("Darah saya tinggal " + _health + " diserang " + damage);
+        ShowHealthCanvas();
+        if(_health <= 0)
+        {
+            Die();
+        }
     }
 
     public void Destruct()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     public void Die()
     {
-        throw new System.NotImplementedException();
+        ReportDieToRoom();
+        //nanti ganti
+        Destroy();
     }
 
     public void Knockback(Transform causer)
     {
-        throw new System.NotImplementedException();
+        Knockback(causer, 0f);
     }
 
     public void Knockback(Transform causer, float power = 0)
     {
-        throw new System.NotImplementedException();
+        Vector2 force = -(causer.position - transform.position).normalized * power;
+        _move.Rigid2D.velocity = force;
+    }
+
+    IEnumerator doKnockback(Transform causer, float power = 0f, float delay = 0.3f)
+    {
+        Knockback(causer, power);
+        yield return new WaitForSeconds(delay);
+        _move.StopMove();
     }
 	#endregion
 
+    #region UI 
+    void ShowHealthCanvas()
+    {
+         _healthTimer = healthTimer;
+        if(!healthCanvas.activeSelf)
+        {
+            healthCanvas.SetActive(true);
+        }
+    }
+    void HideHealthCanvas()
+    {
+        if(healthCanvas.activeSelf)
+        {
+            healthCanvas.SetActive(false);
+        }   
+    }
+    #endregion
+    
     void Awake()
     {
         _aim = GetComponent<AITargetComp>();
         _move = GetComponent<AIMovementComp>();
+        Initialized();
+        _healthSlider = healthCanvas.GetComponentInChildren<Slider>();
     }
 	void Update()
     {
+        // Set target to player
+        if(!_aim.targetAim)
+        {
+            _aim.targetAim = GameManager.Instance.m_Player.transform;
+        }
+
         // Update Aim Direction
         switch(_move.GetDirection())
         {
@@ -62,8 +196,22 @@ public class GoblinSniper : BaseDungeonEnemy, IAttackable
                 _aim.SetAimRotation(90f);
             break;
         }
-
         
+        if(healthCanvas.activeSelf && _healthTimer <= 0)
+        {
+           HideHealthCanvas();
+        }else{
+            _healthTimer -= Time.deltaTime;
+        }
+    }
+
+    void LateUpdate()
+    {
+        
+        if(healthCanvas.activeSelf)
+        {
+            _healthSlider.value = _health/health;
+        }
     }
 
 }

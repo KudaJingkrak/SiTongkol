@@ -1,2 +1,60 @@
-tree("Root")
-	Succeed
+tree "Root"
+	fallback
+		tree "StuckMove"
+		tree "PatrolMove"
+		tree "Patrol"
+		tree "StartAttack"
+		tree "DoAttack"
+
+tree "StuckMove"
+	while
+		sequence
+			not CanAttackPlayer
+			not IsAttacking
+			isStuck
+		sequence
+			SetStep()
+			SetRandomDirection
+			Wait(0.1)
+		
+
+tree "Patrol"
+	while
+		sequence
+			not CanAttackPlayer
+			not IsAttacking
+		sequence
+			SetStep(35,50)
+			SetRandomDirection
+			Wait(1.0)
+
+tree "PatrolMove"
+	while
+		sequence
+			not isEndStep
+			not CanAttackPlayer
+			not IsAttacking
+			not isStuck
+		sequence
+			MoveStep
+
+tree "StartAttack"
+	while
+		sequence
+			CanAttackPlayer
+			not IsAttacking
+		sequence
+			StartAttack
+			
+
+tree "DoAttack"
+	while IsAttacking
+		sequence
+			Wait(0.35)
+			FireWithOffset
+			Wait(0.35)
+			FireWithOffset
+			Wait(0.35)
+			FireWithOffset
+			Wait(1.35)
+			StopAttack

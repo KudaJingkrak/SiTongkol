@@ -305,21 +305,22 @@ public class GayatriCharacter : BaseClass, IAttackable {
 		ComboEnum comboPlayer = feedback.combo;
 		comboCounter = feedback.counter;
 		
-		float TempDamage = 0;
-    	Debug.Log("Attacking is " + comboPlayer + " dengan combo " + comboCounter);
+		float TempDamage = 0f;
+    	//Debug.Log("Attacking is " + comboPlayer + " dengan combo " + comboCounter);
         
 		if(comboPlayer == ComboEnum.Perfect)
 		{
-			TempDamage = (senjata.Damage/100) * Persentase_Perfect;
+			TempDamage = (senjata.Damage/100f) * Persentase_Perfect;
 		}
 		else if(comboPlayer == ComboEnum.Good)
 		{
-			TempDamage = (senjata.Damage/100) * Persentase_Good;
+			TempDamage = (senjata.Damage/100f) * Persentase_Good;
 		}
 		else if(comboPlayer == ComboEnum.Miss)
 		{
-			TempDamage = (senjata.Damage/100) * Persentase_Miss;
+			TempDamage = (senjata.Damage/100f) * Persentase_Miss;
 		}
+		// Debug.Log("temp damage "+ TempDamage);
 		/*
 		Manggil Combonya gimana?
 
@@ -350,7 +351,7 @@ public class GayatriCharacter : BaseClass, IAttackable {
 			if(hits[i].collider != null && !hits[i].collider.gameObject.Equals(this.gameObject)){
 				IAttackable attackable = hits[i].collider.gameObject.GetComponent<IAttackable>();
 				if(attackable != null){
-					Debug.Log("Menyerang "+ hits[i].collider.gameObject.name);
+					//Debug.Log("Menyerang "+ hits[i].collider.gameObject.name);
                     if (comboPlayer == ComboEnum.Perfect)
                     {
                         attackable.ApplyDamage(TempDamage, gameObject, DamageType.Critical);
