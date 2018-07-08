@@ -244,6 +244,9 @@ MonoBehaviour:
   movementType: 0
   direction: 0
   movementSpeed: 1
+  _speed: 0
+  x: 0
+  y: 0
   stuckError: 0.25
   maxStep: 10
   minStep: 0
@@ -507,6 +510,9 @@ MonoBehaviour:
   movementType: 0
   direction: 0
   movementSpeed: 1
+  _speed: 0
+  x: 0
+  y: 0
   stuckError: 0.25
   maxStep: 10
   minStep: 0
@@ -714,6 +720,9 @@ MonoBehaviour:
   movementType: 0
   direction: 0
   movementSpeed: 1
+  _speed: 0
+  x: 0
+  y: 0
   stuckError: 0.25
   maxStep: 10
   minStep: 0
@@ -888,6 +897,16 @@ Prefab:
         type: 2}
       propertyPath: movementSpeed
       value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 95527450129939242, guid: f5658b7668498bd42b55077127554b84,
+        type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4a2b7dc9686da66428df6a5614559b80, type: 2}
+    - target: {fileID: 114987763372520098, guid: f5658b7668498bd42b55077127554b84,
+        type: 2}
+      propertyPath: fireRate
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f5658b7668498bd42b55077127554b84, type: 2}

@@ -3,8 +3,9 @@ tree "Root"
 		tree "StuckMove"
 		tree "PatrolMove"
 		tree "Patrol"
-		tree "StartAttack"
 		tree "DoAttack"
+		tree "StartAttack"
+		
 
 tree "StuckMove"
 	while
@@ -50,11 +51,11 @@ tree "StartAttack"
 tree "DoAttack"
 	while IsAttacking
 		sequence
+			Wait(1.0)
+			DoAttack
 			Wait(0.35)
-			FireWithOffset
+			DoAttack
 			Wait(0.35)
-			FireWithOffset
+			DoAttack
 			Wait(0.35)
-			FireWithOffset
-			Wait(1.35)
 			StopAttack

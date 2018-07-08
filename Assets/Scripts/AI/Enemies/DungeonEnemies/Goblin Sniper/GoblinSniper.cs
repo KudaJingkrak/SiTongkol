@@ -8,6 +8,8 @@ using Panda;
 [RequireComponent(typeof(AIMovementComp), typeof(AITargetComp))]
 public class GoblinSniper : BaseDungeonEnemy, IAttackable
 {   
+    private Animator _anim;
+
     [Header("UI Manager")]
     public UltimateTextDamageManager textDamageManager;
     public GameObject healthCanvas;
@@ -68,16 +70,29 @@ public class GoblinSniper : BaseDungeonEnemy, IAttackable
     [Task]
     public void StartAttack(){
         IsAttacking = true;
+        
 
         if(Task.isInspected)
         {
             Task.current.Succeed();
         }
     }
+    [Task]
+    public void DoAttack(){
+        _anim.SetBool("IsAttacking", true);
+        _aim.FireWithOffset();
+
+        if(Task.isInspected)
+        {         
+            Task.current.Succeed();
+        }
+        
+    }
 
     [Task]
     public void StopAttack(){
         IsAttacking = false;
+        _anim.SetBool("IsAttacking", false);
 
         if(Task.isInspected)
         {
@@ -169,6 +184,7 @@ public class GoblinSniper : BaseDungeonEnemy, IAttackable
     {
         _aim = GetComponent<AITargetComp>();
         _move = GetComponent<AIMovementComp>();
+        _anim = GetComponent<Animator>();
         Initialized();
         _healthSlider = healthCanvas.GetComponentInChildren<Slider>();
     }
@@ -178,6 +194,13 @@ public class GoblinSniper : BaseDungeonEnemy, IAttackable
         if(!_aim.targetAim)
         {
             _aim.targetAim = GameManager.Instance.m_Player.transform;
+        }
+
+        if(_anim.isActiveAndEnabled)
+        {
+            _anim.SetFloat("MoveX", _move.x);
+            _anim.SetFloat("MoveY", _move.y);
+            _anim.SetFloat("Velocity", _move.Rigid2D.velocity.magnitude);
         }
 
         // Update Aim Direction

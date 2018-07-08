@@ -12,7 +12,8 @@ public class AIMovementComp : MonoBehaviour {
 	private Direction _dir;
 	
 	public float movementSpeed = 1f;
-	private float _speed, x, y;
+	[HideInInspector]
+	public float _speed, x, y;
 	private BoxCollider2D _boxColl2D;
 	private Animator _anim;
 	private Rigidbody2D _rigid2D;
