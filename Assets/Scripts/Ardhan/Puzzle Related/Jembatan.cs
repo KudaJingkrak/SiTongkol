@@ -16,8 +16,9 @@ public class Jembatan : MonoBehaviour {
 	void Update () {
         if (puzzlenya.PuzzleCompleted)
         {
-            Collider_Jembatan.active = false;
-            Sprite_Jembatan1.active = true;
+            Sprite_Jembatan1.SetActive(true);
+            Sprite_Jembatan1.transform.position = new Vector3(0, 12);
+            Collider_Jembatan.SetActive(false);
         }
 	}
 }

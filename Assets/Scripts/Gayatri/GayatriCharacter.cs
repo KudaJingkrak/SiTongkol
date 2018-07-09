@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GayatriCharacter : BaseClass, IAttackable {
     public GameObject ColliderKaki;
@@ -12,6 +13,8 @@ public class GayatriCharacter : BaseClass, IAttackable {
 	public float speed;
 	public float attackDistance = 0.1f;
 	public float inteactDistance = 0.1f;
+
+    public Slider StaminaSlider;
 
 	[Header("Pull")]
 	public bool isPulling;
@@ -108,6 +111,7 @@ public class GayatriCharacter : BaseClass, IAttackable {
 				animator.SetFloat("MoveY", -1);
 				_moveX = 0;
 				_moveY = -1;
+                StaminaSlider.transform.localPosition = new Vector3(-0.316f, -1.1f);
 				break;
 			case Direction.Right:
 				animator.SetFloat("MoveX", 1);
@@ -126,6 +130,7 @@ public class GayatriCharacter : BaseClass, IAttackable {
 				animator.SetFloat("MoveY", 1);
 				_moveX = 0;
 				_moveY = 1;
+                StaminaSlider.transform.localPosition = new Vector3(-0.316f, -5);
 				break;
 		}
 

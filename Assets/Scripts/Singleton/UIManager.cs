@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIManager : BaseClass {
 
     public HUDManager HUD;
+    public GameObject HUD_Object;
 	// Use this for initialization
 	void Start () {
 		//Nanti disini di check ke PlayerPreferences nya.
@@ -20,11 +21,13 @@ public class UIManager : BaseClass {
 
     public void Hidden()
     {
+        HUD_Object.SetActive(false);
        // Container.enabled = true;
     }
 
     public void UnHidden()
     {
+        HUD_Object.SetActive(true);
        // Container.enabled = false;
     }
 
