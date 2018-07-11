@@ -8,6 +8,7 @@ public class PuzzleManager : MonoBehaviour {
     [Header("Switch")]
     public SwitchManager[] switchedObject;
     public bool[] jawabanBener;
+    public float SwitchesCooldown;
     
     [Header("Destroying")]
     public GameObject[] destroyedObject;
@@ -22,6 +23,35 @@ public class PuzzleManager : MonoBehaviour {
 	void Update () {
 		
 	}
+    public void ResetSwitches()
+    {
+        for (int i = 0; i < switchedObject.Length; i++)
+        {
+            switchedObject[i].boolSwitch = false;
+        }
+    }
+
+    IEnumerator StartCooldownResetSwitches()
+    {
+        yield return new WaitForSeconds(SwitchesCooldown);
+        ResetSwitches();
+        Debug.Log("Finished Reset Switches");
+    }
+
+    public void checkResetSwitch()
+    {
+        for (int i = 0; i < switchedObject.Length; i++)
+        {
+            if (switchedObject[i].boolSwitch == true)
+            {
+                if (i == switchedObject.Length - 1)
+                {
+                    StartCoroutine(StartCooldownResetSwitches());
+                    Debug.Log("Starting Reset Switches");
+                }
+            }
+        }
+    }
 
     public void checkPuzzle()
     {
@@ -38,6 +68,7 @@ public class PuzzleManager : MonoBehaviour {
                     }
                     continue;
                 }
+
                 else
                 {
                     break;

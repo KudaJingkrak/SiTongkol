@@ -27,12 +27,12 @@ public class SwitchManager : MonoBehaviour {
         if (boolSwitch)
         {
             switchButton.GetComponent<SpriteRenderer>().sprite = switch_on;
-            switchButton.transform.position = new Vector2(switchButton.transform.position.x, switchButton.transform.position.y - 0.25f);
+            //switchButton.transform.position = new Vector2(switchButton.transform.position.x, switchButton.transform.position.y - 0.25f);
         }
         else
         {
             switchButton.GetComponent<SpriteRenderer>().sprite = switch_off;
-            switchButton.transform.position = new Vector2(switchButton.transform.position.x, switchButton.transform.position.y + 0.25f);
+            //switchButton.transform.position = new Vector2(switchButton.transform.position.x, switchButton.transform.position.y + 0.25f);
         }
     }
 
