@@ -348,6 +348,13 @@ public class AIMovementComp : MonoBehaviour {
 	public bool SetPlayerAsTarget(){
 		if(target && target.gameObject.CompareTag("Player")) return true;
 
+		if(GameManager.Instance.m_Player)
+		{
+			target = GameManager.Instance.m_Player.transform;
+
+			return true;
+		}
+
 		//TODO kalo udah ada global manager diganti
 		GayatriCharacter player = FindObjectOfType<GayatriCharacter>();	
 		if(player){
