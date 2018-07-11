@@ -1471,11 +1471,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 18
       objectReference: {fileID: 0}
-    - target: {fileID: 114177709881927118, guid: bc2586916a9690b4796649880c8c3a0f,
-        type: 2}
-      propertyPath: quickMovePower
-      value: 30
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bc2586916a9690b4796649880c8c3a0f, type: 2}
   m_IsPrefabParent: 0
@@ -1637,6 +1632,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: 114672761386705130, guid: 35f849f796581d74792b91d700ad6560,
+        type: 2}
+      propertyPath: transisiCamera
+      value: 
+      objectReference: {fileID: 1519268377}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35f849f796581d74792b91d700ad6560, type: 2}
   m_IsPrefabParent: 0
@@ -2862,6 +2862,50 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 3
   m_ColliderType: 1
+--- !u!1 &1519268368 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1393633092710392, guid: c3aad379a9acce440a2ed23cfb3b1bb8,
+    type: 2}
+  m_PrefabInternal: {fileID: 1155131598}
+--- !u!114 &1519268372 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114111831487575070, guid: c3aad379a9acce440a2ed23cfb3b1bb8,
+    type: 2}
+  m_PrefabInternal: {fileID: 1155131598}
+  m_Script: {fileID: 11500000, guid: 8b8c96e2cdc154e848a3d9fe62464d42, type: 3}
+--- !u!114 &1519268377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1519268368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1eca57db7d394266ae024997acf4456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProCamera2D: {fileID: 1519268372}
+  TransitionShaderEnter: 0
+  DurationEnter: 0.5
+  DelayEnter: 0
+  EaseTypeEnter: 1
+  BackgroundColorEnter: {r: 0, g: 0, b: 0, a: 1}
+  SideEnter: 0
+  DirectionEnter: 0
+  BlindsEnter: 16
+  TextureEnter: {fileID: 0}
+  TextureSmoothingEnter: 0.2
+  TransitionShaderExit: 0
+  DurationExit: 0.5
+  DelayExit: 0
+  EaseTypeExit: 1
+  BackgroundColorExit: {r: 0, g: 0, b: 0, a: 1}
+  SideExit: 0
+  DirectionExit: 0
+  BlindsExit: 16
+  TextureExit: {fileID: 0}
+  TextureSmoothingExit: 0.2
+  StartSceneOnEnterState: 1
 --- !u!1 &1615863925
 GameObject:
   m_ObjectHideFlags: 0

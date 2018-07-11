@@ -11,8 +11,6 @@ tree "FollowMove"
 	while
 		sequence
 			CanFollowPlayer
-			not CanAttackPlayer
-			not IsAttacking
 			not isStuck
 		sequence
 			MoveToTarget
@@ -20,7 +18,6 @@ tree "FollowMove"
 tree "StuckMove"
 	while 
 		sequence
-			not CanFollowPlayer
 			not CanAttackPlayer
 			not IsAttacking
 			isStuck
@@ -46,6 +43,7 @@ tree "PatrolMove"
 		sequence
 			not isEndStep
 			not CanAttackPlayer
+			not CanFollowPlayer
 			not IsAttacking
 		sequence
 			MoveStep

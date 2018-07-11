@@ -67,7 +67,6 @@ public class GoblinSniper : BaseDungeonEnemy, IAttackable
     [Task]
     public void DoAttack(){
         _anim.SetBool("IsAttacking", true);
-        _aim.FireWithOffset();
 
         if(Task.isInspected)
         {         
@@ -75,11 +74,20 @@ public class GoblinSniper : BaseDungeonEnemy, IAttackable
         }
         
     }
+    public void Attack()
+    {
+        _aim.FireWithOffset();
+    }
+    [Task]
+    public void UnAttack()
+    {
+        _anim.SetBool("IsAttacking", false);
+    }
 
     [Task]
     public void StopAttack(){
         IsAttacking = false;
-        _anim.SetBool("IsAttacking", false);
+        UnAttack();
 
         if(Task.isInspected)
         {
