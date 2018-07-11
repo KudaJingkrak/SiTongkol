@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Com.LuisPedroFonseca.ProCamera2D;
 
 public class StatusManager : BaseClass {
+
+    public ProCamera2DTransitionsFX transisiCamera;
 
 	public float currentHealth;
     public float currentMana;
@@ -171,6 +174,7 @@ public class StatusManager : BaseClass {
         Initiated_Stamina();
         Initiated_Mana();
         Initiated_Health();
+        transisiCamera.TransitionEnter();
 
 	}
 	

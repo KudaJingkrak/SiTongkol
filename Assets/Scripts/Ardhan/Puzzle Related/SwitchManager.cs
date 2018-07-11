@@ -22,7 +22,7 @@ public class SwitchManager : MonoBehaviour {
 		
 	}
 
-    void changeSprite()
+    public void changeSprite()
     {
         if (boolSwitch)
         {
