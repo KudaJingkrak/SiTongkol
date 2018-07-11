@@ -19,7 +19,8 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
     private float _healthTimer;
 
     private AIMovementComp _move;
-
+	[Header("Attack Component")]
+	public float attackRange = 2f, canFollowRange = 5f;
     // Attackable Variable
     private IEnumerator knockbackrator = null;
 
@@ -29,7 +30,56 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
     private bool __canAttack = false;
     private Vector2 __castDir = Vector2.zero;
 	#region PandaTask
+	[Task]
+    public bool CanAttackPlayer{
+        get{
+            __castDir = _move.GetVectorDirection();
 
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, new Vector2(1f,1f), 0f, __castDir, attackRange); 
+
+            for(int i = 0 ; i < hits.Length; i++)
+            {
+                if(hits[i].transform.CompareTag("Player"))
+                {
+                    __canAttack = true;
+                    break;
+                }
+            }
+
+            return __canAttack;
+        }
+    }
+	
+    [Task]
+    public void StartAttack(){
+        IsAttacking = true;
+        
+
+        if(Task.isInspected)
+        {
+            Task.current.Succeed();
+        }
+    }
+    [Task]
+    public void DoAttack(){
+        _anim.SetTrigger("AttackTrigger");
+
+        if(Task.isInspected)
+        {         
+            Task.current.Succeed();
+        }
+        
+    }
+
+    [Task]
+    public void StopAttack(){
+        IsAttacking = false;
+
+        if(Task.isInspected)
+        {
+            Task.current.Succeed();
+        }
+    }
 	#endregion
 
 	#region BaseEnemy
@@ -42,7 +92,24 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
 	#region IAttackable
     public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None)
     {
-       
+       doFlash();
+        _health -= damage;
+        if(causer)
+        {
+            if(knockbackrator != null)
+            {
+                StopCoroutine(knockbackrator);
+            }
+
+            knockbackrator = doKnockback(causer.transform, 5f, 0.075f);
+            StartCoroutine(knockbackrator);
+        }
+        // Debug.Log("Darah saya tinggal " + _health + " diserang " + damage);
+        ShowHealthCanvas();
+        if(_health <= 0)
+        {
+            Die();
+        }
     }
 
     public void Destruct()
@@ -52,19 +119,28 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
 
     public void Die()
     {
-        
+        ReportDieToRoom();
+        //nanti ganti
+        Destroy();
     }
 
     public void Knockback(Transform causer)
     {
-        
+        Knockback(causer, 0f);
     }
 
     public void Knockback(Transform causer, float power = 0)
     {
-        
+        Vector2 force = -(causer.position - transform.position).normalized * power;
+        _move.Rigid2D.velocity = force;
     }
 
+	IEnumerator doKnockback(Transform causer, float power = 0f, float delay = 0.3f)
+    {
+        Knockback(causer, power);
+        yield return new WaitForSeconds(delay);
+        _move.StopMove();
+    }
 	#endregion
 
 	#region UI
