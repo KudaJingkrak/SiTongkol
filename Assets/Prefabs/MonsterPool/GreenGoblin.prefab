@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 95327433489323774}
   - component: {fileID: 114515856109156862}
   - component: {fileID: 114177709881927118}
+  - component: {fileID: 114066909066201450}
   m_Layer: 8
   m_Name: GreenGoblin
   m_TagString: Untagged
@@ -201,14 +202,14 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 10
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &61584108623091576
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -266,6 +267,27 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114066909066201450
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1115296180229474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17e43e7170fb45b4b81dcd16d0ff55d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scripts:
+  - {fileID: 4900000, guid: f1a789c63de2a0f44abc8858ae62d0a2, type: 3}
+  autoReset: 1
+  tickOn: 0
+  sourceInfos:
+  - isFoldout: 1
+    breakPoints: 
+    breakPointStatuses: 
+    collapsedLines: 
+    btScript: 
 --- !u!114 &114177709881927118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -281,6 +303,10 @@ MonoBehaviour:
   textDamageManager: {fileID: 0}
   healthCanvas: {fileID: 1584895828021436}
   healthTimer: 1
+  attackRange: 2
+  canFollowRange: 5
+  attackDamage: 15
+  quickMovePower: 30
   IsAttacking: 0
 --- !u!114 &114203103209827892
 MonoBehaviour:
@@ -473,7 +499,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4f0d2d658109a3a428fea165c6e01407, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

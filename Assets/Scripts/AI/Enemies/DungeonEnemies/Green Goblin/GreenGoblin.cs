@@ -14,13 +14,12 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
     [Header("UI Manager")]
     public UltimateTextDamageManager textDamageManager;
     public GameObject healthCanvas;
-    public float healthTimer = 1;
+    public float healthTimer = 1f;
     private Slider _healthSlider;
     private float _healthTimer;
 
     private AIMovementComp _move;
-	[Header("Attack Component")]
-	public float attackRange = 2f, canFollowRange = 5f;
+	public float attackRange = 2f, canFollowRange = 5f, attackDamage = 15f, quickMovePower = 10f;
     // Attackable Variable
     private IEnumerator knockbackrator = null;
 
@@ -33,7 +32,8 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
 	[Task]
     public bool CanAttackPlayer{
         get{
-            __castDir = _move.GetVectorDirection();
+            if(_move) __castDir = _move.GetVectorDirection();
+			__canAttack = false;
 
             RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, new Vector2(1f,1f), 0f, __castDir, attackRange); 
 
@@ -49,20 +49,51 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
             return __canAttack;
         }
     }
-	
+	[Task]
+	public bool CanFollowPlayer
+	{
+		get{
+			if(!_move || !_move.target) return false;
+			return Vector2.Distance(transform.position, _move.target.position) <= canFollowRange;
+		}
+	}
     [Task]
     public void StartAttack(){
         IsAttacking = true;
-        
+        _anim.SetBool("IsCharge", true);
 
         if(Task.isInspected)
         {
             Task.current.Succeed();
         }
     }
+	public void QuickForward()
+	{
+		_move.QuickMoveByDirection4(quickMovePower,0.25f);
+	}
+	[Task]
+	public void UnAttack()
+	{
+		_anim.SetBool("IsCharge", false);
+		_anim.SetBool("IsSlash", false);
+
+		StopAttack();
+	}
     [Task]
     public void DoAttack(){
-        _anim.SetTrigger("AttackTrigger");
+       
+		 __castDir = _move.GetVectorDirection();
+
+		RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, new Vector2(1f,1f), 0f, __castDir, 2f); 
+
+		for(int i = 0 ; i < hits.Length; i++)
+		{
+			if(hits[i].transform.CompareTag("Player"))
+			{
+				hits[i].transform.GetComponent<GayatriCharacter>().ApplyDamage(attackDamage, this.gameObject);
+				break;
+			}
+		}
 
         if(Task.isInspected)
         {         
@@ -70,6 +101,16 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
         }
         
     }
+	[Task]
+	public void DoSlash()
+	{
+		_anim.SetBool("IsSlash", true);
+
+		if(Task.isInspected)
+        {
+            Task.current.Succeed();
+        }
+	}
 
     [Task]
     public void StopAttack(){
@@ -172,7 +213,7 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
 	// Update is called once per frame
 	void Update () {
 
-		if(!_move.isPlayerAsTarget)
+		if(_move && !_move.isPlayerAsTarget)
 		{
 			_move.SetPlayerAsTarget();
 		}

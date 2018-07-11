@@ -53,9 +53,4 @@ tree "DoAttack"
 		sequence
 			Wait(1.0)
 			DoAttack
-			Wait(0.35)
-			DoAttack
-			Wait(0.35)
-			DoAttack
-			Wait(0.35)
 			StopAttack

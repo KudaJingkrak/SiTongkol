@@ -34,20 +34,7 @@ public class GoblinSniper : BaseDungeonEnemy, IAttackable
     public bool CanAttackPlayer{
         get{
             __canAttack = false; 
-			switch(_move.GetDirection()){
-				case Direction.Back:
-					__castDir = Vector2.up;
-					break;
-				case Direction.Front:
-					__castDir = Vector2.down;
-					break;
-				case Direction.Left:
-					__castDir = Vector2.left;
-					break;
-				case Direction.Right:
-					__castDir = Vector2.right;
-					break;
-			}
+			__castDir = _move.GetVectorDirection();
 
             RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, new Vector2(1f,1f), 0f, __castDir, 10f); 
 

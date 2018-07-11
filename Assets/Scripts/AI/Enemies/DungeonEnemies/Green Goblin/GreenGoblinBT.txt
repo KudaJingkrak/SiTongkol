@@ -1,2 +1,69 @@
 tree("Root")
-	Succeed
+	fallback
+		tree "StuckMove"
+		tree "FollowMove"		 
+		tree "PatrolMove"
+		tree "Patrol"
+		tree "DoAttack"
+		tree "StartAttack"
+
+tree "FollowMove"
+	while
+		sequence
+			CanFollowPlayer
+			not CanAttackPlayer
+			not IsAttacking
+			not isStuck
+		sequence
+			MoveToTarget
+
+tree "StuckMove"
+	while 
+		sequence
+			not CanFollowPlayer
+			not CanAttackPlayer
+			not IsAttacking
+			isStuck
+		sequence	
+			SetStep
+			SetRandomDirection
+			Wait(0.1)
+
+tree "Patrol"
+	while
+		sequence
+			not CanAttackPlayer
+			not CanFollowPlayer
+			not IsAttacking
+			not isStuck
+		sequence
+			SetStep(45,50)
+			SetRandomDirection
+			Wait(1.0)
+
+tree "PatrolMove"
+	while
+		sequence
+			not isEndStep
+			not CanAttackPlayer
+			not IsAttacking
+		sequence
+			MoveStep
+
+tree "StartAttack"
+	while
+		sequence
+			CanAttackPlayer
+			not IsAttacking
+		sequence
+			StartAttack
+
+tree "DoAttack"
+	while IsAttacking
+		sequence
+			Wait(1.0)
+			DoSlash
+			Wait(0.3)
+			UnAttack
+
+
