@@ -28,6 +28,7 @@ public class PuzzleManager : MonoBehaviour {
         for (int i = 0; i < switchedObject.Length; i++)
         {
             switchedObject[i].boolSwitch = false;
+            switchedObject[i].changeSprite();
         }
     }
 
@@ -71,6 +72,7 @@ public class PuzzleManager : MonoBehaviour {
 
                 else
                 {
+                    PuzzleCompleted = false;
                     break;
                 }
             }
