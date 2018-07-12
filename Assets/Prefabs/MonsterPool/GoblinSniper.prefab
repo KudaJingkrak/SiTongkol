@@ -318,7 +318,7 @@ Animator:
   m_GameObject: {fileID: 1432695985074598}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4a2b7dc9686da66428df6a5614559b80, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -339,7 +339,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementType: 0
   direction: 1
-  movementSpeed: 1
+  movementSpeed: 1.25
+  _speed: 0
+  x: 0
+  y: 0
   stuckError: 0.25
   maxStep: 10
   minStep: 0
@@ -554,7 +557,7 @@ MonoBehaviour:
     offsetsProjectile:
     - {fileID: 4385275891503480}
   turnRate: 30
-  fireRate: 3
+  fireRate: 1
   prefabSelected: {fileID: 0}
   prefabs:
   - {fileID: 1962380637121792, guid: 5184b65a2359b43438c00bc3f3e1bbd2, type: 2}
