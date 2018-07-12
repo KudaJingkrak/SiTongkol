@@ -624,6 +624,7 @@ public class GayatriCharacter : BaseClass, IAttackable {
 #endregion
     public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None)
     {
+        doFlash();
         if (isReflect)
         {
             //masih ngaco.
@@ -692,4 +693,38 @@ public class GayatriCharacter : BaseClass, IAttackable {
 		}
 	}
 
+    #region Flashing
+    private Material _mat;
+    private IEnumerator _flashCoroutine;
+    protected void doFlash()
+    {
+        if (!_mat) _mat = GetComponent<SpriteRenderer>().material;
+
+        if (_flashCoroutine != null)
+        {
+            StopCoroutine(_flashCoroutine);
+        }
+
+        _flashCoroutine = Flashing();
+        StartCoroutine(Flashing());
+    }
+
+    private IEnumerator Flashing()
+    {
+        _mat.SetFloat("_FlashAmount", 1.0f);
+        _mat.SetFloat("_IsFlash2", 0.0f);
+        yield return new WaitForSeconds(0.05f);
+        _mat.SetFloat("_FlashAmount", 0.0f);
+        yield return new WaitForSeconds(0.05f);
+        _mat.SetFloat("_FlashAmount", 1.0f);
+        _mat.SetFloat("_IsFlash2", 1.0f);
+        yield return new WaitForSeconds(0.05f);
+        _mat.SetFloat("_FlashAmount", 0.0f);
+        yield return new WaitForSeconds(0.05f);
+        _mat.SetFloat("_FlashAmount", 1.0f);
+        _mat.SetFloat("_IsFlash2", 0.0f);
+        yield return new WaitForSeconds(0.05f);
+        _mat.SetFloat("_FlashAmount", 0.0f);
+    }
+    # endregion
 }

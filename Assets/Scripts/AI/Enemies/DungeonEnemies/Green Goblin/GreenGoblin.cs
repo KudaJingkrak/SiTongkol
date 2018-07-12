@@ -134,6 +134,7 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
     public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None)
     {
        doFlash();
+        textDamageManager.Add("" + damage, transform, "default");
         _health -= damage;
         if(causer)
         {
