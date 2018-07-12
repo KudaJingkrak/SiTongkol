@@ -1,31 +1,40 @@
-tree "Root"
+tree("Root")
 	fallback
-		tree "PatrolMove"
 		tree "StuckMove"
+		tree "FollowMove"		 
+		tree "PatrolMove"
 		tree "Patrol"
 		tree "DoAttack"
 		tree "StartAttack"
-		
+
+tree "FollowMove"
+	while
+		sequence
+			CanFollowPlayer
+			not isStuck
+		sequence
+			MoveToTarget
 
 tree "StuckMove"
-	while
+	while 
 		sequence
 			not CanAttackPlayer
 			not IsAttacking
 			isStuck
-		sequence
+		sequence	
 			SetStep
 			SetRandomDirection
 			Wait(0.1)
-		
 
 tree "Patrol"
 	while
 		sequence
 			not CanAttackPlayer
+			not CanFollowPlayer
 			not IsAttacking
+			not isStuck
 		sequence
-			SetStep(35,50)
+			SetStep(45,50)
 			SetRandomDirection
 			Wait(1.0)
 
@@ -34,8 +43,8 @@ tree "PatrolMove"
 		sequence
 			not isEndStep
 			not CanAttackPlayer
+			not CanFollowPlayer
 			not IsAttacking
-			not isStuck
 		sequence
 			MoveStep
 
@@ -46,16 +55,11 @@ tree "StartAttack"
 			not IsAttacking
 		sequence
 			StartAttack
-			
 
 tree "DoAttack"
 	while IsAttacking
 		sequence
-			Wait(0.6)
-			DoAttack
-			Wait(0.6)
-			DoAttack
-			Wait(0.6)
-			DoAttack
 			Wait(1.0)
-			StopAttack
+			DoSlash
+			Wait(0.3)
+			UnAttack

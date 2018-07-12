@@ -95,9 +95,17 @@ public class AIMovementComp : MonoBehaviour {
 		return Vector2.zero;
 	}
 
-	[Panda.Task]
+	[Task]
 	public bool SetRandomDirection(){
 		SetDirection((Direction)Random.Range(0, 4));
+		return true;
+	}
+
+	[Task]
+	public bool SetRandomDirection(float a){
+		this.x = Random.value * 2 - 1;
+		this.y = Random.value * 2 - 1;
+		SetDirection();
 		return true;
 	}
 
@@ -125,10 +133,10 @@ public class AIMovementComp : MonoBehaviour {
 		Move(x,y);
 	}
 	
-	[Panda.Task]
+	[Task]
 	public void MoveByDirection(){
 		Move(x,y);
-		Panda.Task.current.Succeed();
+		if(Task.isInspected)Task.current.Succeed();
 	}
 	[Panda.Task]
 	public void Launch(float x, float y, float power = 1f){

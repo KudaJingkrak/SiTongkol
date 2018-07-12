@@ -6,8 +6,7 @@ using UnityEngine.UI;
 using Panda;
 
 [RequireComponent(typeof(AIMovementComp))]
-public class Troll : BaseDungeonEnemy, IAttackable {
-	
+public class Bat : BaseDungeonEnemy, IAttackable {
 	private Animator _anim;
 
     [Header("UI Manager")]
@@ -19,62 +18,57 @@ public class Troll : BaseDungeonEnemy, IAttackable {
 
     private AIMovementComp _move;
 	public float attackRange = 2f, canFollowRange = 5f, attackDamage = 15f, quickMovePower = 10f;
-	
     // Attackable Variable
     private IEnumerator knockbackrator = null;
-	private bool _canAttackPlayer = false, _canFollowPlayer = false;
-	
 
-	#region  PandaTask
+    //Panda Task Variable
+    [Task]
+    public bool IsAttacking = false;
+    private bool __canAttack = false;
+    private Vector2 __castDir = Vector2.zero;
+	#region PandaTask
 	[Task]
-	public bool IsAttacking = false;
-	[Task]
-	public bool CanAttackPlayer
-	{
-		get
-		{
-			if(!_move) return false;
+    public bool CanAttackPlayer{
+        get{
+            if(_move) __castDir = _move.GetVectorDirection();
+			__canAttack = false;
 
-			Vector2 castDir = _move.GetVectorDirection();
-			_canAttackPlayer = false;
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, new Vector2(1f,1f), 0f, __castDir, attackRange); 
 
-			RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, new Vector2(1f,1f), 0f, castDir, attackRange); 
-
-			for(int i = 0 ; i < hits.Length; i++)
+            for(int i = 0 ; i < hits.Length; i++)
             {
                 if(hits[i].transform.CompareTag("Player"))
                 {
-                   _canAttackPlayer = true;
+                    __canAttack = true;
                     break;
                 }
             }
 
-			return _canAttackPlayer;
-		}
-	}
-
+            return __canAttack;
+        }
+    }
 	[Task]
 	public bool CanFollowPlayer
 	{
-		get
-		{
+		get{
 			if(!_move || !_move.target) return false;
-			return Vector2.Distance(transform.position, _move.target.position) <= canFollowRange;;
+			return Vector2.Distance(transform.position, _move.target.position) <= canFollowRange;
 		}
 	}
+    [Task]
+    public void StartAttack(){
+        IsAttacking = true;
+        _anim.SetBool("IsCharge", true);
 
-	[Task]
-	public void StartAttack()
-	{
-		IsAttacking = true;
-		_anim.SetBool("IsCharge", true);
-
-		if(Task.isInspected)
+        if(Task.isInspected)
         {
             Task.current.Succeed();
         }
+    }
+	public void QuickForward()
+	{
+		_move.QuickMoveByDirection4(quickMovePower,0.25f);
 	}
-
 	[Task]
 	public void UnAttack()
 	{
@@ -83,18 +77,12 @@ public class Troll : BaseDungeonEnemy, IAttackable {
 
 		StopAttack();
 	}
-
-	[Task]
+    [Task]
     public void DoAttack(){
        
-		if(!_move)
-        {
-            _move = GetComponent<AIMovementComp>();
-        }
+		 __castDir = _move.GetVectorDirection();
 
-		Vector2 castDir = _move.GetVectorDirection();
-
-		RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, new Vector2(1.2f,1.2f), 0f, castDir, 2f); 
+		RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, new Vector2(1f,1f), 0f, __castDir, 2f); 
 
 		for(int i = 0 ; i < hits.Length; i++)
 		{
@@ -130,7 +118,7 @@ public class Troll : BaseDungeonEnemy, IAttackable {
         {
             Task.current.Succeed();
         }
-	}
+    }
 	#endregion
 
 	#region BaseEnemy
@@ -141,9 +129,9 @@ public class Troll : BaseDungeonEnemy, IAttackable {
 	#endregion
 
 	#region IAttackable
-	public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None)
+    public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None)
     {
-		doFlash();
+       doFlash();
         _health -= damage;
         if(causer)
         {
@@ -165,12 +153,12 @@ public class Troll : BaseDungeonEnemy, IAttackable {
 
     public void Destruct()
     {
-        
+
     }
 
     public void Die()
     {
-		ReportDieToRoom();
+        ReportDieToRoom();
         //nanti ganti
         Destroy();
     }
@@ -212,21 +200,17 @@ public class Troll : BaseDungeonEnemy, IAttackable {
     }
 	#endregion
 
-	private void Awake()
+    private void Awake()
 	{
 		_move = GetComponent<AIMovementComp>();
         _anim = GetComponent<Animator>();
         Initialized();
         _healthSlider = healthCanvas.GetComponentInChildren<Slider>();
 	}
-
-    // Use this for initialization
-    void Start () {
-
-	}
 	
 	// Update is called once per frame
 	void Update () {
+
 		if(_move && !_move.isPlayerAsTarget)
 		{
 			_move.SetPlayerAsTarget();
@@ -247,8 +231,9 @@ public class Troll : BaseDungeonEnemy, IAttackable {
         }
 	}
 
-    void LateUpdate()
+	void LateUpdate()
     {
+        
         if(healthCanvas.activeSelf)
         {
             _healthSlider.value = _health/health;
