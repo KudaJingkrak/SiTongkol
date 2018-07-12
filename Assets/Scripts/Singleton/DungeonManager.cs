@@ -140,23 +140,27 @@ public class DungeonManager : MonoBehaviour {
 
 	public void DestroyAllEnemies(DungeonRoom room)
 	{
-		for(int i = 0; i < room.enemies.Count; i++)
+		while(room.enemies.Count > 0)
 		{
-			IAttackable attakable = room.enemies[i].GetComponent<IAttackable>();
-			if(attakable != null)
-			{
-				attakable.Die();
-				return;
-			}
 			
-			attakable = room.enemies[i].GetComponentInChildren<IAttackable>();
+			IAttackable attakable = room.enemies[0].GetComponent<IAttackable>();
 			if(attakable != null)
 			{
+				room.enemies.RemoveAt(0);
 				attakable.Die();
-				return;
+			}
+			else
+			{
+				attakable = room.enemies[0].GetComponentInChildren<IAttackable>();
+				if(attakable != null)
+				{
+					room.enemies.RemoveAt(0);
+					attakable.Die();
+				}
 			}
 
 		}
+		
 		room.isRespawned = false;
 	}
 
@@ -192,10 +196,11 @@ public class DungeonRoom{
 			return counter;
 		}
 	}
+
 	[Header("Monster Respawn Management")]
 	public List<MonsterSelector> monster = new List<MonsterSelector>();
 	public List<Transform> respwanPoint = new List<Transform>();
-	[HideInInspector]
+	// [HideInInspector]
 	public List<GameObject> enemies = new List<GameObject>();
 
 	public void AddEnemy(GameObject enemy){
@@ -213,7 +218,6 @@ public class DungeonRoom{
 		}
 	}
 
-	
 
 	[System.Serializable]
 	public class MonsterSelector

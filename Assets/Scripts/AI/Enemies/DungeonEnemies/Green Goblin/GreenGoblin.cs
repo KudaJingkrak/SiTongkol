@@ -126,6 +126,7 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
 	#region BaseEnemy
 	public override void Initialized()
 	{
+        ReportLiveToRoom();
 		_health = health;
 	}
 	#endregion

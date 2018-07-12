@@ -990,24 +990,10 @@ MonoBehaviour:
     isSkipable: 0
     monster:
     - tier: 0
-      size: 16
+      size: 2
     respwanPoint:
     - {fileID: 2140693223}
     - {fileID: 671394608}
-    - {fileID: 816316421}
-    - {fileID: 942210899}
-    - {fileID: 1995730862}
-    - {fileID: 1908220200}
-    - {fileID: 1674410164}
-    - {fileID: 1362359358}
-    - {fileID: 1601898148}
-    - {fileID: 1910273995}
-    - {fileID: 1822149363}
-    - {fileID: 1287151583}
-    - {fileID: 1287407285}
-    - {fileID: 1590194770}
-    - {fileID: 1903832885}
-    - {fileID: 509857018}
     enemies: []
   - position: {x: 0, y: 0}
     isExplored: 0
@@ -1020,7 +1006,9 @@ MonoBehaviour:
     enemies: []
   pc2dr: {fileID: 0}
   tierOne:
-  - monster: {fileID: 1477777808450780, guid: 53a7d689441c5e44ba121c5302643a78, type: 2}
+  - monster: {fileID: 1115296180229474, guid: bc2586916a9690b4796649880c8c3a0f, type: 2}
+    size: 16
+  - monster: {fileID: 1597018628802478, guid: ee58d97c5067977418d06cc556a5c0ad, type: 2}
     size: 16
   tierTwo: []
   tierThree: []

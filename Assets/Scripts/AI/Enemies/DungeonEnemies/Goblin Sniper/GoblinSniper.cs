@@ -98,6 +98,7 @@ public class GoblinSniper : BaseDungeonEnemy, IAttackable
     #region BaseEnemy
     public override void Initialized()
     {
+        ReportLiveToRoom();
         _health = health;
     }
     #endregion
