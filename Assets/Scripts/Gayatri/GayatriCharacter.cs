@@ -5,6 +5,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GayatriCharacter : BaseClass, IAttackable {
+    /*
+     * Things TODO:
+     * 1. DoFlash pas kena serangan + knockback
+     * 2. DamageSerangan -> DamageText
+     * 3. Combo System.
+     */
+
     public GameObject ColliderKaki;
 	public Rigidbody2D rigid2D;
 	public BoxCollider2D boxCollider2D;

@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/Scene/LevelTesting/Luar Dungeon.unity
     guid: e6998d1c0dea33d4d8e35d610c976bd2
   - enabled: 1
-    path: Assets/Scene/puzzle/Puzzle Basic.unity
-    guid: fdb73174cacbcb741b48eaacdce8155e
+    path: Assets/Scene/LevelTesting/Dalam_Dungeon.unity
+    guid: 6af34676a11c97f469fe2ab1e7dda119
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
