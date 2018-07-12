@@ -87,10 +87,20 @@ public class DungeonManager : MonoBehaviour {
 				if(i == currentRoomIndex){
 					rooms[i].isPlayerHere = true;
 					rooms[i].isExplored = true;
+					CleanDumpEnemies(rooms[i]);
 					if(!rooms[i].isRespawned)
 					{
 						RespawnAllEnemies(rooms[i]);
+					}
 
+					if(!rooms[i].isSkipable)
+					{
+						if(rooms[i].numberOfEnemies > 0)
+						{
+							rooms[i].CloseAllPintu();
+						}else{
+							rooms[i].OpenAllPintu();
+						}
 					}
 					
 				}else{
@@ -102,7 +112,26 @@ public class DungeonManager : MonoBehaviour {
 					}
 
 				}
-				
+			}
+		}
+	}
+
+	public void CleanDumpEnemies(DungeonRoom room)
+	{
+		bool isClean = false;
+		int i = 0;
+
+		while(!isClean)
+		{
+			if( i < room.enemies.Count && !room.enemies[i].activeSelf){
+				room.enemies.RemoveAt(i);
+			}else{
+				i++;
+			}
+
+			if(i >= room.enemies.Count)
+			{
+				isClean = true;
 			}
 		}
 	}
@@ -110,6 +139,8 @@ public class DungeonManager : MonoBehaviour {
 	public void RespawnAllEnemies(DungeonRoom room)
 	{
 		room.isRespawned = true;
+		if(!room.isRespawnable) return;
+
 		int baseIndex  = 0;
 		for(int i = 0; i < room.monster.Count; i++)
 		{	
@@ -140,6 +171,8 @@ public class DungeonManager : MonoBehaviour {
 
 	public void DestroyAllEnemies(DungeonRoom room)
 	{
+		if(!room.isRespawnable) return;
+
 		while(room.enemies.Count > 0)
 		{
 			
@@ -160,7 +193,7 @@ public class DungeonManager : MonoBehaviour {
 			}
 
 		}
-		
+
 		room.isRespawned = false;
 	}
 
@@ -197,6 +230,10 @@ public class DungeonRoom{
 		}
 	}
 
+	[Header("Gate Management")]
+	public bool isOpened = false;
+	public List<Pintu> pintu = new List<Pintu>();
+
 	[Header("Monster Respawn Management")]
 	public List<MonsterSelector> monster = new List<MonsterSelector>();
 	public List<Transform> respwanPoint = new List<Transform>();
@@ -216,6 +253,24 @@ public class DungeonRoom{
 		{
 			enemies.Remove(enemy);
 		}
+	}
+
+	public void OpenAllPintu()
+	{
+		for(int i=0; i < pintu.Count; i++)
+		{
+			pintu[i].PintuKebuka();
+		}
+		isOpened = true;
+	}
+
+	public void CloseAllPintu()
+	{
+		for(int i=0; i < pintu.Count; i++)
+		{
+			pintu[i].PintuKetutup();
+		}
+		isOpened = false;
 	}
 
 
