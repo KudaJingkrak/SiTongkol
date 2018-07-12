@@ -210,10 +210,10 @@ public class AIMovementComp : MonoBehaviour {
 			Task.current.Succeed();
 		}
 	}
-	[Panda.Task]
+	[Task]
 	public void SetStep(int step){
 		_step = step;
-		Panda.Task.current.Succeed();
+		if(Task.isInspected) Task.current.Succeed();
 	}
 	[Task]
 	public void SetStep(int minStep, int maxStep)
@@ -224,34 +224,46 @@ public class AIMovementComp : MonoBehaviour {
 			Task.current.Succeed();
 		}
 	}
-	[Panda.Task]
+	[Task]
 	public void MoveStep(){
 		Move(_dir);
 		_step--;
-		Panda.Task.current.Succeed();
+		if(Task.isInspected)
+		{
+			Task.current.Succeed();
+		}
 	}
-	[Panda.Task]
+	[Task]
 	public void QuickMoveStep(float x, float y, float power = 1f, float timeStop = 0.1f){
 		Vector2 velocity = new Vector2(x,y) * power;
 		QuickMove(velocity, timeStop);
 		_step--;
-		Panda.Task.current.Succeed();
+		if(Task.isInspected)
+		{
+			Task.current.Succeed();
+		}
 	}
-	[Panda.Task]
+	[Task]
 	public void QuickMoveByDirectionStep(float power = 1f, float timeStop = 0.1f){
 		Vector2 velocity = new Vector2(this.x,this.y) * power;
 		QuickMove(velocity, timeStop);
 		_step--;
-		Panda.Task.current.Succeed();
+		if(Task.isInspected)
+		{
+			Task.current.Succeed();
+		}
 	}
-	[Panda.Task]
+	[Task]
 	public void QuickMoveByDirection4Step(float power = 1f, float timeStop = 0.1f){
 		SetDirection();
 		SetDirection(_dir);
 		Vector2 velocity = new Vector2(this.x,this.y) * power;
 		QuickMove(velocity, timeStop);
 		_step--;
-		Panda.Task.current.Succeed();
+		if(Task.isInspected)
+		{
+			Task.current.Succeed();
+		}
 	}
 	[Task]
 	public bool isStuck{

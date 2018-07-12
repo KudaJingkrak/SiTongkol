@@ -87,7 +87,6 @@ public class GoblinSniper : BaseDungeonEnemy, IAttackable
     [Task]
     public void StopAttack(){
         IsAttacking = false;
-        UnAttack();
 
         if(Task.isInspected)
         {
