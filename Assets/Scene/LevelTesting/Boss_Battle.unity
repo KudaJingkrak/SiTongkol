@@ -190,6 +190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 154437643}
   - component: {fileID: 154437642}
+  - component: {fileID: 154437644}
   m_Layer: 0
   m_Name: Anganan
   m_TagString: Untagged
@@ -256,6 +257,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &154437644
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 154437641}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 465524a16e5e5d94291b93bcdfc83dec, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &465442954
 GameObject:
   m_ObjectHideFlags: 0
@@ -908,6 +926,11 @@ Prefab:
         type: 2}
       propertyPath: Rooms.Array.data[0].Dimensions.height
       value: 10.000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 20315014046764072, guid: c3aad379a9acce440a2ed23cfb3b1bb8,
+        type: 2}
+      propertyPath: orthographic size
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c3aad379a9acce440a2ed23cfb3b1bb8, type: 2}
