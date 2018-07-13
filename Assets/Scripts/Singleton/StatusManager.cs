@@ -174,12 +174,22 @@ public class StatusManager : BaseClass {
         Initiated_Stamina();
         Initiated_Mana();
         Initiated_Health();
-        transisiCamera.TransitionEnter();
+
+        if(!transisiCamera)
+        {
+            transisiCamera = Camera.main.GetComponent<ProCamera2DTransitionsFX>();
+        }
+
+        if(transisiCamera)
+        {
+            transisiCamera.TransitionEnter();
+        }
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        
 	}
 
     void FixedUpdate()
