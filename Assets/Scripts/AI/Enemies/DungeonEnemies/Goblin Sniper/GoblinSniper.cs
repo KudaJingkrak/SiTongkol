@@ -59,19 +59,15 @@ public class GoblinSniper : BaseDungeonEnemy, IAttackable
         IsAttacking = true;
         
 
-        if(Task.isInspected)
-        {
-            Task.current.Succeed();
-        }
+        // if(Task.isInspected)
+			Task.current.Succeed();
     }
     [Task]
     public void DoAttack(){
         _anim.SetBool("IsAttacking", true);
 
-        if(Task.isInspected)
-        {         
-            Task.current.Succeed();
-        }
+        // if(Task.isInspected)
+			Task.current.Succeed();
         
     }
     public void Attack()
@@ -88,10 +84,8 @@ public class GoblinSniper : BaseDungeonEnemy, IAttackable
     public void StopAttack(){
         IsAttacking = false;
 
-        if(Task.isInspected)
-        {
-            Task.current.Succeed();
-        }
+        // if(Task.isInspected)
+			Task.current.Succeed();
     }
     #endregion
 

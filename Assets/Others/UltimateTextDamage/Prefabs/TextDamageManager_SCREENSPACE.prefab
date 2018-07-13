@@ -71,6 +71,9 @@ MonoBehaviour:
   - keyType: default
     poolCount: 20
     prefab: {fileID: 114685088414384168, guid: 74837713fa6c9ca40beb9f0df4fb1830, type: 2}
+  - keyType: critical
+    poolCount: 20
+    prefab: {fileID: 114865973802963578, guid: 29e222daeff3b9a40986ac968c956ebf, type: 2}
 --- !u!223 &223561562274088596
 Canvas:
   m_ObjectHideFlags: 1

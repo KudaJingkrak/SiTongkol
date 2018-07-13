@@ -69,10 +69,8 @@ public class Troll : BaseDungeonEnemy, IAttackable {
 		IsAttacking = true;
 		_anim.SetBool("IsCharge", true);
 
-		if(Task.isInspected)
-        {
-            Task.current.Succeed();
-        }
+		// if(Task.isInspected)
+			Task.current.Succeed();
 	}
 
 	[Task]
@@ -106,9 +104,7 @@ public class Troll : BaseDungeonEnemy, IAttackable {
 		}
 
         if(Task.isInspected)
-        {         
-            Task.current.Succeed();
-        }
+			Task.current.Succeed();
         
     }
 	[Task]
@@ -116,10 +112,8 @@ public class Troll : BaseDungeonEnemy, IAttackable {
 	{
 		_anim.SetBool("IsSlash", true);
 
-		if(Task.isInspected)
-        {
-            Task.current.Succeed();
-        }
+		// if(Task.isInspected)
+			Task.current.Succeed();
 	}
 
     [Task]
@@ -127,9 +121,7 @@ public class Troll : BaseDungeonEnemy, IAttackable {
         IsAttacking = false;
 
         if(Task.isInspected)
-        {
-            Task.current.Succeed();
-        }
+			Task.current.Succeed();
 	}
 	#endregion
 

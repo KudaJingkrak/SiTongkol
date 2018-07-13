@@ -62,10 +62,8 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
         IsAttacking = true;
         _anim.SetBool("IsCharge", true);
 
-        if(Task.isInspected)
-        {
-            Task.current.Succeed();
-        }
+        // if(Task.isInspected)
+			Task.current.Succeed();
     }
 	public void QuickForward()
 	{
@@ -95,10 +93,8 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
 			}
 		}
 
-        if(Task.isInspected)
-        {         
-            Task.current.Succeed();
-        }
+       if(Task.isInspected)
+			Task.current.Succeed();
         
     }
 	[Task]
@@ -106,10 +102,8 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
 	{
 		_anim.SetBool("IsSlash", true);
 
-		if(Task.isInspected)
-        {
-            Task.current.Succeed();
-        }
+		// if(Task.isInspected)
+			Task.current.Succeed();
 	}
 
     [Task]
@@ -117,9 +111,7 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
         IsAttacking = false;
 
         if(Task.isInspected)
-        {
-            Task.current.Succeed();
-        }
+			Task.current.Succeed();
     }
 	#endregion
 
