@@ -15,8 +15,5 @@ tree "ToDestination"
 		sequence
 			MoveToDestination
 
-tree "StartAttack"
-	while not IsAttacking
-		sequence
-			StartAttack
+
 		
