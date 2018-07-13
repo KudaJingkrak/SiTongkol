@@ -229,8 +229,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 615298395
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300004, guid: 1fcf3eb875d11784082ac57955eb6ca6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -249,11 +249,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 154437641}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.88, y: 1.28, z: 0.8492055}
+  m_LocalPosition: {x: -3.88, y: 0.67, z: 0.8492055}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1334640617}
   - {fileID: 1320332246}
+  - {fileID: 1609538125}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1086,8 +1087,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 615298395
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 2ce3bbc312ddfd446af53aba3f61bcaf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2350,6 +2351,11 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!4 &1609538125 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4193253167846686, guid: a0677984825e8524dafd2a1e6a9f4d77,
+    type: 2}
+  m_PrefabInternal: {fileID: 2102225364}
 --- !u!1 &1681382285
 GameObject:
   m_ObjectHideFlags: 0
@@ -2389,6 +2395,63 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224910644817633608, guid: 35f849f796581d74792b91d700ad6560,
     type: 2}
   m_PrefabInternal: {fileID: 1375848253}
+--- !u!1001 &2102225364
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 154437643}
+    m_Modifications:
+    - target: {fileID: 114858834487689716, guid: a0677984825e8524dafd2a1e6a9f4d77,
+        type: 2}
+      propertyPath: childs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193253167846686, guid: a0677984825e8524dafd2a1e6a9f4d77, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193253167846686, guid: a0677984825e8524dafd2a1e6a9f4d77, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -2.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193253167846686, guid: a0677984825e8524dafd2a1e6a9f4d77, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193253167846686, guid: a0677984825e8524dafd2a1e6a9f4d77, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193253167846686, guid: a0677984825e8524dafd2a1e6a9f4d77, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193253167846686, guid: a0677984825e8524dafd2a1e6a9f4d77, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193253167846686, guid: a0677984825e8524dafd2a1e6a9f4d77, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193253167846686, guid: a0677984825e8524dafd2a1e6a9f4d77, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114858834487689716, guid: a0677984825e8524dafd2a1e6a9f4d77,
+        type: 2}
+      propertyPath: childs.Array.data[0].render
+      value: 
+      objectReference: {fileID: 1320332248}
+    - target: {fileID: 114858834487689716, guid: a0677984825e8524dafd2a1e6a9f4d77,
+        type: 2}
+      propertyPath: childs.Array.data[0].orderLayer
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a0677984825e8524dafd2a1e6a9f4d77, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &2107574282
 GameObject:
   m_ObjectHideFlags: 0

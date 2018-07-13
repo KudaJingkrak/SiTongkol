@@ -1132,6 +1132,8 @@ MonoBehaviour:
     monster:
     - tier: 0
       size: 1
+    - tier: 0
+      size: 1
     respwanPoint:
     - {fileID: 2140693223}
     enemies: []
