@@ -8,6 +8,7 @@ using Panda;
 public class Anganan : BaseEnemy, IAttackable {
 	public bool IsAttacking = false;
 	public bool IsCharging = false;
+	public float slamAttackDamage = 30;
 	public GameObject[] damageCollider;
 	public int[] hitTrigger;
 	private Stack<int> _hitTrigger = new Stack<int>();
@@ -93,14 +94,76 @@ public class Anganan : BaseEnemy, IAttackable {
 
 	#region PandaTask
 	[Task]
+	public bool CanAttackPlayer
+	{
+		get{
+			RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, new Vector2(3f,3f), 0f,  Vector2.down, Random.value * 2f); 
+
+			for(int i = 0 ; i < hits.Length; i++)
+			{
+				if(hits[i].transform.CompareTag("Player"))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+	}
+	[Task]
 	public void HorizontalMove(float isRightMove)
 	{
 		_move.Move(isRightMove, 0f);
-		//Task.current.Succeed();
+		Task.current.Succeed();
 	}
-	public void SlamAttack()
+	[Task]
+	public void HorizontalFollow()
+	{
+		float myMove = _aim.targetAim.position.x - transform.position.x;
+		if(myMove < -1)
+		{
+			myMove = -1;
+		}else if(myMove > 1)
+		{
+			myMove = 1;
+		}else{
+			myMove = 0;
+		}
+		_move.Move(myMove, 0f);
+
+		Task.current.Succeed();
+	}
+	public void SlamAttackCast()
 	{
 
+		RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, new Vector2(3f,3f), 0f,  Vector2.down, 1.75f); 
+
+		for(int i = 0 ; i < hits.Length; i++)
+		{
+			if(hits[i].transform.CompareTag("Player"))
+			{
+				hits[i].transform.GetComponent<GayatriCharacter>().ApplyDamage(slamAttackDamage, this.gameObject);
+				break;
+			}
+		}
+	}
+
+	public void SweepAttackCast()
+	{
+
+		RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, new Vector2(5f,3f), 0f,  Vector2.down, 0.95f); 
+
+		for(int i = 0 ; i < hits.Length; i++)
+		{
+			if(hits[i].transform.CompareTag("Player"))
+			{
+				hits[i].transform.GetComponent<GayatriCharacter>().ApplyDamage(slamAttackDamage, this.gameObject);
+				break;
+			}
+		}
+	}
+	public void SpawnOrb()
+	{
+		 _aim.FireWithOffset();
 	}
 	#endregion
 
@@ -116,12 +179,17 @@ public class Anganan : BaseEnemy, IAttackable {
 	{
 		for(int i= 0; i < hitTrigger.Length; i++){
 			_hitTrigger.Push(hitTrigger[i]);
-		}		
+		}	
 	}
 
 	void Update()
 	{
-		
+
+		if(!_aim.targetAim)
+        {
+            _aim.targetAim = GameManager.Instance.m_Player.transform;
+        }
+
 		if(_healthBar)
 		{
 			_healthBar.value = _health / health;

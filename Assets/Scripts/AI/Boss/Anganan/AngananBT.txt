@@ -5,4 +5,4 @@ tree("Root")
 tree "Move"
 	sequence
 		SetSpeed(10.0)
-		SequenceMove(1)
+		HorizontalFollow
