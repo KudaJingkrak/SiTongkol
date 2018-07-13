@@ -410,6 +410,15 @@ public class AIMovementComp : MonoBehaviour {
 		Panda.Task.current.Succeed();
 	}
 
+	[Task]
+	public bool SetTargetDestination(int index)
+	{
+		if(index >= targetPoints.Count) return false;
+
+		destination = targetPoints[index].position;
+		return true;
+	}
+
 	[Panda.Task]
 	public void MoveToTarget(){
 		if(target && !isReachTarget){

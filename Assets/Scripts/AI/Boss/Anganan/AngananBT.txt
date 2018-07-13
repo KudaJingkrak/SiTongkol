@@ -1,0 +1,8 @@
+tree("Root")
+	fallback
+		tree "Move"
+
+tree "Move"
+	sequence
+		SetSpeed(10.0)
+		SequenceMove(1)

@@ -131,7 +131,8 @@ public class Bullet : PoolObject {
     }
 
     public void Disable(){
-        trail.time = -1;
+        if(trail)
+            trail.time = -1;
         _isActive = false;
         _isEnable = false;
         // stop bullet moving

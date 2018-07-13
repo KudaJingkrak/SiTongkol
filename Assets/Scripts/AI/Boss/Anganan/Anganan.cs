@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Panda;
 
 [RequireComponent(typeof(AITargetComp))]
 public class Anganan : BaseEnemy, IAttackable {
-	public bool IsAttacking, IsCharging;
+	public bool IsAttacking = false;
+	public bool IsCharging = false;
 	public GameObject[] damageCollider;
 	public int[] hitTrigger;
 	private Stack<int> _hitTrigger = new Stack<int>();
@@ -89,10 +91,16 @@ public class Anganan : BaseEnemy, IAttackable {
 	}
 	#endregion
 
-	#region Attacking
+	#region PandaTask
+	[Task]
+	public void HorizontalMove(float isRightMove)
+	{
+		_move.Move(isRightMove, 0f);
+		//Task.current.Succeed();
+	}
 	public void SlamAttack()
 	{
-		
+
 	}
 	#endregion
 
@@ -113,6 +121,7 @@ public class Anganan : BaseEnemy, IAttackable {
 
 	void Update()
 	{
+		
 		if(_healthBar)
 		{
 			_healthBar.value = _health / health;
