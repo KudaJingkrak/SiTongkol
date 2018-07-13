@@ -7,6 +7,7 @@ public class UIManager : BaseClass {
 
     public HUDManager HUD;
     public GameObject HUD_Object;
+    public GameObject BossHealthBar;
 	// Use this for initialization
 	void Start () {
 		//Nanti disini di check ke PlayerPreferences nya.

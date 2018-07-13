@@ -60,10 +60,8 @@ public class Bat : BaseDungeonEnemy, IAttackable {
         IsAttacking = true;
         _anim.SetBool("IsCharge", true);
 
-        if(Task.isInspected)
-        {
-            Task.current.Succeed();
-        }
+        // if(Task.isInspected)
+			Task.current.Succeed();
     }
 	public void QuickForward()
 	{
@@ -93,10 +91,8 @@ public class Bat : BaseDungeonEnemy, IAttackable {
 			}
 		}
 
-        if(Task.isInspected)
-        {         
-            Task.current.Succeed();
-        }
+        // if(Task.isInspected)
+			Task.current.Succeed();
         
     }
 	[Task]
@@ -104,20 +100,16 @@ public class Bat : BaseDungeonEnemy, IAttackable {
 	{
 		_anim.SetBool("IsSlash", true);
 
-		if(Task.isInspected)
-        {
-            Task.current.Succeed();
-        }
+		// if(Task.isInspected)
+			Task.current.Succeed();
 	}
 
     [Task]
     public void StopAttack(){
         IsAttacking = false;
 
-        if(Task.isInspected)
-        {
-            Task.current.Succeed();
-        }
+        // if(Task.isInspected)
+			Task.current.Succeed();
     }
 	#endregion
 

@@ -25,9 +25,8 @@ public class AITargetComp : MonoBehaviour {
 		if(index < prefabs.Length){
 			prefabSelected = prefabs[index];
 		}
-		if(Task.isInspected){
+		// if(Task.isInspected)
 			Task.current.Succeed();
-		}
 	}
 
 	#endregion
@@ -36,7 +35,8 @@ public class AITargetComp : MonoBehaviour {
 	[Panda.Task]
 	public void Fire(){
 		Fire(transform.position, transform.rotation);
-		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+		// if(Task.isInspected)
+			Task.current.Succeed();
 	}
 
 	[Panda.Task]
@@ -55,7 +55,8 @@ public class AITargetComp : MonoBehaviour {
 		
 		}
 
-		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+		// if(Task.isInspected)
+			Task.current.Succeed();
 	}
 
 	[Panda.Task]
@@ -74,7 +75,8 @@ public class AITargetComp : MonoBehaviour {
 
 		}
 
-		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+		// if(Task.isInspected)
+			Task.current.Succeed();
 	}
 
 	[Panda.Task]
@@ -93,7 +95,8 @@ public class AITargetComp : MonoBehaviour {
 
 		}
 		
-		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+		// if(Task.isInspected)
+			Task.current.Succeed();
 	}
 
 	[Panda.Task]
@@ -106,7 +109,8 @@ public class AITargetComp : MonoBehaviour {
 
 		}
 		
-		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+		// if(Task.isInspected)
+			Task.current.Succeed();
 	}
 
 	[Panda.Task]
@@ -118,13 +122,15 @@ public class AITargetComp : MonoBehaviour {
 
 		}
 
-		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+		// if(Task.isInspected)
+			Task.current.Succeed();
 	}
 
 	[Panda.Task]
 	public void FireDirection(float x, float y){
 		FireDirection(new Vector2(x,y));
-		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+		// if(Task.isInspected)
+			Task.current.Succeed();
 
 	}
 
@@ -185,9 +191,11 @@ public class AITargetComp : MonoBehaviour {
 				spawners[i].rootAiming.transform.rotation = Quaternion.Slerp(spawners[i].rootAiming.transform.rotation, newRotation, Time.deltaTime * turnRate );
 
 			}
-			if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+			// if(Task.isInspected)
+				Task.current.Succeed();
 		}else{
-			if(Panda.Task.isInspected) Panda.Task.current.Fail();
+			// if(Task.isInspected)
+				Task.current.Fail();
 		}
 
 	}
@@ -207,9 +215,11 @@ public class AITargetComp : MonoBehaviour {
 				spawners[spawnerIndex].rootAiming.transform.rotation = Quaternion.Slerp(spawners[spawnerIndex].rootAiming.transform.rotation, newRotation, Time.deltaTime * turnRate );
 
 			}
-			if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+			// if(Task.isInspected)
+				Task.current.Succeed();
 		}else{
-			if(Panda.Task.isInspected) Panda.Task.current.Fail();
+			// if(Task.isInspected)
+				Task.current.Fail();
 		}
 
 	}
@@ -221,7 +231,8 @@ public class AITargetComp : MonoBehaviour {
 			spawners[i].rootAiming.transform.Rotate(Vector3.back * speed * turnRate * Time.deltaTime);
 		}
 		
-		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+		// if(Task.isInspected)
+			Task.current.Succeed();
 		
 	}
 
@@ -230,12 +241,14 @@ public class AITargetComp : MonoBehaviour {
 		if(index > 0 && index < spawners.Length)
 		{
 			spawners[index].rootAiming.transform.Rotate(Vector3.back * speed * turnRate * Time.deltaTime);
-			if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+			// if(Task.isInspected)
+				Task.current.Succeed();
 
 		}
 		else
 		{
-			if(Panda.Task.isInspected) Panda.Task.current.Fail();
+			// if(Task.isInspected)
+				Task.current.Fail();
 		}
 	}
 
@@ -245,18 +258,21 @@ public class AITargetComp : MonoBehaviour {
 		{
 			spawners[i].rootAiming.transform.Rotate(Vector3.forward * speed * turnRate * Time.deltaTime);
 		}
-		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+		// if(Task.isInspected)
+			Task.current.Succeed();
 	}
 
 	[Panda.Task]
 	public void AimTurnCounterClockwise(float speed = 10f, int index = 0){
 		if(index > 0 && index < spawners.Length){
 			spawners[index].rootAiming.transform.Rotate(Vector3.forward * speed * turnRate * Time.deltaTime);
-			if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+			// if(Task.isInspected)
+				Task.current.Succeed();
 		}
 		else
 		{
-			if(Panda.Task.isInspected) Panda.Task.current.Fail();
+			// if(Task.isInspected)
+				Task.current.Fail();
 
 		}
 	}
@@ -267,7 +283,8 @@ public class AITargetComp : MonoBehaviour {
 		{
 			spawners[i].rootAiming.transform.rotation = Quaternion.Euler(0,0,angle);
 		}
-		if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+		// if(Task.isInspected)
+			Task.current.Succeed();
 	}
 
 	[Panda.Task]
@@ -275,12 +292,14 @@ public class AITargetComp : MonoBehaviour {
 		if(index > 0 && index < spawners.Length)
 		{
 			spawners[index].rootAiming.transform.rotation = Quaternion.Euler(0,0,angle);
-			if(Panda.Task.isInspected) Panda.Task.current.Succeed();
+			// if(Task.isInspected)
+				Task.current.Succeed();
 
 		}
 		else
 		{
-			if(Panda.Task.isInspected) Panda.Task.current.Fail();
+			if(Task.isInspected)
+				Task.current.Fail();
 		
 		}
 	}
