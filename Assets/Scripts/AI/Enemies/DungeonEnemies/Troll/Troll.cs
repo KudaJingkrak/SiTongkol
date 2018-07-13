@@ -103,7 +103,7 @@ public class Troll : BaseDungeonEnemy, IAttackable {
 			}
 		}
 
-        // if(Task.isInspected)
+        if(Task.isInspected)
 			Task.current.Succeed();
         
     }
@@ -120,7 +120,7 @@ public class Troll : BaseDungeonEnemy, IAttackable {
     public void StopAttack(){
         IsAttacking = false;
 
-        // if(Task.isInspected)
+        if(Task.isInspected)
 			Task.current.Succeed();
 	}
 	#endregion

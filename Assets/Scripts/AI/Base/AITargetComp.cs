@@ -25,7 +25,7 @@ public class AITargetComp : MonoBehaviour {
 		if(index < prefabs.Length){
 			prefabSelected = prefabs[index];
 		}
-		// if(Task.isInspected)
+		if(Task.isInspected)
 			Task.current.Succeed();
 	}
 
@@ -55,7 +55,7 @@ public class AITargetComp : MonoBehaviour {
 		
 		}
 
-		// if(Task.isInspected)
+		if(Task.isInspected)
 			Task.current.Succeed();
 	}
 
@@ -176,7 +176,7 @@ public class AITargetComp : MonoBehaviour {
 		fireRateCounter = tempFireCacl;
 	}
 
-	[Panda.Task]
+	[Task]
 	public void AimTarget(){
 		if(!targetAim && _movementComp.target){
 			targetAim = _movementComp.target;
@@ -200,7 +200,7 @@ public class AITargetComp : MonoBehaviour {
 
 	}
 
-	[Panda.Task]
+	[Task]
 	public void AimTarget(int spawnerIndex = 0){
 		if(!targetAim && _movementComp.target){
 			targetAim = _movementComp.target;
@@ -224,7 +224,7 @@ public class AITargetComp : MonoBehaviour {
 
 	}
 
-	[Panda.Task]
+	[Task]
 	public void AimTurnClockwise(float speed = 10f){
 		for (int i= 0; i < spawners.Length; i++)
 		{
@@ -236,7 +236,7 @@ public class AITargetComp : MonoBehaviour {
 		
 	}
 
-	[Panda.Task]
+	[Task]
 	public void AimTurnClockwise(float speed = 10f, int index = 0){
 		if(index > 0 && index < spawners.Length)
 		{
@@ -252,7 +252,7 @@ public class AITargetComp : MonoBehaviour {
 		}
 	}
 
-	[Panda.Task]
+	[Task]
 	public void AimTurnCounterClockwise(float speed = 10f){
 		for (int i= 0; i < spawners.Length; i++)
 		{
@@ -262,7 +262,7 @@ public class AITargetComp : MonoBehaviour {
 			Task.current.Succeed();
 	}
 
-	[Panda.Task]
+	[Task]
 	public void AimTurnCounterClockwise(float speed = 10f, int index = 0){
 		if(index > 0 && index < spawners.Length){
 			spawners[index].rootAiming.transform.Rotate(Vector3.forward * speed * turnRate * Time.deltaTime);
@@ -277,17 +277,19 @@ public class AITargetComp : MonoBehaviour {
 		}
 	}
 
-	[Panda.Task]
+	[Task]
 	public void SetAimRotation(float angle){
 		for (int i= 0; i < spawners.Length; i++)
 		{
 			spawners[i].rootAiming.transform.rotation = Quaternion.Euler(0,0,angle);
 		}
-		// if(Task.isInspected)
+		
+		if(Task.isInspected)
 			Task.current.Succeed();
+		
 	}
 
-	[Panda.Task]
+	[Task]
 	public void SetAimRotation(float angle, int index = 0){
 		if(index > 0 && index < spawners.Length)
 		{
@@ -298,8 +300,10 @@ public class AITargetComp : MonoBehaviour {
 		}
 		else
 		{
-			if(Task.isInspected)
-				Task.current.Fail();
+			// if(Task.isInspected)
+			try{
+				Task.current.Fail();	
+			}finally{}
 		
 		}
 	}

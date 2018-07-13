@@ -93,7 +93,7 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
 			}
 		}
 
-       // if(Task.isInspected)
+       if(Task.isInspected)
 			Task.current.Succeed();
         
     }
@@ -110,7 +110,7 @@ public class GreenGoblin : BaseDungeonEnemy, IAttackable
     public void StopAttack(){
         IsAttacking = false;
 
-        // if(Task.isInspected)
+        if(Task.isInspected)
 			Task.current.Succeed();
     }
 	#endregion

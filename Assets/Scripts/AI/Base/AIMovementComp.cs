@@ -171,7 +171,7 @@ public class AIMovementComp : MonoBehaviour {
 		SetDirection(_dir);
 		Vector2 velocity = new Vector2(this.x,this.y) * power;
 		QuickMove(velocity, timeStop);
-		// if(Task.isInspected)
+		if(Task.isInspected)
 			Task.current.Succeed();
 	}
 	public void QuickMove(Vector2 direction, float power = 1f, float timeStop = 0.1f){
