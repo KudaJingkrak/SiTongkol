@@ -5,7 +5,8 @@ using UnityEngine;
 public class Pintu : MonoBehaviour {
     public GameObject PintuBuka;
     public GameObject PintuTutup;
-    private bool _hasPlayer = false;
+    public bool _hasPlayer;
+    public bool isJembatan;
 
     public void PintuKebuka()
     {
@@ -32,7 +33,7 @@ public class Pintu : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.transform.CompareTag("Player"))
+        if(other.transform.CompareTag("Player") && !isJembatan)
         {
             _hasPlayer = true;
         }
@@ -40,7 +41,7 @@ public class Pintu : MonoBehaviour {
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if(other.transform.CompareTag("Player"))
+        if(other.transform.CompareTag("Player") && !isJembatan)
         {
             _hasPlayer = true;
         }
@@ -48,7 +49,7 @@ public class Pintu : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if(other.transform.CompareTag("Player"))
+        if(other.transform.CompareTag("Player") && !isJembatan)
         {
             _hasPlayer = false;
         }

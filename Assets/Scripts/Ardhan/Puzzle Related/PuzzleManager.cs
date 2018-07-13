@@ -13,10 +13,14 @@ public class PuzzleManager : MonoBehaviour {
     [Header("Destroying")]
     public GameObject[] destroyedObject;
     public bool PuzzleCompleted;
+    public bool isJembatan;
 
 	// Use this for initialization
 	void Start () {
-        PuzzleCompleted = false;
+        if (!isJembatan)
+        {
+            PuzzleCompleted = false;
+        }
 	}
 	
 	// Update is called once per frame

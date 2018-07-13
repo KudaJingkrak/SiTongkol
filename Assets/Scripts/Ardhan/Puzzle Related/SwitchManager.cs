@@ -10,10 +10,12 @@ public class SwitchManager : MonoBehaviour {
     public bool boolSwitch;
     public bool isTahan;
     public bool isOnce;
+    public bool isOnce_Hold;
 
 	// Use this for initialization
 	void Start () {
         boolSwitch = false;
+        isOnce_Hold = false;
         changeSprite();
     }
 	
@@ -49,8 +51,9 @@ public class SwitchManager : MonoBehaviour {
                 boolSwitch = false;
                 changeSprite();
                 switchButton.GetComponentInParent<PuzzleManager>().checkPuzzle();
+
             }
-           
+                       
         }
         else if (!boolSwitch)
         {
@@ -66,7 +69,12 @@ public class SwitchManager : MonoBehaviour {
         {
             if (boolSwitch)
             {
-                boolSwitch = true;  
+                boolSwitch = true;
+                if (!isOnce_Hold)
+                {
+                    isOnce_Hold = true;
+                    switchButton.GetComponentInParent<PuzzleManager>().checkPuzzle();
+                }
                 //tetep ditrue.
             }
         }
@@ -79,6 +87,7 @@ public class SwitchManager : MonoBehaviour {
             if (boolSwitch)
             {
                 boolSwitch = false;
+                isOnce_Hold = false;
                 changeSprite();
                 switchButton.GetComponentInParent<PuzzleManager>().checkPuzzle();
             }
