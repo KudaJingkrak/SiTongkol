@@ -1,8 +1,22 @@
 tree("Root")
 	fallback
-		tree "Move"
+		tree "RandomMove"
+		tree "ToDestination"
 
-tree "Move"
-	sequence
-		SetSpeed(10.0)
-		HorizontalFollow
+tree "RandomMove"
+	while isReachDestination
+		sequence
+			SetSpeed(2.0)
+			SetRandomTargetDestination
+		
+
+tree "ToDestination"
+	while not isReachDestination
+		sequence
+			MoveToDestination
+
+tree "StartAttack"
+	while not IsAttacking
+		sequence
+			StartAttack
+		

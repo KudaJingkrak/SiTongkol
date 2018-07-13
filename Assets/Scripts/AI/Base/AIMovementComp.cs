@@ -419,6 +419,15 @@ public class AIMovementComp : MonoBehaviour {
 		return true;
 	}
 
+	[Task]
+	public bool SetRandomTargetDestination()
+	{
+		int index = Random.Range(0,targetPoints.Count);
+
+		destination = targetPoints[index].position;
+		return true;
+	}
+
 	[Panda.Task]
 	public void MoveToTarget(){
 		if(target && !isReachTarget){
@@ -427,6 +436,16 @@ public class AIMovementComp : MonoBehaviour {
 			Panda.Task.current.Succeed();			
 		}
 		Panda.Task.current.Fail();
+	}
+
+	[Panda.Task]
+	public void MoveToDestination(){
+		if(!isReachDestination){
+			Vector3 dir = ((Vector3)destination - transform.position).normalized;
+			Move(dir);	
+						
+		}
+		Panda.Task.current.Succeed();
 	}
 
 	/**

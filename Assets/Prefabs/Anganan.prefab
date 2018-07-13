@@ -538,8 +538,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 2000
+  spawnPoints: []
   IsAttacking: 0
   IsCharging: 0
+  indexAttack: 0
   slamAttackDamage: 30
   damageCollider:
   - {fileID: 1939261479094256}
@@ -635,7 +637,8 @@ MonoBehaviour:
     - {fileID: 4194265205314104}
   turnRate: 30
   fireRate: 1
-  prefabSelected: {fileID: 0}
+  prefabSelected: {fileID: 1052641953581958, guid: 7299cadf02053bb46a6b8a0ace9024e3,
+    type: 2}
   prefabs:
   - {fileID: 1052641953581958, guid: 7299cadf02053bb46a6b8a0ace9024e3, type: 2}
 --- !u!114 &114804066397328984
@@ -659,7 +662,7 @@ MonoBehaviour:
   maxStep: 10
   minStep: 0
   target: {fileID: 0}
-  destination: {x: 0, y: 0}
+  destination: {x: 0, y: 0.99}
   distanceError: 1
   destinationError: 0.1
   nearDistance: 5

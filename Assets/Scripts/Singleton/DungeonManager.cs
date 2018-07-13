@@ -169,6 +169,26 @@ public class DungeonManager : MonoBehaviour {
 		}
 	}
 
+	public void SpawnMonster(Tier tier, DungeonRoom room, int index)
+	{
+		MonsterDungeon instance = null;
+		switch(tier)
+		{
+			case Tier.TierOne:
+				instance = tierOne[Random.Range(0, tierOne.Count)];
+				MonsterPoolManager.Instance.ReuseObject(Tier.TierOne, instance.monster, room.respwanPoint[index].position, room.respwanPoint[index].rotation);
+				break;
+			case Tier.TierTwo:
+				instance = tierTwo[Random.Range(0, tierTwo.Count)];
+				MonsterPoolManager.Instance.ReuseObject(Tier.TierTwo, instance.monster, room.respwanPoint[index].position, room.respwanPoint[index].rotation);
+				break;
+			case Tier.TierThree:
+				instance = tierThree[Random.Range(0, tierThree.Count)];
+				MonsterPoolManager.Instance.ReuseObject(Tier.TierThree, instance.monster, room.respwanPoint[index].position, room.respwanPoint[index].rotation);
+				break;
+		}
+	}
+
 	public void DestroyAllEnemies(DungeonRoom room)
 	{
 		if(!room.isRespawnable) return;
@@ -197,13 +217,12 @@ public class DungeonManager : MonoBehaviour {
 		room.isRespawned = false;
 	}
 
-	[System.Serializable]
-	public class MonsterDungeon
-	{
-		public GameObject monster;
-		public int size;
-	}
-
+}
+[System.Serializable]
+public class MonsterDungeon
+{
+	public GameObject monster;
+	public int size;
 }
 [System.Serializable]
 public class DungeonRoom{

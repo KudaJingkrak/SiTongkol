@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Panda;
+using Naga.Dungeon;
 
 [RequireComponent(typeof(AITargetComp))]
 public class Anganan : BaseEnemy, IAttackable {
+	[Header("Spawn point location")]
+	public Transform[] spawnPoints;
+	[Header("Attack Variable")]
 	public bool IsAttacking = false;
 	public bool IsCharging = false;
+	public int indexAttack = 0;
 	public float slamAttackDamage = 30;
 	public GameObject[] damageCollider;
 	public int[] hitTrigger;
@@ -93,6 +98,7 @@ public class Anganan : BaseEnemy, IAttackable {
 	#endregion
 
 	#region PandaTask
+
 	[Task]
 	public bool CanAttackPlayer
 	{
@@ -114,6 +120,25 @@ public class Anganan : BaseEnemy, IAttackable {
 	{
 		_move.Move(isRightMove, 0f);
 		Task.current.Succeed();
+	}
+	[Task]
+	public void Discharge()
+	{
+		if(_anim.isActiveAndEnabled)
+		{
+			_anim.SetBool("IsCharging", true);
+		}
+	}
+	[Task]
+	public void StartAttack()
+	{
+
+	}
+
+	[Task]
+	public void StopAttack()
+	{
+		
 	}
 	[Task]
 	public void HorizontalFollow()
@@ -145,6 +170,37 @@ public class Anganan : BaseEnemy, IAttackable {
 				break;
 			}
 		}
+
+		DungeonRoom room = DungeonManager.Instance.rooms[0];
+		int size = 0;
+		for(int i = 0 ; i < room.monster.Count; i++)
+		{
+			size += room.monster[i].size;
+		}
+
+		Stack<int> indexSpawn = new Stack<int>();
+		indexSpawn.Push(Random.Range(0,room.respwanPoint.Count));
+		size--;
+
+		while(size > 0)
+		{
+			int i = Random.Range(0,room.respwanPoint.Count);
+			if(!indexSpawn.Contains(i))
+			{
+				indexSpawn.Push(i);
+				size--;
+			}
+
+		}
+
+		for(int i = 0 ; i < room.monster.Count; i++)
+		{
+			for(int j = 0; j < room.monster[i].size; j++)
+			{
+				DungeonManager.Instance.SpawnMonster(room.monster[i].tier, room, indexSpawn.Pop());
+			}
+		}
+		
 	}
 
 	public void SweepAttackCast()
