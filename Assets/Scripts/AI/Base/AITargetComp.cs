@@ -80,14 +80,15 @@ public class AITargetComp : MonoBehaviour {
 	}
 
 	[Panda.Task]
-	public void FireWithOffset(int spawnerIndex, int offsetIndex){
+	public GameObject FireWithOffset(int spawnerIndex, int offsetIndex){
+		GameObject go = null;
 		if(spawners != null)
 		{
 			if(spawnerIndex > -1 && spawnerIndex < spawners.Length)
 			{
 				if(offsetIndex > -1 && offsetIndex < spawners[spawnerIndex].offsetsProjectile.Length)
 				{
-					Fire(spawners[spawnerIndex].offsetsProjectile[offsetIndex].transform);
+					go = Fire(spawners[spawnerIndex].offsetsProjectile[offsetIndex].transform);
 
 				}
 
@@ -95,8 +96,9 @@ public class AITargetComp : MonoBehaviour {
 
 		}
 		
-		// if(Task.isInspected)
+		if(Task.isInspected)
 			Task.current.Succeed();
+		return go;
 	}
 
 	[Panda.Task]
@@ -134,14 +136,14 @@ public class AITargetComp : MonoBehaviour {
 
 	}
 
-	public void Fire(Transform objTransform){
+	public GameObject Fire(Transform objTransform){
 		CalcFireRate();
-		PoolManager.Instance.ReuseObject(prefabSelected, objTransform.position, objTransform.rotation);	
+		return PoolManager.Instance.ReuseObject(prefabSelected, objTransform.position, objTransform.rotation);	
 	}
 	
-	public void Fire(Vector2 position, Quaternion rotation){
+	public GameObject Fire(Vector2 position, Quaternion rotation){
 		CalcFireRate();
-		PoolManager.Instance.ReuseObject(prefabSelected, position, rotation);	
+		return PoolManager.Instance.ReuseObject(prefabSelected, position, rotation);	
 	}
 
 	public void FireDirection(Vector2 position){

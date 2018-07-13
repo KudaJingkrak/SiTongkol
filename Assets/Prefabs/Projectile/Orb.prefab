@@ -65,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1052641953581958}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -31.08936, y: -4.0302114, z: 0}
+  m_LocalPosition: {x: 3.9173188, y: 1.6790977, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4087541058171778}
@@ -119,9 +119,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  turnRate: 1
-  damage: 15
-  lifetime: 3.4028235e+38
+  turnRate: 0.25
+  damage: 20
+  lifetime: 10
   isHoming: 1
   target: {fileID: 0}
   _isActive: 1

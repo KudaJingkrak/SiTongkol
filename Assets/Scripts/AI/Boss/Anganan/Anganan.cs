@@ -10,10 +10,11 @@ public class Anganan : BaseEnemy, IAttackable {
 	[Header("Spawn point location")]
 	public Transform[] spawnPoints;
 	[Header("Attack Variable")]
+	[Task]
 	public bool IsAttacking = false;
 	public bool IsCharging = false;
 	public int indexAttack = 0;
-	public float slamAttackDamage = 30;
+	public float slamAttackDamage = 50f, sweepAttackDamage = 60f;
 	public GameObject[] damageCollider;
 	public int[] hitTrigger;
 	private Stack<int> _hitTrigger = new Stack<int>();
@@ -28,6 +29,8 @@ public class Anganan : BaseEnemy, IAttackable {
         doFlash();
 
 		_health -= damage;
+
+		if(_health < 0) Die();
     }
 
     public void Destruct()
@@ -37,7 +40,7 @@ public class Anganan : BaseEnemy, IAttackable {
 
     public void Die()
     {
-        throw new System.NotImplementedException();
+        Destroy();
     }
 	#endregion
 
@@ -72,6 +75,7 @@ public class Anganan : BaseEnemy, IAttackable {
 		{
 			_anim.SetBool("IsAttacking", false);
 		}
+		IsAttacking = false;
 	}
 	public void DoOnHit()
 	{
@@ -126,19 +130,34 @@ public class Anganan : BaseEnemy, IAttackable {
 	{
 		if(_anim.isActiveAndEnabled)
 		{
-			_anim.SetBool("IsCharging", true);
+			_anim.SetBool("IsCharging", false);
 		}
+		Task.current.Succeed();
 	}
 	[Task]
 	public void StartAttack()
 	{
-
+		IsAttacking = true;
+		indexAttack = Random.Range(0,3);
+		if(_anim.isActiveAndEnabled)
+		{
+			_anim.SetBool("IsAttacking", true);
+			_anim.SetBool("IsCharging", true);
+			_anim.SetInteger("IndexAttack", indexAttack);
+		}
+		
+		Task.current.Succeed();
 	}
 
 	[Task]
 	public void StopAttack()
 	{
-		
+		IsAttacking = false;
+		if(_anim.isActiveAndEnabled)
+		{
+			_anim.SetBool("IsAttacking", false);
+		}
+		Task.current.Succeed();
 	}
 	[Task]
 	public void HorizontalFollow()
@@ -212,14 +231,19 @@ public class Anganan : BaseEnemy, IAttackable {
 		{
 			if(hits[i].transform.CompareTag("Player"))
 			{
-				hits[i].transform.GetComponent<GayatriCharacter>().ApplyDamage(slamAttackDamage, this.gameObject);
+				hits[i].transform.GetComponent<GayatriCharacter>().ApplyDamage(sweepAttackDamage, this.gameObject);
 				break;
 			}
 		}
 	}
 	public void SpawnOrb()
 	{
-		 _aim.FireWithOffset();
+		GameObject go = _aim.FireWithOffset(0,0);
+		if(go)
+		{
+			Bullet bullet = go.GetComponent<Bullet>();
+			bullet.SetTarget(_aim.targetAim);
+		}
 	}
 	#endregion
 

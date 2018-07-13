@@ -39,7 +39,7 @@ public class PoolManager : MonoBehaviour {
 		}
 	}
 
-	public void ReuseObject(GameObject prefab, Vector3 position, Quaternion rotation) {
+	public GameObject ReuseObject(GameObject prefab, Vector3 position, Quaternion rotation) {
 		int poolKey = prefab.GetInstanceID ();
 
 		if (poolDictionary.ContainsKey (poolKey)) {
@@ -47,12 +47,14 @@ public class PoolManager : MonoBehaviour {
 			poolDictionary [poolKey].Enqueue (objectToReuse);
 
 			objectToReuse.Reuse (position, rotation);
+			return objectToReuse.gameObject;
 		}
+		return null;
 	}
 
 	public class ObjectInstance {
 
-		GameObject gameObject;
+		public GameObject gameObject;
 		Transform transform;
 
 		bool hasPoolObjectComponent;

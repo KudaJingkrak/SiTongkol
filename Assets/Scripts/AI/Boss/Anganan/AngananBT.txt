@@ -2,18 +2,48 @@ tree("Root")
 	fallback
 		tree "RandomMove"
 		tree "ToDestination"
+		tree "StartAttack"
+		tree "DoAttack"
 
 tree "RandomMove"
-	while isReachDestination
+	while 
 		sequence
-			SetSpeed(2.0)
+			isReachDestination
+			not CanAttackPlayer
+			not IsAttacking
+		sequence
 			SetRandomTargetDestination
+			Wait(0.2)
 		
 
 tree "ToDestination"
-	while not isReachDestination
+	while 
 		sequence
+			not isReachDestination
+			not CanAttackPlayer
+			not IsAttacking
+		sequence
+			SetSpeed(2.0)
 			MoveToDestination
+
+tree "StartAttack"
+	while 
+		sequence
+			not IsAttacking
+			CanAttackPlayer
+		sequence
+			SetSpeed(0.0)
+			Wait(0.3)
+			StartAttack
+			
+
+tree "DoAttack"
+	while IsAttacking
+		sequence
+			Wait(1.3)
+			Discharge
+			Wait(3.5)
+			StopAttack
 
 
 		
