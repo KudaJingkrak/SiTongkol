@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Panda;
 using Naga.Dungeon;
+using Com.LuisPedroFonseca.ProCamera2D;
 
 [RequireComponent(typeof(AITargetComp))]
 public class Anganan : BaseEnemy, IAttackable {
@@ -22,6 +23,10 @@ public class Anganan : BaseEnemy, IAttackable {
 	private Animator _anim;
 	private AIMovementComp _move;
 	private AITargetComp _aim;
+    public ProCamera2DShake shakingCamera;
+    public ProCamera2DTransitionsFX transisiCamera;
+    public DungeonManager managerDungeon;
+    public UIManager _uiManager;
 
 	#region IAttackable
     public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None)
@@ -40,7 +45,13 @@ public class Anganan : BaseEnemy, IAttackable {
 
     public void Die()
     {
-        Destroy();
+        //managerDungeon.DestroyAllEnemies(managerDungeon.rooms[0]);
+        DungeonManager.Instance.DestroyAllEnemies(DungeonManager.Instance.rooms[0]);
+        _anim.SetBool("IsAttacking", false);
+        _anim.SetBool("IsCharging", false);
+        Debug.Log("DIE");
+        _anim.SetTrigger("isDead");
+        //Destroy();
     }
 	#endregion
 
@@ -245,7 +256,12 @@ public class Anganan : BaseEnemy, IAttackable {
 			bullet.SetTarget(_aim.targetAim);
 		}
 	}
-	#endregion
+    #endregion
+
+    public void Shaking()
+    {
+        shakingCamera.Shake(0);
+    }
 
     void Awake()
 	{
@@ -257,6 +273,7 @@ public class Anganan : BaseEnemy, IAttackable {
 
 	void Start()
 	{
+        _uiManager = FindObjectOfType<UIManager>();
 		for(int i= 0; i < hitTrigger.Length; i++){
 			_hitTrigger.Push(hitTrigger[i]);
 		}	

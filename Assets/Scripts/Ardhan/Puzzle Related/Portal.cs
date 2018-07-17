@@ -7,7 +7,7 @@ public class Portal : MonoBehaviour {
     public string NamaSceneTujuan;
 	// Use this for initialization
 	void Start () {
-		
+        statusManager = FindObjectOfType<StatusManager>();
 	}
 	
 	// Update is called once per frame

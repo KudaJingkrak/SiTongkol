@@ -497,7 +497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5408053eabaa2084293264080be1b154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1000
+  health: 250
   textDamageManager: {fileID: 114035206023084450}
   healthCanvas: {fileID: 1427118380962896}
   healthTimer: 1

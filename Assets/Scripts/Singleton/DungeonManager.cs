@@ -88,7 +88,7 @@ public class DungeonManager : MonoBehaviour {
 					rooms[i].isPlayerHere = true;
 					rooms[i].isExplored = true;
 					CleanDumpEnemies(rooms[i]);
-					if(!rooms[i].isRespawned)
+					if(!rooms[i].isRespawned && !rooms[i].isBossRoom)
 					{
 						RespawnAllEnemies(rooms[i]);
 					}
@@ -229,6 +229,7 @@ public class DungeonRoom{
 	public Vector2 position = Vector2.zero;
 	public bool isExplored = false;
 	public bool isPlayerHere = false;
+    public bool isBossRoom = false;
 	[Header("Enemies Handle")]
 	public bool isRespawnable = true;
 	[HideInInspector]

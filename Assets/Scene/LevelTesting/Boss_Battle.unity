@@ -296,6 +296,66 @@ Transform:
   m_Father: {fileID: 2137122268}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &243105489 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1393633092710392, guid: c3aad379a9acce440a2ed23cfb3b1bb8,
+    type: 2}
+  m_PrefabInternal: {fileID: 973620822}
+--- !u!114 &243105493 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114111831487575070, guid: c3aad379a9acce440a2ed23cfb3b1bb8,
+    type: 2}
+  m_PrefabInternal: {fileID: 973620822}
+  m_Script: {fileID: 11500000, guid: 8b8c96e2cdc154e848a3d9fe62464d42, type: 3}
+--- !u!114 &243105498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 243105489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1eca57db7d394266ae024997acf4456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProCamera2D: {fileID: 243105493}
+  TransitionShaderEnter: 0
+  DurationEnter: 0.5
+  DelayEnter: 0
+  EaseTypeEnter: 1
+  BackgroundColorEnter: {r: 0, g: 0, b: 0, a: 1}
+  SideEnter: 0
+  DirectionEnter: 0
+  BlindsEnter: 16
+  TextureEnter: {fileID: 0}
+  TextureSmoothingEnter: 0.2
+  TransitionShaderExit: 0
+  DurationExit: 0.5
+  DelayExit: 0
+  EaseTypeExit: 1
+  BackgroundColorExit: {r: 0, g: 0, b: 0, a: 1}
+  SideExit: 0
+  DirectionExit: 0
+  BlindsExit: 16
+  TextureExit: {fileID: 0}
+  TextureSmoothingExit: 0.2
+  StartSceneOnEnterState: 0
+--- !u!114 &243105499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 243105489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ac0ec3d6ad5f4a3d9d184bc3773a3a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProCamera2D: {fileID: 243105493}
+  ShakePresets: []
+  ConstantShakePresets: []
+  StartConstantShakePreset: {fileID: 0}
+  CurrentConstantShakePreset: {fileID: 0}
 --- !u!1 &298032270
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,7 +543,8 @@ MonoBehaviour:
   - position: {x: 0, y: 0}
     isExplored: 0
     isPlayerHere: 0
-    isRespawnable: 0
+    isBossRoom: 1
+    isRespawnable: 1
     isRespawned: 0
     isSkipable: 0
     isOpened: 0
@@ -1391,6 +1452,31 @@ Prefab:
       propertyPath: m_Name
       value: BossAnganan
       objectReference: {fileID: 0}
+    - target: {fileID: 114092353029933744, guid: aa60bba3d93855043986234086ffef6b,
+        type: 2}
+      propertyPath: health
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 114092353029933744, guid: aa60bba3d93855043986234086ffef6b,
+        type: 2}
+      propertyPath: managerDungeon
+      value: 
+      objectReference: {fileID: 429633028}
+    - target: {fileID: 114092353029933744, guid: aa60bba3d93855043986234086ffef6b,
+        type: 2}
+      propertyPath: _uiManager
+      value: 
+      objectReference: {fileID: 1718353589}
+    - target: {fileID: 114092353029933744, guid: aa60bba3d93855043986234086ffef6b,
+        type: 2}
+      propertyPath: shakingCamera
+      value: 
+      objectReference: {fileID: 243105499}
+    - target: {fileID: 114092353029933744, guid: aa60bba3d93855043986234086ffef6b,
+        type: 2}
+      propertyPath: transisiCamera
+      value: 
+      objectReference: {fileID: 243105498}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aa60bba3d93855043986234086ffef6b, type: 2}
   m_IsPrefabParent: 0
@@ -1810,6 +1896,79 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1435352096}
   m_Script: {fileID: 11500000, guid: 49093565db84727418430049f78f9f18, type: 3}
+--- !u!1 &1456246972
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1456246973}
+  - component: {fileID: 1456246974}
+  m_Layer: 8
+  m_Name: Explosion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1456246973
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1456246972}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.02, z: 0}
+  m_LocalScale: {x: 9, y: 9, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1500047809}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1456246974
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1456246972}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.46, y: 0.58}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
 --- !u!1 &1459857404
 GameObject:
   m_ObjectHideFlags: 0
@@ -2636,6 +2795,11 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
+--- !u!4 &1500047809 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4927107762672192, guid: aa60bba3d93855043986234086ffef6b,
+    type: 2}
+  m_PrefabInternal: {fileID: 988197707}
 --- !u!1 &1511647605
 GameObject:
   m_ObjectHideFlags: 0
@@ -2755,6 +2919,12 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1718353589 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114726171499164352, guid: 35f849f796581d74792b91d700ad6560,
+    type: 2}
+  m_PrefabInternal: {fileID: 1375848253}
+  m_Script: {fileID: 11500000, guid: a30d72848fba65b4fbe85a7dfec6e85a, type: 3}
 --- !u!224 &1835418216 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224910644817633608, guid: 35f849f796581d74792b91d700ad6560,
