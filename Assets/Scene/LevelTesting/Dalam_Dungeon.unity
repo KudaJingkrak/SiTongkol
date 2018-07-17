@@ -1184,9 +1184,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ProCamera2D: {fileID: 228481842}
-  TransitionShaderEnter: 0
-  DurationEnter: 0.5
-  DelayEnter: 0
+  TransitionShaderEnter: 1
+  DurationEnter: 4
+  DelayEnter: 1
   EaseTypeEnter: 1
   BackgroundColorEnter: {r: 0, g: 0, b: 0, a: 1}
   SideEnter: 0
@@ -1194,8 +1194,8 @@ MonoBehaviour:
   BlindsEnter: 16
   TextureEnter: {fileID: 0}
   TextureSmoothingEnter: 0.2
-  TransitionShaderExit: 0
-  DurationExit: 0.5
+  TransitionShaderExit: 1
+  DurationExit: 1.5
   DelayExit: 0
   EaseTypeExit: 1
   BackgroundColorExit: {r: 0, g: 0, b: 0, a: 1}
@@ -11702,7 +11702,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 761314b8c9711144988691da9a7723fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusManager: {fileID: 0}
   NamaSceneTujuan: Boss_Battle
 --- !u!212 &1252429359
 SpriteRenderer:

@@ -1042,7 +1042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.029411793, g: 0.029411793, b: 0.029411793, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1051,7 +1051,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 70
+    m_FontSize: 3
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 3
@@ -1062,7 +1062,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: a
 --- !u!114 &114053139425615576
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1232,8 +1232,9 @@ MonoBehaviour:
       value: 40
     - wait: 0.02
       value: 50
-  attackLaunch: 0
-  knockbackForce: 0
+  attackLaunch: 30
+  knockbackForce: 100
+  transisiCamera: {fileID: 0}
   Slider_Gayatri: {fileID: 1091934015776110}
   Persentase_Perfect: 120
   Persentase_Good: 50
@@ -2135,7 +2136,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4f0d2d658109a3a428fea165c6e01407, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2783,8 +2784,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 48.50006, y: -50.29998}
-  m_SizeDelta: {x: 151.5, y: 28.4}
+  m_AnchoredPosition: {x: -17.5, y: -4.853}
+  m_SizeDelta: {x: 6.668, y: 2.219}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224902148203317874
 RectTransform:

@@ -7164,6 +7164,7 @@ MonoBehaviour:
   boolSwitch: 0
   isTahan: 0
   isOnce: 1
+  isOnce_Hold: 0
 --- !u!61 &173984519
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7316,6 +7317,7 @@ MonoBehaviour:
   boolSwitch: 0
   isTahan: 0
   isOnce: 1
+  isOnce_Hold: 0
 --- !u!1 &309003199
 GameObject:
   m_ObjectHideFlags: 0
@@ -7368,6 +7370,7 @@ MonoBehaviour:
   SwitchesCooldown: 0
   destroyedObject: []
   PuzzleCompleted: 0
+  isJembatan: 0
 --- !u!1001 &355002458
 Prefab:
   m_ObjectHideFlags: 0
@@ -7531,114 +7534,7 @@ Prefab:
     - target: {fileID: 224932386737870316, guid: 0113ab1652087d8419daef925ac723f8,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212390089305671098, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 4f0d2d658109a3a428fea165c6e01407, type: 2}
-    - target: {fileID: 114165532053935970, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: knockbackForce
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114165532053935970, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: attackLaunch
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 224883843759634980, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224461881011433696, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 224892452635034684, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 224813517294523300, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224311579224553184, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 224680103240099692, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4126414404147064, guid: 0113ab1652087d8419daef925ac723f8, type: 2}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4699629540074510, guid: 0113ab1652087d8419daef925ac723f8, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 224761369989305784, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4046188464126592, guid: 0113ab1652087d8419daef925ac723f8, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 224892452635034684, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: -17.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224892452635034684, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 6.668
-      objectReference: {fileID: 0}
-    - target: {fileID: 224892452635034684, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -4.853
-      objectReference: {fileID: 0}
-    - target: {fileID: 224892452635034684, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 2.219
-      objectReference: {fileID: 0}
-    - target: {fileID: 114015557171741268, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_FontData.m_FontSize
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114015557171741268, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_Text
-      value: a
-      objectReference: {fileID: 0}
-    - target: {fileID: 114015557171741268, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 0.029411793
-      objectReference: {fileID: 0}
-    - target: {fileID: 114015557171741268, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0.029411793
-      objectReference: {fileID: 0}
-    - target: {fileID: 114015557171741268, guid: 0113ab1652087d8419daef925ac723f8,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0.029411793
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0113ab1652087d8419daef925ac723f8, type: 2}
@@ -7799,12 +7695,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &512554398 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114672761386705130, guid: 35f849f796581d74792b91d700ad6560,
-    type: 2}
-  m_PrefabInternal: {fileID: 571558126}
-  m_Script: {fileID: 11500000, guid: de91adcd0bb714b44a7aca45a06211a9, type: 3}
 --- !u!1 &514067247
 GameObject:
   m_ObjectHideFlags: 0
@@ -11303,7 +11193,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 761314b8c9711144988691da9a7723fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusManager: {fileID: 512554398}
   NamaSceneTujuan: Dalam_Dungeon
 --- !u!1001 &754138919
 Prefab:
@@ -11627,6 +11516,7 @@ MonoBehaviour:
   SwitchesCooldown: 0
   destroyedObject: []
   PuzzleCompleted: 0
+  isJembatan: 0
 --- !u!4 &816594498
 Transform:
   m_ObjectHideFlags: 0
@@ -11946,6 +11836,7 @@ MonoBehaviour:
   boolSwitch: 0
   isTahan: 0
   isOnce: 1
+  isOnce_Hold: 0
 --- !u!61 &1098697408
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12544,6 +12435,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PintuBuka: {fileID: 612214016}
   PintuTutup: {fileID: 1193884130}
+  _hasPlayer: 0
+  isJembatan: 0
 --- !u!4 &2053561529
 Transform:
   m_ObjectHideFlags: 0

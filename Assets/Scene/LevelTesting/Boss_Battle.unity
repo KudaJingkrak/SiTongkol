@@ -419,9 +419,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ProCamera2D: {fileID: 243105493}
-  TransitionShaderEnter: 0
-  DurationEnter: 0.5
-  DelayEnter: 0
+  TransitionShaderEnter: 1
+  DurationEnter: 4
+  DelayEnter: 1
   EaseTypeEnter: 1
   BackgroundColorEnter: {r: 0, g: 0, b: 0, a: 1}
   SideEnter: 0
@@ -429,8 +429,8 @@ MonoBehaviour:
   BlindsEnter: 16
   TextureEnter: {fileID: 0}
   TextureSmoothingEnter: 0.2
-  TransitionShaderExit: 0
-  DurationExit: 0.5
+  TransitionShaderExit: 1
+  DurationExit: 1.5
   DelayExit: 0
   EaseTypeExit: 1
   BackgroundColorExit: {r: 0, g: 0, b: 0, a: 1}
@@ -439,7 +439,7 @@ MonoBehaviour:
   BlindsExit: 16
   TextureExit: {fileID: 0}
   TextureSmoothingExit: 0.2
-  StartSceneOnEnterState: 0
+  StartSceneOnEnterState: 1
 --- !u!114 &243105499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,7 +452,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ProCamera2D: {fileID: 243105493}
-  ShakePresets: []
+  ShakePresets:
+  - {fileID: 11400000, guid: bdeb758c7bbd24b29bc19493062ef65e, type: 2}
   ConstantShakePresets: []
   StartConstantShakePreset: {fileID: 0}
   CurrentConstantShakePreset: {fileID: 0}
@@ -1555,7 +1556,7 @@ Prefab:
     - target: {fileID: 114092353029933744, guid: aa60bba3d93855043986234086ffef6b,
         type: 2}
       propertyPath: health
-      value: 50
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 114092353029933744, guid: aa60bba3d93855043986234086ffef6b,
         type: 2}

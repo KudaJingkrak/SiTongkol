@@ -4,9 +4,6 @@ using UnityEngine;
 using Com.LuisPedroFonseca.ProCamera2D;
 
 public class StatusManager : BaseClass {
-
-    public ProCamera2DTransitionsFX transisiCamera;
-
 	public float currentHealth;
     public float currentMana;
     public float currentStamina;
@@ -175,24 +172,10 @@ public class StatusManager : BaseClass {
         Initiated_Mana();
         Initiated_Health();
 
-        if(!transisiCamera)
-        {
-            transisiCamera = Camera.main.GetComponent<ProCamera2DTransitionsFX>();
-        }
-
-        if(transisiCamera)
-        {
-            transisiCamera.TransitionEnter();
-        }
-
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (!transisiCamera)
-        {
-            transisiCamera = Camera.main.GetComponent<ProCamera2DTransitionsFX>();
-        }
     }
 
     void FixedUpdate()

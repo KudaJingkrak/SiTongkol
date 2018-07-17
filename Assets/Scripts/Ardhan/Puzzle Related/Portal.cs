@@ -1,13 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Com.LuisPedroFonseca.ProCamera2D;
 
 public class Portal : MonoBehaviour {
-    public StatusManager statusManager;
     public string NamaSceneTujuan;
 	// Use this for initialization
 	void Start () {
-        statusManager = FindObjectOfType<StatusManager>();
 	}
 	
 	// Update is called once per frame
@@ -20,7 +19,7 @@ public class Portal : MonoBehaviour {
         if (collision.gameObject.tag == "Player")
         {
             collision.gameObject.transform.position = new Vector3(7.716572f, 51.5f, 0);
-            statusManager.transisiCamera.TransitionExit();
+            collision.GetComponent<GayatriCharacter>().transisiCamera.TransitionExit();
             StartCoroutine(changeScene());
         }
     }
