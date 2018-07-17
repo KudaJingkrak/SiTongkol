@@ -7,5 +7,11 @@ AnimatorController:
   m_PrefabInternal: {fileID: 0}
   m_Name: text_default_Critical_ac
   serializedVersion: 5
-  m_AnimatorParameters: []
+  m_AnimatorParameters:
+  - m_Name: offsetX
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers: []

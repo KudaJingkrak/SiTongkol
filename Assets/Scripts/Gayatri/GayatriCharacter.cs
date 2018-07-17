@@ -120,38 +120,34 @@ public class GayatriCharacter : BaseClass, IAttackable
         animator.SetBool("IsPulling", isPulling);
         animator.SetBool("IsDodging", isDodging);
         animator.SetBool("isCrouching", isCrouching);
-        animator.SetBool("isAttacking", isAttacking);
+        // animator.SetBool("isAttacking", isAttacking);
 
         switch (direction)
         {
             case Direction.Front:
-                animator.SetFloat("MoveX", 0);
-                animator.SetFloat("MoveY", -1);
                 _moveX = 0;
                 _moveY = -1;
                 StaminaSlider.transform.localPosition = new Vector3(-0.316f, -1.1f);
                 break;
             case Direction.Right:
-                animator.SetFloat("MoveX", 1);
-                animator.SetFloat("MoveY", 0);
                 _moveX = 1;
                 _moveY = 0;
                 break;
             case Direction.Left:
-                animator.SetFloat("MoveX", -1);
-                animator.SetFloat("MoveY", 0);
                 _moveX = -1;
                 _moveY = 0;
                 break;
             case Direction.Back:
-                animator.SetFloat("MoveX", 0);
-                animator.SetFloat("MoveY", 1);
                 _moveX = 0;
                 _moveY = 1;
                 StaminaSlider.transform.localPosition = new Vector3(-0.316f, -5);
                 break;
         }
 
+        animator.SetFloat("MoveX", _moveX);
+        animator.SetFloat("MoveY", _moveY);
+        
+        
         if (isPulling)
         {
             if (_moveable != null)
@@ -206,7 +202,7 @@ public class GayatriCharacter : BaseClass, IAttackable
     public void Move(float x, float y)
     {
 
-        if (onDialogue || isAttacking)
+        if (onDialogue || isAttacking || animator.GetBool("isAttacking"))
         {
             return;
         }
@@ -345,12 +341,15 @@ public class GayatriCharacter : BaseClass, IAttackable
     }
 
     #region Attack	
-
     public void Start_Attacking()
     {
-        if (Status.currentStamina > Attack_Stamina)
+        if (!isAttacking && !animator.GetBool("isAttacking") && Status.currentStamina >= Attack_Stamina)
         {
             isAttacking = true;
+            animator.SetBool("isAttacking", true);
+
+            CancelInvoke("UnAttack");
+            Invoke("UnAttack", 0.49f);
         }
     }
     public void Attacking()
@@ -428,8 +427,9 @@ public class GayatriCharacter : BaseClass, IAttackable
 
     public void UnAttack()
     {
-
         isAttacking = false;
+        animator.SetBool("isAttacking", false);
+        
     }
 
     #endregion Attack

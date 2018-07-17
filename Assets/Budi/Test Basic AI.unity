@@ -1405,6 +1405,26 @@ Prefab:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 212761600229838678, guid: 0113ab1652087d8419daef925ac723f8,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 1.3125
+      objectReference: {fileID: 0}
+    - target: {fileID: 212761600229838678, guid: 0113ab1652087d8419daef925ac723f8,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 212761600229838678, guid: 0113ab1652087d8419daef925ac723f8,
+        type: 2}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114165532053935970, guid: 0113ab1652087d8419daef925ac723f8,
+        type: 2}
+      propertyPath: attackLaunch
+      value: 300
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0113ab1652087d8419daef925ac723f8, type: 2}
   m_IsPrefabParent: 0
