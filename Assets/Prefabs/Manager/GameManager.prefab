@@ -1637,6 +1637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HUD: {fileID: 114801385962336750}
   HUD_Object: {fileID: 0}
+  BossHealthBar: {fileID: 0}
 --- !u!114 &114736563874329580
 MonoBehaviour:
   m_ObjectHideFlags: 1
