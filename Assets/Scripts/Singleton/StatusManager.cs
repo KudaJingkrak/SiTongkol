@@ -189,8 +189,11 @@ public class StatusManager : BaseClass {
 	
 	// Update is called once per frame
 	void Update () {
-        
-	}
+        if (!transisiCamera)
+        {
+            transisiCamera = Camera.main.GetComponent<ProCamera2DTransitionsFX>();
+        }
+    }
 
     void FixedUpdate()
     {

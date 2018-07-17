@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Panda;
 using Naga.Dungeon;
 using Com.LuisPedroFonseca.ProCamera2D;
+using Guirao.UltimateTextDamage;
 
 [RequireComponent(typeof(AITargetComp))]
 public class Anganan : BaseEnemy, IAttackable {
@@ -22,16 +23,20 @@ public class Anganan : BaseEnemy, IAttackable {
 	private Slider _healthBar;
 	private Animator _anim;
 	private AIMovementComp _move;
-	private AITargetComp _aim;
+    private AITargetComp _aim;
+
+    [Header("PRO CAMERA + UI Thingy")]
     public ProCamera2DShake shakingCamera;
     public ProCamera2DTransitionsFX transisiCamera;
     public DungeonManager managerDungeon;
     public UIManager _uiManager;
+    public UltimateTextDamageManager DamageTextManager;
 
 	#region IAttackable
     public void ApplyDamage(float damage = 0, GameObject causer = null, DamageType type = DamageType.Normal, DamageEffect effect = DamageEffect.None)
     {
         doFlash();
+        DamageTextManager.Add("" + damage, transform, "default");
 
 		_health -= damage;
 
@@ -51,7 +56,16 @@ public class Anganan : BaseEnemy, IAttackable {
         _anim.SetBool("IsCharging", false);
         Debug.Log("DIE");
         _anim.SetTrigger("isDead");
+        StartCoroutine(TransisiKeluar());
         //Destroy();
+    }
+
+    IEnumerator TransisiKeluar()
+    {
+        yield return new WaitForSeconds(5);
+        transisiCamera.TransitionExit();
+        yield return new WaitForSeconds(2);
+        Application.LoadLevel("Luar Dungeon");
     }
 	#endregion
 
@@ -274,6 +288,10 @@ public class Anganan : BaseEnemy, IAttackable {
 	void Start()
 	{
         _uiManager = FindObjectOfType<UIManager>();
+        shakingCamera = FindObjectOfType<ProCamera2DShake>();
+        transisiCamera = FindObjectOfType<ProCamera2DTransitionsFX>();
+        DamageTextManager = FindObjectOfType<UltimateTextDamageManager>();
+
 		for(int i= 0; i < hitTrigger.Length; i++){
 			_hitTrigger.Push(hitTrigger[i]);
 		}	

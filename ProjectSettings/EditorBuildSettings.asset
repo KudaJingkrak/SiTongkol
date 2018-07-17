@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/LevelTesting/Dalam_Dungeon.unity
     guid: 6af34676a11c97f469fe2ab1e7dda119
+  - enabled: 1
+    path: Assets/Scene/LevelTesting/Boss_Battle.unity
+    guid: 4fca24549ae70bb4cae860cff37793a1
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Com.LuisPedroFonseca.ProCamera2D;
 
 public class GayatriCharacter : BaseClass, IAttackable
 {
@@ -67,6 +68,9 @@ public class GayatriCharacter : BaseClass, IAttackable
     public float attackLaunch;
     public float knockbackForce;
 
+    [Header("ProCamera2D")]
+    public ProCamera2DTransitionsFX transisiCamera;
+
     public GameObject Slider_Gayatri;
     private ComboSystem combo_Sys;
 
@@ -78,6 +82,8 @@ public class GayatriCharacter : BaseClass, IAttackable
     // Use this for initialization
     void Start()
     {
+        transisiCamera = FindObjectOfType<ProCamera2DTransitionsFX>();
+        transisiCamera.TransitionEnter();
         SetPlayer(this.gameObject);
         linearDrag = rigid2D.drag;
         combo_Sys = Slider_Gayatri.GetComponentInParent<ComboSystem>();
