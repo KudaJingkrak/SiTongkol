@@ -315,7 +315,7 @@ Transform:
   - {fileID: 995958303}
   - {fileID: 1392276263}
   m_Father: {fileID: 1269562207}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &42937733
 BoxCollider2D:
@@ -576,7 +576,7 @@ Transform:
   - {fileID: 1499037117}
   - {fileID: 1745704665}
   m_Father: {fileID: 1269562207}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &170341737
 BoxCollider2D:
@@ -2206,7 +2206,7 @@ Transform:
   - {fileID: 957579461}
   - {fileID: 1252429357}
   m_Father: {fileID: 1269562207}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &666669052
 BoxCollider2D:
@@ -10017,36 +10017,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a6ced62263ecf064fa3ec27858b7ed29, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &880099445
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1404382263383110, guid: 3e60d26e6f451b944a02d921192340f4,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 880099446}
-  m_Layer: 0
-  m_Name: Buka
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &880099446
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4481354509518596, guid: 3e60d26e6f451b944a02d921192340f4,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 880099445}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1005840838}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &898044301
 GameObject:
   m_ObjectHideFlags: 0
@@ -10226,7 +10196,6 @@ MonoBehaviour:
     pintu:
     - {fileID: 2131045179}
     - {fileID: 1747995404}
-    - {fileID: 1005840840}
     monster:
     - tier: 1
       size: 2
@@ -10607,81 +10576,6 @@ Transform:
   m_Father: {fileID: 1149793200}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1005840837
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1942379732125780, guid: 3e60d26e6f451b944a02d921192340f4,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1005840838}
-  - component: {fileID: 1005840840}
-  - component: {fileID: 1005840839}
-  m_Layer: 0
-  m_Name: Gate Horizontal_Room (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1005840838
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4877256346349302, guid: 3e60d26e6f451b944a02d921192340f4,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1005840837}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -34.843, y: -1.76, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 880099446}
-  m_Father: {fileID: 1269562207}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1005840839
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 61253437069017926, guid: 3e60d26e6f451b944a02d921192340f4,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1005840837}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.31199563, y: -0.008000016}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.5839946, y: 1.1960042}
-  m_EdgeRadius: 0
---- !u!114 &1005840840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114652229547156530, guid: 3e60d26e6f451b944a02d921192340f4,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1005840837}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3812ea19f302c348a85c89d5f2cbd69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PintuBuka: {fileID: 880099445}
-  PintuTutup: {fileID: 0}
-  _hasPlayer: 0
-  isJembatan: 0
 --- !u!114 &1045505231 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114602423121661090, guid: fd07b4da8a8f8c641ac3f7a4e36e54ae,
@@ -11244,7 +11138,7 @@ Transform:
   - {fileID: 657735840}
   - {fileID: 247715375}
   m_Father: {fileID: 1269562207}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1170321084
 BoxCollider2D:
@@ -11802,7 +11696,6 @@ Transform:
   - {fileID: 1593619951}
   - {fileID: 2131045177}
   - {fileID: 1637938862}
-  - {fileID: 1005840838}
   - {fileID: 1170321083}
   - {fileID: 170341736}
   - {fileID: 42937732}
@@ -13538,7 +13431,7 @@ Transform:
   m_Children:
   - {fileID: 1684268821}
   m_Father: {fileID: 1269562207}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1735878833
 BoxCollider2D:
@@ -13717,7 +13610,7 @@ Transform:
   - {fileID: 165025706}
   - {fileID: 2125659993}
   m_Father: {fileID: 1269562207}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1747995403
 BoxCollider2D:

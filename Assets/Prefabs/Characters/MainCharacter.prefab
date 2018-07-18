@@ -1198,7 +1198,11 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 9acd9c619f3bd3744a0b84dbeaf5a6fb, type: 3}
     label: Senjata
     description: Senjata Testing
-    Damage: 100
+    Damage:
+    - 100
+    - 200
+    - 300
+    - 400
     perfect:
     - top: 0.5
       bottom: 0.3

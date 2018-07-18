@@ -361,20 +361,21 @@ public class GayatriCharacter : BaseClass, IAttackable
         comboCounter = feedback.counter;
 
         float TempDamage = 0f;
-        //Debug.Log("Attacking is " + comboPlayer + " dengan combo " + comboCounter);
+        Debug.Log("Attacking is " + comboPlayer + " dengan combo " + comboCounter);
 
         if (comboPlayer == ComboEnum.Perfect)
         {
-            TempDamage = (senjata.Damage / 100f) * Persentase_Perfect;
+            TempDamage = (senjata.Damage[comboCounter] / 100f) * Persentase_Perfect;
         }
         else if (comboPlayer == ComboEnum.Good)
         {
-            TempDamage = (senjata.Damage / 100f) * Persentase_Good;
+            TempDamage = (senjata.Damage[comboCounter] / 100f) * Persentase_Good;
         }
         else if (comboPlayer == ComboEnum.Miss)
         {
-            TempDamage = (senjata.Damage / 100f) * Persentase_Miss;
+            TempDamage = (senjata.Damage[comboCounter] / 100f) * Persentase_Miss;
         }
+
         // Debug.Log("temp damage "+ TempDamage);
         /*
 		Manggil Combonya gimana?
