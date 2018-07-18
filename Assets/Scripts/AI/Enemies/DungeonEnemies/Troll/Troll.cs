@@ -22,7 +22,8 @@ public class Troll : BaseDungeonEnemy, IAttackable {
 	
     // Attackable Variable
     private IEnumerator knockbackrator = null;
-	private bool _canAttackPlayer = false, _canFollowPlayer = false;
+	private bool _canAttackPlayer = false;
+    // private bool _canFollowPlayer = false;
 	
 
 	#region  PandaTask

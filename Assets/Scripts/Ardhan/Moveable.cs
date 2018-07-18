@@ -8,6 +8,13 @@ public class Moveable : MonoBehaviour {
     public TriggerMove Trigger_Y;
     public Rigidbody2D rb_Object;
     public BoxCollider2D boxCollider;
+    public GameObject pulledActor;
+
+    void Awake()
+    {
+        rb_Object = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
+    }
 	// Use this for initialization
 	void Start () {
 		
@@ -15,21 +22,9 @@ public class Moveable : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        // if (Trigger_X.inArea)
-        // {
-        //     state_move = MoveAble_State.MoveX;
-        //     rb_Object.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
-        // }
-        // else if (Trigger_Y.inArea)
-        // {
-        //     state_move = MoveAble_State.MoveY;
-        //     rb_Object.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
-        // }
-        // else
-        // {
-        //     state_move = MoveAble_State.Idle;
-        //     rb_Object.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
-        // }
+        if(!pulledActor)
+        {
+            gameObject.layer = 0;
+        }
 	}
 }
