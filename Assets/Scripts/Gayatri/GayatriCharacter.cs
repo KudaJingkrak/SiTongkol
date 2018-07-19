@@ -17,6 +17,7 @@ public class GayatriCharacter : BaseClass, IAttackable
     public GameObject ColliderKaki;
     public Rigidbody2D rigid2D;
     public BoxCollider2D boxCollider2D;
+    private BoxCollider2D _boxColliderKaki;
     public Animator animator;
     public Direction direction = Direction.Front;
     public float speed;
@@ -29,6 +30,7 @@ public class GayatriCharacter : BaseClass, IAttackable
     public bool isPulling;
     public bool isHorizontalPulling;
     private float linearDrag;
+    private bool startPulling = false;
 
     [Header("Crouch")]
     public bool isCrouching;
@@ -82,9 +84,16 @@ public class GayatriCharacter : BaseClass, IAttackable
     // Use this for initialization
     void Start()
     {
-        transisiCamera = FindObjectOfType<ProCamera2DTransitionsFX>();
-        transisiCamera.TransitionEnter();
         SetPlayer(this.gameObject);
+        _boxColliderKaki = ColliderKaki.GetComponent<BoxCollider2D>();
+
+        // transisiCamera = FindObjectOfType<ProCamera2DTransitionsFX>();
+        transisiCamera = Camera.main.GetComponent<ProCamera2DTransitionsFX>();
+        if(transisiCamera)
+        {
+            transisiCamera.TransitionEnter();
+        }
+        
         linearDrag = rigid2D.drag;
         combo_Sys = Slider_Gayatri.GetComponentInParent<ComboSystem>();
         isReflect = false;
@@ -152,23 +161,38 @@ public class GayatriCharacter : BaseClass, IAttackable
         {
             if (_moveable != null)
             {
-                Vector2 _moveableNewPos = Vector2.zero;
+                Vector2 _moveableLastPos = _moveable.transform.position;
+                float _moveableX = 0f, _moveableY = 0f;
                 switch (_moveDir)
                 {
                     case Direction.Back:
-                        _moveableNewPos = new Vector2(_moveable.transform.position.x, transform.position.y + _moveableColl.size.y + boxCollider2D.offset.y * 0.5f);
+                        _moveableX = _moveable.transform.position.x;
+                        _moveableY = _boxColliderKaki.transform.position.y + 
+                            (_boxColliderKaki.size.y + _boxColliderKaki.offset.y) * 0.5f  + 
+                            _moveableColl.size.y * 0.5f;
                         break;
                     case Direction.Front:
-                        _moveableNewPos = new Vector2(_moveable.transform.position.x, transform.position.y - _moveableColl.size.y + boxCollider2D.offset.y * 0.5f);
+                        _moveableX = _moveable.transform.position.x;
+                        _moveableY = _boxColliderKaki.transform.position.y - 
+                            (_boxColliderKaki.size.y - _boxColliderKaki.offset.y ) * 0.5f - 
+                            _moveableColl.size.y* 0.5f;
                         break;
                     case Direction.Left:
-                        _moveableNewPos = new Vector2(transform.position.x - _moveableColl.size.x + boxCollider2D.offset.x * 0.5f, _moveable.transform.position.y);
+                        _moveableX = _boxColliderKaki.transform.position.x - 
+                            (_boxColliderKaki.size.x - _boxColliderKaki.offset.x) * 0.5f - 
+                            _moveableColl.size.x * 0.5f;
+                        _moveableY = _moveable.transform.position.y;
                         break;
                     case Direction.Right:
-                        _moveableNewPos = new Vector2(transform.position.x + _moveableColl.size.x + boxCollider2D.offset.x * 0.5f, _moveable.transform.position.y);
+                        _moveableX = _boxColliderKaki.transform.position.x + 
+                            (_boxColliderKaki.size.x + _boxColliderKaki.offset.x) * 0.5f + 
+                            _moveableColl.size.x * 0.5f;
+                        _moveableY = _moveable.transform.position.y;
                         break;
                 }
-                _moveable.rb_Object.MovePosition(_moveableNewPos);
+
+                _moveable.rb_Object.MovePosition(new Vector2(_moveableX, _moveableY));
+                
             }
             //Debug.Log("Panjang move " + Vector2.Distance(_moveable.transform.position, transform.position));
             if (Vector2.Distance(_moveable.transform.position, (transform.position + (Vector3)boxCollider2D.offset * 0.5f)) > 1.5f)
@@ -202,7 +226,7 @@ public class GayatriCharacter : BaseClass, IAttackable
     public void Move(float x, float y)
     {
 
-        if (onDialogue || isAttacking || animator.GetBool("isAttacking"))
+        if (startPulling || onDialogue || isAttacking)
         {
             return;
         }
@@ -224,6 +248,7 @@ public class GayatriCharacter : BaseClass, IAttackable
         {
             SetDirection(Direction.Front);
         }
+       
 
         float _speed = speed;
         if (isPulling)
@@ -282,7 +307,7 @@ public class GayatriCharacter : BaseClass, IAttackable
             }
 
             RaycastHit2D[] hits = Physics2D.BoxCastAll(boxCollider2D.transform.position, boxCollider2D.size, 0.0f, _castDir, inteactDistance);
-            Debug.Log("Jumlah hits ada " + hits.Length);
+            // Debug.Log("Jumlah hits ada " + hits.Length);
 
             for (int i = 0; i < hits.Length; i++)
             {
@@ -438,7 +463,9 @@ public class GayatriCharacter : BaseClass, IAttackable
     #region Pull
     public bool Pull()
     {
+        
         if (isPulling) return false;
+        startPulling = true;
 
         animator.SetFloat("TempX", _moveX);
         animator.SetFloat("TempY", _moveY);
@@ -464,7 +491,7 @@ public class GayatriCharacter : BaseClass, IAttackable
                 break;
         }
 
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(boxCollider2D.transform.position, boxCollider2D.size, 0.0f, _castDir, 0.25f);
+        RaycastHit2D[] hits = Physics2D.BoxCastAll((_boxColliderKaki.transform.position + (Vector3)_boxColliderKaki.offset), _boxColliderKaki.size * 0.9f, 0.0f, _castDir, 0.2f);
         //Debug.Log("Jumlah hits ada "+hits.Length);
 
         for (int i = 0; i < hits.Length; i++)
@@ -475,16 +502,19 @@ public class GayatriCharacter : BaseClass, IAttackable
                 if (_moveable != null)
                 {
 
-                    Debug.Log("Moveable object " + hits[i].collider.gameObject.name);
-                    isPulling = true;
+                    // Debug.Log("Moveable object " + hits[i].collider.gameObject.name);
+                    _moveable.gameObject.layer = 14; // change layer to pulled object
                     _moveableColl = _moveable.boxCollider;
                     _moveDir = direction;
-
-                    return true;
+                    _moveable.pulledActor = gameObject;
+                    _moveable.rb_Object.bodyType = RigidbodyType2D.Dynamic;
+                    isPulling = true;
+                    break;
                 }
             }
         }
-        return false;
+        startPulling = false;
+        return _moveable != null;
     }
 
     IEnumerator MovingObject(float delay)
@@ -515,6 +545,7 @@ public class GayatriCharacter : BaseClass, IAttackable
     {
         if (isPulling)
         {
+            _moveable.pulledActor = null;
             _moveable.transform.SetParent(null);
             _moveable.rb_Object.isKinematic = false;
             _moveable = null;
@@ -526,14 +557,14 @@ public class GayatriCharacter : BaseClass, IAttackable
 
     public void Pickup()
     {
-        Debug.Log("Pickup");
+        // Debug.Log("Pickup");
         RaycastHit2D[] hits = Physics2D.BoxCastAll(boxCollider2D.transform.position, boxCollider2D.size, 0.0f, Vector3.zero);
         for (int i = 0; i < hits.Length; i++)
         {
             if (hits[i].collider != null && !hits[i].collider.gameObject.Equals(this.gameObject))
             {
                 Pickupable pickupable = hits[i].collider.gameObject.GetComponent<Pickupable>();
-                Debug.Log("Pickup Item");
+                // Debug.Log("Pickup Item");
                 if (pickupable != null)
                 {
                     pickupable.PickupItem(gameObject);

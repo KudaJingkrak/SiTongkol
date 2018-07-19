@@ -27,19 +27,19 @@ public class TriggerMove : MonoBehaviour {
     {
         if(other.gameObject.tag == "Player")
         {
-            if(Input.GetButtonDown("X"))
-            {
-                transform.parent.SetParent(other.transform);
-                parent_Rigidbody.isKinematic = true;
-                other.gameObject.GetComponent<Rigidbody2D>().constraints = transform.parent.gameObject.GetComponent<Rigidbody2D>().constraints;
-            }
-            else if(Input.GetButtonUp("X"))
-            {   
-                 transform.parent.SetParent(null);
-                 parent_Rigidbody.isKinematic = false;
-                 other.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+            // if(Input.GetButtonDown("X"))
+            // {
+            //     transform.parent.SetParent(other.transform);
+            //     parent_Rigidbody.isKinematic = true;
+            //     other.gameObject.GetComponent<Rigidbody2D>().constraints = transform.parent.gameObject.GetComponent<Rigidbody2D>().constraints;
+            // }
+            // else if(Input.GetButtonUp("X"))
+            // {   
+            //      transform.parent.SetParent(null);
+            //      parent_Rigidbody.isKinematic = false;
+            //      other.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
                  
-            }
+            // }
         }
     }
 
