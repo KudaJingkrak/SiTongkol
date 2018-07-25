@@ -199,7 +199,7 @@ public class AIMovementComp : MonoBehaviour {
 	#region Stuck_Movement
 	[Header("Stuck Movement")]
 	[Tooltip("Distance to check is stuck")] public float stuckError = 0.25f;
-	[Tooltip("Max step after stucked")] public int maxStep = 10;
+	[Tooltip("Max step after stucked")] public int maxStep = 30;
 	[Tooltip("Min step after stucked")] public int minStep = 0;
 	private int _step;
 	[Panda.Task]
@@ -289,7 +289,7 @@ public class AIMovementComp : MonoBehaviour {
 				_boxColl2D.size, 0f, _castDir, stuckError);
 			
 			for(int i = 0; i < hits.Length; i++){
-				if(hits[i].collider.gameObject.layer == 9){ // if unwalkable
+				if(hits[i].collider.gameObject.layer == 9 || hits[i].collider.gameObject.layer == LayerMask.NameToLayer("Fallable")){ // if unwalkable
 					return _movType != MovementType.Fly;
 				}
 			}

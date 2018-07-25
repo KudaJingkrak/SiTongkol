@@ -742,7 +742,7 @@ public class GayatriCharacter : BaseClass, IAttackable
 
     public void Die()
     {
-
+        Status.Decreased_Health(10000000000f);
     }
 
     public void Knockback(Transform causer)

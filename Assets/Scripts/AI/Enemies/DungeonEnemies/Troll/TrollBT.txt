@@ -1,8 +1,8 @@
 tree("Root")
-	fallback
-		tree "StuckMove"
-		tree "FollowMove"		 
+	fallback		 
 		tree "PatrolMove"
+		tree "StuckMove"
+		tree "FollowMove"
 		tree "Patrol"
 		tree "DoAttack"
 		tree "StartAttack"
