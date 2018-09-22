@@ -159,6 +159,18 @@ public class Troll : BaseDungeonEnemy, IAttackable {
         }
     }
 
+    public void Fall()
+    {
+        /*
+         * TO DO:
+         * - 1. Freeze into certain location (X,Y,Z)
+         * - 2. DO The Fall Animation
+         * - 3. Attackable.Die()
+         * - 4. Disabled
+         * - 5. Done
+         */
+    }
+
     public void Destruct()
     {
         

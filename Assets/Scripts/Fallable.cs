@@ -63,10 +63,31 @@ public class Fallable : MonoBehaviour {
 
 				if(maxInside && minInside)
 				{
+                    //Need to be Resolved in Discussion
+
+                    /*
+                     * ISSUE:
+                     * - If you choose to use Attackable.Die() then it would be needed more complex than Die, it needs also for some specific
+                     *  set of behaviors which need new interface for specific objects.
+                     *  
+                     *  but the new variable also makes some new problems as well that need to be defining as well:
+                     *  - as for Gayatri:
+                     *      - Is she instantly dead or just being damaged and respawned into last location, and how to respawned it?
+                     *  
+                     *  - as for Enemies:
+                     *      - is they gonna be instantly died as well or.. some sort of things.
+                     *      - How to prevent them not to be that stupid (?)
+                     *  
+                     *  - As for Other objects:
+                     *      - we should defined each objects or like pushable object, or something like that.
+                     *      - Other case switch than attackable perhaps?
+                     *      - or other things that need for discussed.
+                     */
+
 					IAttackable attackable = colCap.GetComponentInParent<IAttackable>();
 					if(attackable != null)
 					{
-						attackable.Die();
+						attackable.Fall();
 					}
 				}
 			}		

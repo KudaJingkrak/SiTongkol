@@ -736,6 +736,20 @@ public class GayatriCharacter : BaseClass, IAttackable
 
     }
 
+    public void Fall()
+    {
+        /*
+         * TO DO:
+         * - 1. FREEZE ON THE EXACT LOCATION (X,Y,Z)
+         * - 2. DISABLED THE INPUT CONTROL
+         * - 3. DO THE FALL ANIMATION
+         * - 4. attackable.ApplyDamage()
+         * - 5. Respawn to Last Location
+         * - 6. Enabled INPUT CONTROL
+         * - 7. Done
+         */
+    }
+
     public void Destruct()
     {
 

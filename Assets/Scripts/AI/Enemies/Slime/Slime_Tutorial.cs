@@ -67,6 +67,18 @@ public class Slime_Tutorial : BaseEnemy, IAttackable {
         this.gameObject.SetActive(false);
     }
 
+    public void Fall()
+    {
+        /*
+         * TO DO:
+         * - 1. Freeze into certain location (X,Y,Z)
+         * - 2. DO The Fall Animation
+         * - 3. Attackable.Die()
+         * - 4. Disabled
+         * - 5. Done
+         */
+    }
+
     public void Knockback(Transform causer)
     {
 
