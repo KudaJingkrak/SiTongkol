@@ -56,6 +56,9 @@ public class GayatriCharacter : BaseClass, IAttackable
     public bool onDialogue;
     private IInteractable interactable;
 
+    [Header("Fall")]
+    public bool isFall;
+
     [Header("Movable")]
     private Moveable _moveable;
     private float _moveX = 0.0f, _moveY = 0.0f;
@@ -738,15 +741,26 @@ public class GayatriCharacter : BaseClass, IAttackable
 
     public void Fall()
     {
+        isFall = true;
+        StartCoroutine(fallProcess());
         /*
          * TO DO:
          * - 1. FREEZE ON THE EXACT LOCATION (X,Y,Z)
          * - 2. DISABLED THE INPUT CONTROL
-         * - 3. DO THE FALL ANIMATION
-         * - 4. attackable.ApplyDamage()
-         * - 5. Respawn to Last Location
-         * - 6. Enabled INPUT CONTROL
-         * - 7. Done
+         * 
+         */
+    }
+
+    IEnumerator fallProcess()
+    {
+        return null;
+        /*
+         * TO DO:
+         * 1. Fall Animation until finished
+         * 2. Respawn to Last Location
+         * 3. attackable.ApplyDamage
+         * 4. Enabled Input Control
+         * 5. Done.
          */
     }
 
