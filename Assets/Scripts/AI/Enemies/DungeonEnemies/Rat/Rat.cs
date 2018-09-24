@@ -241,4 +241,6 @@ public class Rat : BaseDungeonEnemy, IAttackable {
             _healthSlider.value = _health/health;
         }
     }
+
+    public void Fall(){}
 }

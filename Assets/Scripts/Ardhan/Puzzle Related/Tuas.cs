@@ -77,5 +77,8 @@ public class Tuas : MonoBehaviour, IAttackable {
 
     }
 
-
+    public void Fall()
+    {
+        
+    }
 }

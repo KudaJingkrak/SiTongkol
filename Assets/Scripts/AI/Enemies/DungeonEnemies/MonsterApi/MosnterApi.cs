@@ -51,4 +51,8 @@ public class MosnterApi : BaseDungeonEnemy, IAttackable {
 	void Update () {
 		
 	}
+
+    public void Fall()
+    {
+    }
 }

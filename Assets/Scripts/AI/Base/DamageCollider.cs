@@ -37,4 +37,6 @@ public class DamageCollider : MonoBehaviour, IAttackable{
     {
         
     }
+
+    public void Fall(){}
 }

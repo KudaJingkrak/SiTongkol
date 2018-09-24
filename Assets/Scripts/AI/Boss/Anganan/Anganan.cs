@@ -324,4 +324,5 @@ public class Anganan : BaseEnemy, IAttackable {
 		}
 	}
 
+    public void Fall(){}
 }

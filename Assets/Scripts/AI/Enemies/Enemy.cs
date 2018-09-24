@@ -306,5 +306,7 @@ public class Enemy : MonoBehaviour, IAttackable{
         }
     }
 
+    public void Fall(){}
+
     #endregion
 }

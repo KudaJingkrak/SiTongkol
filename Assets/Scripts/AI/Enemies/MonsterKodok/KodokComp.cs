@@ -123,4 +123,6 @@ public class KodokComp : BaseDungeonEnemy, IAttackable {
         _movementComp.Rigid2D.velocity = force;
 
     }
+
+    public void Fall(){}
 }
