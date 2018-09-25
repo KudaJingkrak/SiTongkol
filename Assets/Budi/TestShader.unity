@@ -139,6 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 432044631}
   - component: {fileID: 432044630}
+  - component: {fileID: 432044632}
   m_Layer: 0
   m_Name: Fire
   m_TagString: Untagged
@@ -199,12 +200,38 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 432044629}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.19, y: -0.08, z: -0.08936606}
+  m_LocalPosition: {x: -3.26, y: 0.35, z: -0.08936606}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &432044632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 432044629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbcac91a656d31c4da3fd7188dc350fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 50
+  turnRate: 30
+  damage: 1
+  lifetime: 3.4028235e+38
+  isHoming: 0
+  target: {fileID: 0}
+  trail: {fileID: 0}
+  trailTime: 0
+  _sprite: {fileID: 0}
+  _collider2D: {fileID: 0}
+  _isActive: 0
+  _speed: 0
+  _up: {fileID: 0}
+  _isEnable: 0
+  _lifetime: 0
 --- !u!1001 &1129695052
 Prefab:
   m_ObjectHideFlags: 0

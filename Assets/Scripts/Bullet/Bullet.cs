@@ -12,9 +12,9 @@ public class Bullet : PoolObject {
     public bool isHoming = false;
     public Transform target;
 
-    TrailRenderer trail;
-    float trailTime;
-    SpriteRenderer _sprite;
+    protected TrailRenderer trail;
+    protected float trailTime;
+    protected SpriteRenderer _sprite;
     Collider2D _collider2D;
     public bool _isActive = false;
     float _speed;
@@ -41,6 +41,8 @@ public class Bullet : PoolObject {
         _collider2D = GetComponent<Collider2D>();
         _speed = speed;
         _isEnable = _isActive;
+
+        VAwake();
     }
 	
 	// Update is called once per frame
@@ -59,13 +61,14 @@ public class Bullet : PoolObject {
                 transform.position = Vector2.MoveTowards(transform.position, _up.position, _speed * Time.deltaTime);
 
                 _lifetime -= Time.deltaTime;
-                //Debug.Log(_lifetime);
             }
         }
 
         if(_lifetime < 0 || !_isActive){
             Disable();
         }
+
+        VUpdate();
 	}
 
     public override void OnObjectReuse(){
@@ -153,6 +156,10 @@ public class Bullet : PoolObject {
         _sprite.color = new Color(_sprite.color.r, _sprite.color.g, _sprite.color.b, 255f);
         // enable collider
         if(_collider2D.enabled) _collider2D.enabled = true;
+    }
+
+    public void SetLifetime(float lifetime) {
+        this.lifetime = lifetime;
     }
 
     public void SetSpeed(float speed){
@@ -243,9 +250,6 @@ public class Bullet : PoolObject {
                 gameObject.SetActive(false);
             }
         }
-        
-        
-
 
         //Updated.
         /*
@@ -275,4 +279,22 @@ public class Bullet : PoolObject {
         }
         */
     }
+
+    void Start() {
+        VStart();
+    }
+
+    void FixedUpdate() {
+        VFixedUpdate();
+    }
+
+    void LateUpdate() {
+        VLateUpdate();
+    }
+
+    protected virtual void VAwake() {}
+    protected virtual void VStart() {}
+    protected virtual void VUpdate() {}
+    protected virtual void VFixedUpdate() {}
+    protected virtual void VLateUpdate() {}
 }
